@@ -9,74 +9,90 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{--brand:#003366;--accent:#ffcc00;--bg:#f7f9fc;--border:#e5e7eb;--muted:#6b7280;--ink:#0b1220;--card:#fff;}
+    :root{
+      --brand:#003366;--accent:#ffcc00;--bg:#f7f9fc;--border:#e5e7eb;
+      --ink:#0b1220;--muted:#64748b;--card:#fff;--shadow:0 10px 30px rgba(0,0,0,.08);
+    }
     *{box-sizing:border-box}
-    body{margin:0;font-family:Poppins,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
-    header{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);z-index:10}
+    html,body{margin:0;font-family:Poppins,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+    a{color:inherit}
+    /* Header */
+    header{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);z-index:30;transition:box-shadow .2s ease, border-color .2s ease}
+    header.scrolled{box-shadow:var(--shadow);border-color:rgba(0,0,0,0.06)}
     .nav{max-width:1200px;margin:0 auto;padding:10px 16px;display:flex;justify-content:space-between;align-items:center}
-    .brand img{height:80px;width:auto}
-    .btn{padding:10px 16px;border-radius:12px;text-decoration:none;font-weight:600;border:1px solid var(--border);background:#fff;color:var(--ink)}
+    .brand img{height:120px;width:auto;transition:height .2s ease}
+    header.scrolled .brand img{height:96px}
+    .btn{padding:10px 16px;border-radius:12px;text-decoration:none;font-weight:600;border:1px solid var(--border);background:#fff;color:var(--ink);transition:transform .15s ease, box-shadow .15s ease}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.06)}
     .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
     .btn.accent{background:var(--accent);border-color:var(--accent);color:#111}
+    /* Layout */
     section{max-width:1200px;margin:0 auto;padding:40px 16px}
     .section-title{font-size:28px;font-weight:800;margin:0 0 12px}
+    /* Portfolio */
     .grid{display:grid;gap:16px}
     .grid.g3{grid-template-columns:repeat(3,1fr)}
-    a.card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 4px 12px rgba(0,0,0,.05);text-decoration:none;color:inherit;transition:transform .15s ease, box-shadow .15s ease}
-    a.card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.08)}
-    .card img{width:100%;height:200px;object-fit:cover}
-    .card .content{padding:14px}
-    .card h3{margin:6px 0;font-size:18px}
-    .card p{margin:0;color:#444}
-    @media(max-width:980px){.brand img{height:60px}.grid.g3{grid-template-columns:1fr 1fr}}
-    @media(max-width:640px){.grid.g3{grid-template-columns:1fr}}
+    a.card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 4px 12px rgba(0,0,0,.05);text-decoration:none;color:inherit;transition:transform .18s ease, box-shadow .18s ease}
+    a.card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(0,0,0,.10)}
+    .thumb-wrap{overflow:hidden}
+    .thumb{width:100%;height:220px;background:#eef3fb center/cover no-repeat;transform:scale(1);transition:transform .35s ease}
+    a.card:hover .thumb{transform:scale(1.06)}
+    .card .content{padding:16px}
+    .card h3{margin:6px 0 4px;font-size:18px}
+    .card p{margin:0;color:#475569}
+    /* Reveal on scroll */
+    .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease, transform .5s ease}
+    .reveal.in{opacity:1;transform:none}
+    /* Responsive */
+    @media(max-width:1100px){.brand img{height:100px}header.scrolled .brand img{height:84px}.grid.g3{grid-template-columns:1fr 1fr}}
+    @media(max-width:640px){.brand img{height:84px}header.scrolled .brand img{height:72px}.grid.g3{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <header>
+  <header id="hdr">
     <div class="nav">
       <a class="brand" href="#">
         <img src="assets/logo-afm-horizontal.png" alt="AFM Solutions logo">
       </a>
       <div>
-        <a class="btn" href="#servicios">Servicios</a>
+        <a class="btn" href="#portfolio">Trabajos</a>
         <a class="btn primary" href="#contacto">Pedir presupuesto</a>
       </div>
     </div>
   </header>
 
-  <section id="hero">
+  <section id="hero" class="reveal in">
     <h1>Software a medida para tu negocio</h1>
     <p>Desarrollo web y mobile, sistemas de gestión, e-commerce e integraciones. Te ayudamos a vender más y a automatizar procesos.</p>
     <a class="btn accent" href="#contacto">💬 Pedir presupuesto</a>
   </section>
 
-  <section id="portfolio">
+  <section id="portfolio" class="reveal">
     <h2 class="section-title">Trabajos reales</h2>
     <div class="grid g3">
       <a class="card" href="https://puntokiosco.com.ar" target="_blank" rel="noopener">
-        <img src="assets/portfolio-puntokiosco.jpg" alt="PuntoKiosco">
+        <div class="thumb-wrap"><div class="thumb" style="background-image:url('assets/portfolio-puntokiosco.jpg')"></div></div>
         <div class="content">
           <h3>PuntoKiosco</h3>
           <p>Sistema de gestión integral de ventas, stock y caja.</p>
         </div>
       </a>
       <a class="card" href="https://el-tachi.netlify.app" target="_blank" rel="noopener">
-        <img src="assets/portfolio-el-tachi.jpg" alt="Rotisería El Tachi">
+        <div class="thumb-wrap"><div class="thumb" style="background-image:url('assets/portfolio-el-tachi.jpg')"></div></div>
         <div class="content">
           <h3>Rotisería El Tachi</h3>
           <p>Menú dinámico, carrito con WhatsApp y banners administrables.</p>
         </div>
       </a>
       <a class="card" href="https://soldarte.vercel.app" target="_blank" rel="noopener">
-        <img src="assets/portfolio-soldarte.jpg" alt="Soldarte">
+        <div class="thumb-wrap"><div class="thumb" style="background-image:url('assets/portfolio-soldarte.jpg')"></div></div>
         <div class="content">
           <h3>Soldarte</h3>
           <p>Landing de herrería industrial con catálogo y presupuesto online.</p>
         </div>
       </a>
       <a class="card" href="https://ludmilasolutions.github.io/mgv" target="_blank" rel="noopener">
-        <img src="assets/portfolio-mgv.jpg" alt="MGV">
+        <div class="thumb-wrap"><div class="thumb" style="background-image:url('assets/portfolio-mgv.jpg')"></div></div>
         <div class="content">
           <h3>MGV</h3>
           <p>Plataforma multi-local con catálogo por categorías y pedidos online.</p>
@@ -85,10 +101,25 @@
     </div>
   </section>
 
-  <section id="contacto">
+  <section id="contacto" class="reveal">
     <h2 class="section-title">Contacto</h2>
     <p>Escribinos por WhatsApp y contanos tu idea.</p>
     <a class="btn primary" href="https://wa.me/5490000000000?text=Hola%20AFM%20Solutions,%20quiero%20un%20presupuesto" target="_blank" rel="noopener">Abrir WhatsApp</a>
   </section>
+
+  <script>
+    // Header shadow on scroll + section reveal
+    const hdr = document.getElementById('hdr');
+    const onScroll = () => {
+      if(window.scrollY>4) hdr.classList.add('scrolled'); else hdr.classList.remove('scrolled');
+    };
+    document.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+    // Reveal sections
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    }, {threshold: 0.12});
+    document.querySelectorAll('.reveal').forEach(el=>{ if(!el.classList.contains('in')) io.observe(el); });
+  </script>
 </body>
 </html>

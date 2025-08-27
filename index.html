@@ -29,7 +29,7 @@
 
     /* ======= Brand (LOGO grande) ======= */
     .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
-    .brand img{height:420px;width:auto}
+    .brand img{height:96px;width:auto}
 
     /* ======= Buttons ======= */
     .nav .cta{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -47,8 +47,8 @@
     .hero-cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
     .illus{position:relative;background:radial-gradient(1200px 400px at -10% -10%,rgba(255,204,0,.2),transparent 60%), radial-gradient(800px 300px at 110% 20%, rgba(0,70,150,.15),transparent 60%);border:1px solid var(--border);border-radius:20px;min-height:260px;box-shadow:var(--shadow)}
     .illus::after{content:"";position:absolute;inset:0;background:conic-gradient(from 180deg at 50% 50%,rgba(255,204,0,.06),rgba(0,56,120,.07),transparent 30%);mix-blend:overlay;pointer-events:none;border-radius:20px}
-    .illus-inner{position:absolute;inset:0;display:grid;place-items:center}
-    .hex{width:120px;height:120px;border-radius:16px;background:linear-gradient(145deg,var(--accent),#ffd84d);mask:polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0 50%);-webkit-mask:polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0 50%);filter:drop-shadow(0 10px 20px rgba(0,0,0,.15))}
+    .illus-inner{position:absolute;inset:0;display:grid;place-items:center;padding:16px}
+    .hero-logo-img{width:clamp(260px,40vw,520px);height:auto;filter:drop-shadow(0 10px 24px rgba(0,0,0,.12))}
 
     /* ======= Sections ======= */
     section{padding:42px 16px}
@@ -110,6 +110,9 @@
     @media (max-width:640px){
       .brand img{height:270px}
     }
+    /* overrides de tamaño del logo en pantallas chicas */
+    @media (max-width:980px){ .brand img{height:80px !important;} }
+    @media (max-width:640px){ .brand img{height:68px !important;} }
   </style>
 </head>
 <body>
@@ -139,7 +142,9 @@
         </div>
       </div>
       <div class="illus">
-        <div class="illus-inner"><div class="hex" aria-hidden="true"></div></div>
+        <div class="illus-inner">
+          <img src="assets/logo-afm-horizontal.png" alt="AFM Solutions" class="hero-logo-img">
+        </div></div>
       </div>
     </div>
   </section>
@@ -162,22 +167,22 @@
     <p class="section-sub">Visitá los proyectos en producción.</p>
     <div class="grid g3">
       <a class="card item" href="https://puntokiosco.com.ar" target="_blank" rel="noopener">
-        <div class="thumb" style="background-image:url('assets/portfolio-puntokiosco.jpg')"></div>
+        <div class="thumb" style="background-image:url('https://image.thum.io/get/width/1200/https://puntokiosco.com.ar'), url('assets/portfolio-puntokiosco.jpg')"></div>
         <div class="meta"><strong>PuntoKiosco</strong><span class="tag">Sistema</span></div>
         <p>Gestión integral de ventas, stock, turnos y cierre de caja. Impresión térmica y reportes.</p>
       </a>
       <a class="card item" href="https://el-tachi.netlify.app" target="_blank" rel="noopener">
-        <div class="thumb" style="background-image:url('assets/portfolio-el-tachi.jpg')"></div>
+        <div class="thumb" style="background-image:url('https://image.thum.io/get/width/1200/https://el-tachi.netlify.app'), url('assets/portfolio-el-tachi.jpg')"></div>
         <div class="meta"><strong>Rotisería El Tachi</strong><span class="tag">Pedidos</span></div>
         <p>Menú dinámico, carrito con WhatsApp, banners y panel para editar productos.</p>
       </a>
       <a class="card item" href="https://soldarte.vercel.app" target="_blank" rel="noopener">
-        <div class="thumb" style="background-image:url('assets/portfolio-soldarte.jpg')"></div>
+        <div class="thumb" style="background-image:url('https://image.thum.io/get/width/1200/https://soldarte.vercel.app'), url('assets/portfolio-soldarte.jpg')"></div>
         <div class="meta"><strong>Soldarte</strong><span class="tag">Landing</span></div>
         <p>Catálogo de herrería industrial con formulario de presupuestos y galería animada.</p>
       </a>
       <a class="card item" href="https://ludmilasolutions.github.io/mgv" target="_blank" rel="noopener">
-        <div class="thumb" style="background-image:url('assets/portfolio-mgv.jpg')"></div>
+        <div class="thumb" style="background-image:url('https://image.thum.io/get/width/1200/https://ludmilasolutions.github.io/mgv'), url('assets/portfolio-mgv.jpg')"></div>
         <div class="meta"><strong>MGV</strong><span class="tag">Multi‑local</span></div>
         <p>Plataforma multi‑local con catálogo por categorías y pedidos online.</p>
       </a>

@@ -32,15 +32,28 @@
     .top a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:4px 8px;border-radius:10px;transition:.2s ease}
     .top a:hover{background:rgba(0,70,150,.08)}
 
-    /* Header (con container por compatibilidad) */
-    header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--border);z-index:50}
-    .nav{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;padding:10px 0}
+    /* Header FULL-BLEED con logo pegado a la izquierda */
+    .headerbar{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--border);z-index:50}
+    .nav-bleed{
+      width:100vw;                         /* ocupar todo el viewport */
+      margin-left:calc(50% - 50vw);        /* romper centrado del body/container */
+      margin-right:calc(50% - 50vw);
+      padding-left:max(0px, env(safe-area-inset-left));  /* 0 en desktop; safe-area en iPhone */
+      padding-right:max(24px, env(safe-area-inset-right));
+      display:grid;
+      grid-template-columns:auto minmax(0,1fr) auto;     /* brand | menú | CTA */
+      align-items:center;
+      gap:12px;
+      padding-top:10px;padding-bottom:10px;
+    }
     .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0;justify-self:start}
     .brand img{height:160px;width:auto;display:block}
     .brand .title{font-weight:800;letter-spacing:.2px;font-size:clamp(20px,2.6vw,32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
     .menu{display:flex;gap:12px;align-items:center;justify-content:center;min-width:0}
     .menu a{padding:10px 12px;border-radius:10px;color:#1f2937;text-decoration:none;font-weight:600;transition:.2s ease;white-space:nowrap}
     .menu a:hover{background:rgba(0,70,150,.08)}
+
     .cta{display:flex;gap:10px;align-items:center;justify-content:flex-end}
     .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid var(--border);background:#fff;color:inherit;text-decoration:none;font-weight:700;transition:.25s ease}
     .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
@@ -83,13 +96,13 @@
     #proceso .step .num{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--accent);font-weight:800;margin-bottom:8px}
     #proceso .step::after{content:"";position:absolute;inset:auto -10% -30% -10%;height:80px;background:radial-gradient(120px 40px at 50% 0%, rgba(0,70,150,.08), transparent)}
 
-    /* Form */
+    /* Formulario */
     form{display:grid;gap:12px;max-width:720px}
     .field{display:grid;gap:6px}
     .field input,.field textarea{padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:#fff;font:inherit}
     .field input:focus,.field textarea:focus{outline:2px solid rgba(0,70,150,.25);border-color:var(--brand-2)}
 
-    /* Footer y WA */
+    /* Footer + WA */
     footer{border-top:1px solid var(--border);background:#fff}
     .foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:18px 0;color:#4b5563}
     .wa{position:fixed;right:16px;bottom:16px;z-index:60}
@@ -131,12 +144,18 @@
       .reveal,.card,#proceso .step{transition:none}
       .card:hover{transform:none;box-shadow:0 4px 14px rgba(2,6,23,.04)}
     }
+  
+/* === AFM PATCH: header full-bleed & logo left === */
+header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid #e5e7eb;z-index:50}
+header .nav-bleed{width:100vw !important;margin-left:calc(50% - 50vw) !important;margin-right:calc(50% - 50vw) !important;
+  padding:10px max(24px, env(safe-area-inset-right)) 10px max(0px, env(safe-area-inset-left)) !important;
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px}
+header .brand{margin-left:0 !important;justify-self:start !important;display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0}
+header .brand img{height:160px;width:auto;display:block}
+@media (max-width:980px){ header .brand img{height:120px} }
+@media (max-width:640px){ header .brand img{height:84px} }
 
-    /* === FIX: LOGO PEGADO A LA IZQUIERDA (ROMPE CONTAINER DEL HEADER) === */
-    header .container.nav{max-width:100% !important;margin:0 !important;padding-left:0 !important;padding-right:24px !important}
-    header .nav{max-width:100% !important;margin:0 !important}
-    header .brand{margin-left:max(0px, env(safe-area-inset-left)) !important}
-  </style>
+</style>
 </head>
 <body>
   <!-- Topbar -->
@@ -147,9 +166,9 @@
     </div>
   </div>
 
-  <!-- Header (mantengo .container por compatibilidad, pero el FIX lo neutraliza) -->
-  <header>
-    <div class="container nav" id="nav">
+  <!-- Header FULL-BLEED -->
+  <header class="headerbar">
+    <div class="nav-bleed" id="nav">
       <a class="brand" href="#" aria-label="AFM Solutions">
         <img src="assets/logo-afm-horizontal.png" alt="AFM Solutions logo">
         <span class="title">AFM Solutions</span>
@@ -280,18 +299,15 @@
   </script>
 
   <script>
-    // Año
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // Burger
     const nav = document.getElementById('nav');
     const burger = document.getElementById('burger');
-    burger?.addEventListener('click',()=> nav.classList.toggle('open'));
+    burger?.addEventListener('click', ()=> nav.classList.toggle('open'));
 
-    // Contacto
     const CONFIG = { WHATSAPP_NUMBER:'543417558966', WHATSAPP_PREFIX:'Hola AFM Solutions, quiero un presupuesto', EMAIL_TO:'angelmascali@gmail.com' };
 
-    document.getElementById('btnWsp').addEventListener('click',(e)=>{
+    document.getElementById('btnWsp').addEventListener('click', (e)=>{
       e.preventDefault();
       const f = new FormData(document.getElementById('contactForm'));
       const msg = `${CONFIG.WHATSAPP_PREFIX}%0A%0A`+
@@ -302,6 +318,7 @@
       window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${msg}`,'_blank');
     });
 
+    // Envío por mail sin backend
     document.getElementById('contactForm').addEventListener('submit',(e)=>{
       e.preventDefault();
       const f = new FormData(e.target);

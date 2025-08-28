@@ -18,9 +18,7 @@
   <link rel="preconnect" href="https://image.thum.io">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --brand:#003366;--brand-2:#004a99;--accent:#ffcc00;--ink:#0b1220;--muted:#6b7280;--bg:#f7f9fc;--card:#ffffff;--border:#e5e7eb;--shadow:0 10px 30px rgba(0,0,0,.09)
-    }
+    :root{--brand:#003366;--brand-2:#004a99;--accent:#ffcc00;--ink:#0b1220;--muted:#6b7280;--bg:#f7f9fc;--card:#ffffff;--border:#e5e7eb;--shadow:0 10px 30px rgba(0,0,0,.09)}
     *{box-sizing:border-box}
     html,body{height:100%}
     html{scroll-behavior:smooth}
@@ -34,23 +32,22 @@
     .top a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:4px 8px;border-radius:10px;transition:.2s ease}
     .top a:hover{background:rgba(0,70,150,.08)}
 
-    /* Header full-bleed (logo pegado a la izquierda) */
-    header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--border);z-index:50}
-    .nav{
-      /* full ancho de viewport, rompiendo el centrado del container */
-      width:100vw;
-      margin-left:calc(50% - 50vw);
+    /* Header FULL-BLEED con logo pegado a la izquierda */
+    .headerbar{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--border);z-index:50}
+    .nav-bleed{
+      width:100vw;                         /* ocupar todo el viewport */
+      margin-left:calc(50% - 50vw);        /* romper centrado del body/container */
       margin-right:calc(50% - 50vw);
-      padding-left:max(16px, env(safe-area-inset-left));
+      padding-left:max(0px, env(safe-area-inset-left));  /* 0 en desktop; safe-area en iPhone */
       padding-right:max(24px, env(safe-area-inset-right));
       display:grid;
-      grid-template-columns:auto minmax(0,1fr) auto; /* brand | menu | CTA */
+      grid-template-columns:auto minmax(0,1fr) auto;     /* brand | menú | CTA */
       align-items:center;
       gap:12px;
-      padding-top:10px; padding-bottom:10px;
+      padding-top:10px;padding-bottom:10px;
     }
-    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0;justify-self:start;margin-left:0}
-    .brand img{height:160px;width:auto;display:block;flex:0 0 auto}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0;justify-self:start}
+    .brand img{height:160px;width:auto;display:block}
     .brand .title{font-weight:800;letter-spacing:.2px;font-size:clamp(20px,2.6vw,32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
     .menu{display:flex;gap:12px;align-items:center;justify-content:center;min-width:0}
@@ -58,12 +55,11 @@
     .menu a:hover{background:rgba(0,70,150,.08)}
 
     .cta{display:flex;gap:10px;align-items:center;justify-content:flex-end}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid var(--border);background:#fff;color:inherit;text-decoration:none;font-weight:700;transition:.25s ease;will-change:transform,box-shadow}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid var(--border);background:#fff;color:inherit;text-decoration:none;font-weight:700;transition:.25s ease}
     .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
     .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
     .burger{display:none;border:1px solid var(--border);padding:8px 12px;border-radius:10px;background:#fff}
     .burger span{display:block;width:20px;height:2px;background:#111;margin:4px 0}
-    .nav.open .menu{display:flex}
 
     /* Hero */
     .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--border);background:
@@ -106,7 +102,7 @@
     .field input,.field textarea{padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:#fff;font:inherit}
     .field input:focus,.field textarea:focus{outline:2px solid rgba(0,70,150,.25);border-color:var(--brand-2)}
 
-    /* Footer y WA */
+    /* Footer + WA */
     footer{border-top:1px solid var(--border);background:#fff}
     .foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:18px 0;color:#4b5563}
     .wa{position:fixed;right:16px;bottom:16px;z-index:60}
@@ -159,9 +155,9 @@
     </div>
   </div>
 
-  <!-- Header (sin .container para full-bleed) -->
-  <header>
-    <div class="nav" id="nav">
+  <!-- Header FULL-BLEED -->
+  <header class="headerbar">
+    <div class="nav-bleed" id="nav">
       <a class="brand" href="#" aria-label="AFM Solutions">
         <img src="assets/logo-afm-horizontal.png" alt="AFM Solutions logo">
         <span class="title">AFM Solutions</span>
@@ -195,9 +191,7 @@
           <a class="btn primary" href="#contacto">Pedir presupuesto</a>
         </div>
       </div>
-      <div class="illus reveal">
-        <div class="illus-inner"><div class="hex" aria-hidden="true"></div></div>
-      </div>
+      <div class="illus reveal"><div class="illus-inner"><div class="hex" aria-hidden="true"></div></div></div>
     </div>
   </section>
 
@@ -213,7 +207,7 @@
     </div>
   </section>
 
-  <!-- Portfolio con miniaturas reales -->
+  <!-- Portfolio -->
   <section id="portfolio" class="container portfolio">
     <h2 class="section-title reveal">Trabajos reales</h2>
     <p class="section-sub reveal">Visitá los proyectos en producción.</p>
@@ -289,22 +283,20 @@
 
   <div class="wa"><a id="waFloat" href="https://wa.me/543417558966?text=Hola%20AFM%20Solutions,%20quiero%20un%20presupuesto" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a></div>
 
-  <!-- Schema -->
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Organization","name":"AFM Solutions","url":"https://tusitio.example","logo":"https://tusitio.example/assets/logo-afm-horizontal.png","contactPoint":[{"@type":"ContactPoint","contactType":"sales","email":"angelmascali@gmail.com","telephone":"+543417558966","areaServed":"AR","availableLanguage":["es","en"]}]}
   </script>
 
-  <!-- Scripts -->
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
 
     const nav = document.getElementById('nav');
     const burger = document.getElementById('burger');
-    burger?.addEventListener('click',()=> nav.classList.toggle('open'));
+    burger?.addEventListener('click', ()=> nav.classList.toggle('open'));
 
     const CONFIG = { WHATSAPP_NUMBER:'543417558966', WHATSAPP_PREFIX:'Hola AFM Solutions, quiero un presupuesto', EMAIL_TO:'angelmascali@gmail.com' };
 
-    document.getElementById('btnWsp').addEventListener('click',(e)=>{
+    document.getElementById('btnWsp').addEventListener('click', (e)=>{
       e.preventDefault();
       const f = new FormData(document.getElementById('contactForm'));
       const msg = `${CONFIG.WHATSAPP_PREFIX}%0A%0A`+
@@ -315,10 +307,10 @@
       window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${msg}`,'_blank');
     });
 
-    const form = document.getElementById('contactForm');
-    form.addEventListener('submit',(e)=>{
+    // Envío por mail sin backend
+    document.getElementById('contactForm').addEventListener('submit',(e)=>{
       e.preventDefault();
-      const f = new FormData(form);
+      const f = new FormData(e.target);
       const subject='Nuevo contacto desde AFM Solutions';
       const body=`Nombre: ${f.get('name')}
 Email: ${f.get('email')}
@@ -330,7 +322,7 @@ ${f.get('message')}`;
       document.getElementById('formMsg').textContent='Abriendo tu cliente de email…';
     });
 
-    /* Reveal + miniaturas reales */
+    // Reveal + miniaturas reales
     const io = new IntersectionObserver((entries)=>{
       entries.forEach((e)=>{
         if(e.isIntersecting){

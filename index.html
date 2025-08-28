@@ -20,34 +20,43 @@
   <style>
     :root{
       --brand:#003366;--brand-2:#004a99;--accent:#ffcc00;--ink:#0b1220;
-      --muted:#6b7280;--bg:#f7f9fc;--card:#ffffff;--border:#e5e7eb;--shadow:0 10px 30px rgba(0,0,0,.09)
+      --muted:#6b7280;--bg:#f7f9fc;--card:#ffffff;--border:#e5e7eb;
+      --shadow:0 10px 30px rgba(0,0,0,.09);
+      --gap: clamp(12px, 2.5vw, 24px);
+      --radius: 16px;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     html{scroll-behavior:smooth}
     body{margin:0;font-family:Poppins,system-ui,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg)}
     img{max-width:100%;height:auto;display:block}
-    .container{max-width:1200px;margin:0 auto;padding:0 24px}
+    .container{max-width:1200px;margin:0 auto;padding-inline: clamp(12px, 3vw, 24px)}
 
     /* Topbar */
     .topbar{background:linear-gradient(90deg, rgba(0,70,150,.07), rgba(255,204,0,.08));border-bottom:1px solid var(--border)}
-    .top{display:flex;gap:12px;align-items:center;justify-content:flex-end;padding:8px 24px;font-size:13px;color:#334155;flex-wrap:wrap}
+    .top{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding-block:8px;padding-inline: clamp(12px,3vw,24px);font-size:13px;color:#334155;flex-wrap:wrap}
     .top a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:4px 8px;border-radius:10px;transition:.2s}
     .top a:hover{background:rgba(0,70,150,.08)}
 
-    /* Header full-bleed con logo al ras de la izquierda */
+    /* Header full-bleed (logo SIEMPRE a la izquierda) */
     header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--border);z-index:50}
     header .nav-bleed{
       width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
-      padding:10px 24px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px
+      padding-inline: clamp(12px, 3vw, 24px);
+      padding-block:10px;
+      display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px
     }
     @supports (padding-left: env(safe-area-inset-left)){
-      header .nav-bleed{padding-left:env(safe-area-inset-left)}
+      header .nav-bleed{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
     }
     .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0;justify-self:start}
-    .brand img{height:160px;width:auto} /* usa el PNG recortado que te pasé */
-    .title{font-weight:800;letter-spacing:.2px;font-size:clamp(20px,2.6vw,32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .menu{display:flex;gap:12px;align-items:center;justify-content:center;min-width:0}
+    .brand img{
+      /* LOGO FLUIDO: grande en desktop, cómodo en móviles */
+      height: clamp(72px, 13vw, 160px);
+      width:auto
+    }
+    .title{font-weight:800;letter-spacing:.2px;font-size:clamp(18px,2.3vw,32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .menu{display:flex;gap:10px;align-items:center;justify-content:center;min-width:0}
     .menu a{padding:10px 12px;border-radius:10px;color:#1f2937;text-decoration:none;font-weight:600;transition:.2s;white-space:nowrap}
     .menu a:hover{background:rgba(0,70,150,.08)}
     .cta{display:flex;gap:10px;align-items:center;justify-content:flex-end}
@@ -57,34 +66,44 @@
     .burger{display:none;border:1px solid var(--border);padding:8px 12px;border-radius:10px;background:#fff}
     .burger span{display:block;width:20px;height:2px;background:#111;margin:4px 0}
 
+    /* Mobile overlay menu */
+    #nav.open .menu{
+      position:fixed;left:0;right:0;top:var(--header-h,72px);
+      display:flex;flex-direction:column;gap:8px;
+      background:#fff;border-bottom:1px solid var(--border);
+      padding:12px clamp(12px,3vw,24px);z-index:45
+    }
+
     /* Hero */
     .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
-    .hero-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;padding:40px 24px}
+    .hero-wrap{display:grid;grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr);gap:var(--gap);align-items:center;padding-block: clamp(28px, 5vw, 40px)}
     .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid var(--border);font-size:12px;color:#0009}
-    .h1{font-size:clamp(28px,4vw,44px);line-height:1.1;margin:16px 0 10px;font-weight:800}
+    .h1{font-size:clamp(26px,5vw,48px);line-height:1.1;margin:16px 0 10px;font-weight:800}
     .lead{font-size:clamp(15px,2.1vw,18px);color:#334155;max-width:70ch;line-height:1.6}
     .hero-cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
-    .illus{position:relative;border:1px solid var(--border);border-radius:20px;min-height:260px;box-shadow:0 5px 18px rgba(0,0,0,.05);
+    .illus{position:relative;border:1px solid var(--border);border-radius:20px;min-height: clamp(220px, 36vw, 320px);box-shadow:0 5px 18px rgba(0,0,0,.05);
            background:url('assets/afm-logo-original.png') center/cover no-repeat}
     .illus::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.2));border-radius:20px}
 
     /* Secciones */
-    section{padding:42px 24px}
-    .section-title{font-size:clamp(22px,3vw,30px);margin:0 0 8px;font-weight:800}
+    section{padding-block: clamp(28px, 5vw, 42px)}
+    .section-title{font-size:clamp(22px,3.4vw,30px);margin:0 0 8px;font-weight:800}
     .section-sub{color:var(--muted);margin:0 0 22px}
+
+    /* Grid responsive “smart” */
     .grid{display:grid;gap:16px}
-    .grid.g3{grid-template-columns:repeat(3,1fr)}
-    .grid.g4{grid-template-columns:repeat(4,1fr)}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:0 4px 14px rgba(2,6,23,.04);text-decoration:none;color:inherit;transition:.3s}
+    .auto-fit{grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:0 4px 14px rgba(2,6,23,.04);text-decoration:none;color:inherit;transition:.3s}
     .card:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(2,6,23,.12)}
+
     .portfolio .item{display:flex;flex-direction:column;gap:12px}
     .thumb{aspect-ratio:16/9;border-radius:14px;border:1px solid var(--border);background:#eef3fb center/cover no-repeat;box-shadow:0 6px 20px rgba(2,6,23,.06)}
     .meta{display:flex;align-items:center;justify-content:space-between}.meta .tag{font-size:12px;color:var(--brand);font-weight:700}
     .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(0,70,150,.08);color:var(--brand);font-weight:600;font-size:12px}
 
     /* Proceso */
-    #proceso .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-    #proceso .step{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;position:relative;overflow:hidden;opacity:0;transform:translateY(12px);transition:.5s}
+    #proceso .steps{display:grid;gap:16px;grid-template-columns: repeat(auto-fit, minmax(220px,1fr))}
+    #proceso .step{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;position:relative;overflow:hidden;opacity:0;transform:translateY(12px);transition:.5s}
     #proceso .step .num{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--accent);font-weight:800;margin-bottom:8px}
 
     /* Form + Footer */
@@ -93,7 +112,7 @@
     .field input,.field textarea{padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:#fff;font:inherit}
     .field input:focus,.field textarea:focus{outline:2px solid rgba(0,70,150,.25);border-color:var(--brand-2)}
     footer{border-top:1px solid var(--border);background:#fff}
-    .foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:18px 24px;color:#4b5563}
+    .foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;padding-block:18px;padding-inline: clamp(12px,3vw,24px);color:#4b5563}
     .wa{position:fixed;right:16px;bottom:16px;z-index:60}
     .wa a{display:inline-grid;place-items:center;width:56px;height:56px;border-radius:16px;background:#25D366;color:#fff;text-decoration:none;font-weight:800;box-shadow:0 10px 30px rgba(37,211,102,.45)}
 
@@ -101,31 +120,23 @@
     .reveal{opacity:0;transform:translateY(12px);transition:opacity .5s, transform .5s}
     .reveal.show, #proceso .step.show{opacity:1;transform:none}
 
-    /* Responsive */
+    /* Responsive extras */
     @media (max-width:1220px){ .title{display:none} }
     @media (max-width:980px){
-      .brand img{height:120px}
       .hero-wrap{grid-template-columns:1fr}
-      .grid.g4{grid-template-columns:repeat(2,1fr)}
-      .grid.g3{grid-template-columns:repeat(2,1fr)}
-      #proceso .steps{grid-template-columns:repeat(2,1fr)}
     }
     @media (max-width:640px){
       .menu{display:none}
       .burger{display:inline-block;justify-self:end}
-      .brand img{height:84px}
-      .grid.g3{grid-template-columns:1fr}
-      .grid.g4{grid-template-columns:1fr}
-      #proceso .steps{grid-template-columns:1fr}
     }
     @media (max-width:420px){
-      .brand img{height:68px}
       .cta .btn:not(.primary){display:none}
       .top{justify-content:center;font-size:12px}
     }
-    @media (max-width:360px){
-      .brand img{height:56px}
-      .container{padding:0 12px}
+    @media (prefers-reduced-motion:reduce){
+      *{scroll-behavior:auto}
+      .reveal,.card,#proceso .step{transition:none}
+      .card:hover{transform:none;box-shadow:0 4px 14px rgba(2,6,23,.04)}
     }
 
     /* Parche por si queda CSS viejo en caché que centraba el header */
@@ -134,7 +145,7 @@
     header .nav{
       width:100vw !important; max-width:100vw !important;
       margin-left:calc(50% - 50vw) !important; margin-right:calc(50% - 50vw) !important;
-      padding-left:0 !important; padding-right:24px !important;
+      padding-left:0 !important; padding-right:clamp(12px,3vw,24px) !important;
       display:grid !important; grid-template-columns:auto minmax(0,1fr) auto !important; align-items:center !important;
     }
     header .brand{justify-self:start !important; margin-left:0 !important}
@@ -191,7 +202,7 @@
   <section id="servicios" class="container">
     <h2 class="section-title reveal">Servicios</h2>
     <p class="section-sub reveal">Soluciones técnicas que generan resultados.</p>
-    <div class="grid g4">
+    <div class="grid auto-fit">
       <article class="card reveal"><span class="pill">🌐 Web & PWA</span><h3>Desarrollo Web</h3><p>Landing pages, catálogos, e-commerce, paneles admin, SEO y analytics.</p></article>
       <article class="card reveal"><span class="pill">📱 Apps</span><h3>Apps y Escritorio</h3><p>Android (PWA/KivyMD) y desktop (Tkinter). Diseño y empaquetado listo.</p></article>
       <article class="card reveal"><span class="pill">⚙️ Gestión</span><h3>Sistemas a medida</h3><p>Facturación, stock, reportes, roles/usuarios, tickets y cierre de caja.</p></article>
@@ -199,11 +210,11 @@
     </div>
   </section>
 
-  <!-- Portfolio (miniaturas reales al hacer scroll con thum.io) -->
+  <!-- Portfolio (miniaturas reales) -->
   <section id="portfolio" class="container portfolio">
     <h2 class="section-title reveal">Trabajos reales</h2>
     <p class="section-sub reveal">Visitá los proyectos en producción.</p>
-    <div class="grid g3">
+    <div class="grid auto-fit">
       <a class="card item reveal" href="https://puntokiosco.com.ar" target="_blank" rel="noopener">
         <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://puntokiosco.com.ar" style="background-image:url('assets/portfolio-puntokiosco.jpg')"></div>
         <div class="meta"><strong>PuntoKiosco</strong><span class="tag">Sistema</span></div>
@@ -244,7 +255,7 @@
     <h2 class="section-title reveal">Contacto</h2>
     <p class="section-sub reveal">Contanos qué necesitás y te respondemos a la brevedad.</p>
     <form id="contactForm">
-      <div class="grid g3" style="grid-template-columns:1fr 1fr 1fr">
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
         <div class="field"><label>Nombre</label><input required name="name" placeholder="Tu nombre"></div>
         <div class="field"><label>Email</label><input required type="email" name="email" placeholder="tunombre@mail.com"></div>
         <div class="field"><label>Teléfono (opcional)</label><input name="phone" placeholder="Ej. +54 9 341..."></div>
@@ -286,10 +297,19 @@
     // Año en el footer
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // Burger (si lo activás)
+    // Burger + alto dinámico del header para el overlay
     const nav = document.getElementById('nav');
     const burger = document.getElementById('burger');
-    burger?.addEventListener('click',()=> nav.classList.toggle('open'));
+    function setHeaderHeightVar(){
+      const h = nav.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--header-h', h + 'px');
+    }
+    setHeaderHeightVar();
+    window.addEventListener('resize', setHeaderHeightVar, {passive:true});
+    burger?.addEventListener('click',()=> {
+      nav.classList.toggle('open');
+      setHeaderHeightVar();
+    });
 
     // Config contacto
     const CONFIG = { WHATSAPP_NUMBER:'543417558966', WHATSAPP_PREFIX:'Hola AFM Solutions, quiero un presupuesto', EMAIL_TO:'angelmascali@gmail.com' };

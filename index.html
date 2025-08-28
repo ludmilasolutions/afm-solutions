@@ -33,10 +33,21 @@
     .top a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:4px 8px;border-radius:10px;transition:.2s ease}
     .top a:hover{background:rgba(0,70,150,.08)}
 
-    /* Header / Nav */
+    /* Header / Nav (CORREGIDO) */
     header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--border);z-index:50}
-    .nav{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:10px 0}
-    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0;justify-self:start;margin-left:0}
+    .nav{
+      display:grid;
+      grid-template-columns:auto 1fr auto;   /* brand | menu | cta */
+      align-items:center;
+      gap:12px;
+      padding:10px 0;
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;
+      text-decoration:none;color:inherit;min-width:0;
+      justify-self:start;                 /* pegado a la izquierda */
+      margin-left:0;
+    }
     .brand img{height:160px;width:auto;display:block;flex:0 0 auto}
     .brand .title{font-weight:800;letter-spacing:.2px;font-size:clamp(20px,2.6vw,32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .menu{display:flex;gap:12px;align-items:center;justify-content:center}
@@ -199,7 +210,7 @@
     </div>
   </section>
 
-  <!-- Portfolio con miniaturas reales (live + fallback) -->
+  <!-- Portfolio -->
   <section id="portfolio" class="container portfolio">
     <h2 class="section-title reveal">Trabajos reales</h2>
     <p class="section-sub reveal">Visitá los proyectos en producción.</p>

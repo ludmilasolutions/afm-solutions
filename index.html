@@ -29,24 +29,17 @@
 
     /* Topbar */
     .topbar{background:linear-gradient(90deg, rgba(0,70,150,.07), rgba(255,204,0,.08));border-bottom:1px solid var(--border)}
+    .topbar .container{max-width:100%;margin:0;padding-left:max(0px, env(safe-area-inset-left));padding-right:24px}
     .top{display:flex;gap:12px;align-items:center;justify-content:flex-end;padding:8px 0;font-size:13px;color:#334155;flex-wrap:wrap}
     .top a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:4px 8px;border-radius:10px;transition:.2s ease}
     .top a:hover{background:rgba(0,70,150,.08)}
 
-    /* Header / Nav (corregido) */
+    /* Header / Nav */
     header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--border);z-index:50}
-    .nav{
-      display:grid;
-      grid-template-columns:auto minmax(0,1fr) auto; /* brand | menu | cta */
-      align-items:center;
-      gap:12px;
-      padding:10px 0;
-    }
-    .brand{
-      display:flex;align-items:center;gap:10px;
-      text-decoration:none;color:inherit;min-width:0;
-      justify-self:start; margin-left:0;
-    }
+    .nav{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;padding:10px 0}
+    /* nav full-bleed: logo pegado a la izquierda */
+    .nav.container{max-width:100%;margin:0;padding-left:max(0px, env(safe-area-inset-left));padding-right:24px}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0;justify-self:start;margin-left:0}
     .brand img{height:160px;width:auto;display:block;flex:0 0 auto}
     .brand .title{font-weight:800;letter-spacing:.2px;font-size:clamp(20px,2.6vw,32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .menu{display:flex;gap:12px;align-items:center;justify-content:center;min-width:0}
@@ -148,6 +141,7 @@
   </style>
 </head>
 <body>
+  <!-- Topbar -->
   <div class="topbar">
     <div class="container top">
       <a href="mailto:angelmascali@gmail.com">✉ angelmascali@gmail.com</a>
@@ -155,6 +149,7 @@
     </div>
   </div>
 
+  <!-- Header -->
   <header>
     <div class="container nav" id="nav">
       <a class="brand" href="#" aria-label="AFM Solutions">
@@ -178,6 +173,7 @@
     </div>
   </header>
 
+  <!-- Hero -->
   <section class="hero">
     <div class="container hero-wrap">
       <div class="reveal">
@@ -195,6 +191,7 @@
     </div>
   </section>
 
+  <!-- Servicios -->
   <section id="servicios" class="container">
     <h2 class="section-title reveal">Servicios</h2>
     <p class="section-sub reveal">Soluciones técnicas que generan resultados.</p>
@@ -206,6 +203,7 @@
     </div>
   </section>
 
+  <!-- Portfolio con miniaturas reales -->
   <section id="portfolio" class="container portfolio">
     <h2 class="section-title reveal">Trabajos reales</h2>
     <p class="section-sub reveal">Visitá los proyectos en producción.</p>
@@ -233,6 +231,7 @@
     </div>
   </section>
 
+  <!-- Proceso -->
   <section id="proceso" class="container">
     <h2 class="section-title reveal">Cómo trabajamos</h2>
     <p class="section-sub reveal">Proceso claro, entregas a tiempo y soporte post-lanzamiento.</p>
@@ -244,6 +243,7 @@
     </div>
   </section>
 
+  <!-- Contacto -->
   <section id="contacto" class="container">
     <h2 class="section-title reveal">Contacto</h2>
     <p class="section-sub reveal">Contanos qué necesitás y te respondemos a la brevedad.</p>
@@ -262,6 +262,7 @@
     </form>
   </section>
 
+  <!-- Footer -->
   <footer>
     <div class="container foot">
       <div style="display:flex;align-items:center;gap:10px">
@@ -278,19 +279,25 @@
 
   <div class="wa"><a id="waFloat" href="https://wa.me/543417558966?text=Hola%20AFM%20Solutions,%20quiero%20un%20presupuesto" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a></div>
 
+  <!-- Schema -->
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Organization","name":"AFM Solutions","url":"https://tusitio.example","logo":"https://tusitio.example/assets/logo-afm-horizontal.png","contactPoint":[{"@type":"ContactPoint","contactType":"sales","email":"angelmascali@gmail.com","telephone":"+543417558966","areaServed":"AR","availableLanguage":["es","en"]}]}
   </script>
 
+  <!-- Scripts -->
   <script>
+    // Año en footer
     document.getElementById('y').textContent = new Date().getFullYear();
 
+    // Burger
     const nav = document.getElementById('nav');
     const burger = document.getElementById('burger');
     burger.addEventListener('click',()=> nav.classList.toggle('open'));
 
+    // Config contacto
     const CONFIG = { WHATSAPP_NUMBER:'543417558966', WHATSAPP_PREFIX:'Hola AFM Solutions, quiero un presupuesto', EMAIL_TO:'angelmascali@gmail.com' };
 
+    // WhatsApp desde form
     document.getElementById('btnWsp').addEventListener('click',(e)=>{
       e.preventDefault();
       const f = new FormData(document.getElementById('contactForm'));
@@ -302,6 +309,7 @@
       window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${msg}`,'_blank');
     });
 
+    // Mailto sin backend
     document.getElementById('contactForm').addEventListener('submit',(e)=>{
       e.preventDefault();
       const f = new FormData(e.target);
@@ -316,21 +324,21 @@ ${f.get('message')}`;
       document.getElementById('formMsg').textContent='Abriendo tu cliente de email…';
     });
 
+    // Scroll reveal + miniaturas reales
     const io = new IntersectionObserver((entries)=>{
       entries.forEach((e)=>{
         if(e.isIntersecting){
           e.target.classList.add('show');
-          const thumb = e.target.querySelector('.thumb');
-          if(thumb && thumb.dataset.live){
-            const localBg = thumb.style.backgroundImage || '';
-            thumb.style.backgroundImage = `url('${thumb.dataset.live}'), ${localBg}`;
-            thumb.removeAttribute('data-live');
+          const t = e.target.querySelector('.thumb');
+          if(t && t.dataset.live){
+            const fallback = t.style.backgroundImage || '';
+            t.style.backgroundImage = `url('${t.dataset.live}'), ${fallback}`;
+            t.removeAttribute('data-live');
           }
           io.unobserve(e.target);
         }
       });
-    },{ threshold:0.15 });
-
+    },{threshold:0.15});
     document.querySelectorAll('.reveal, .card, #proceso .step').forEach(el=>io.observe(el));
   </script>
 </body>

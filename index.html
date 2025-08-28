@@ -4,22 +4,23 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>AFM Solutions — Software a medida para tu negocio</title>
-  <meta name="description" content="Desarrollo web y mobile, sistemas de gestión, e-commerce e integraciones. Creamos software a medida para hacer crecer tu negocio."/>
-  <meta name="theme-color" content="#003366"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:title" content="AFM Solutions — Software a medida"/>
-  <meta property="og:description" content="Desarrollo web y apps, sistemas de gestión, e-commerce e integraciones."/>
-  <meta property="og:image" content="assets/og-cover.jpg"/>
-  <meta property="og:url" content="https://tusitio.example"/>
-  <meta name="twitter:card" content="summary_large_image"/>
-  <link rel="icon" href="assets/favicon.png"/>
+  <meta name="description" content="Desarrollo web y mobile, sistemas de gestión, e-commerce e integraciones. Creamos software a medida para hacer crecer tu negocio.">
+  <meta name="theme-color" content="#003366">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AFM Solutions — Software a medida">
+  <meta property="og:description" content="Desarrollo web y apps, sistemas de gestión, e-commerce e integraciones.">
+  <meta property="og:image" content="assets/og-cover.jpg">
+  <meta property="og:url" content="https://tusitio.example">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://image.thum.io">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --brand:#003366;--brand-2:#004a99;--accent:#ffcc00;--ink:#0b1220;--muted:#6b7280;--bg:#f7f9fc;--card:#ffffff;--border:#e5e7eb;--shadow:0 10px 30px rgba(0,0,0,.09)
+      --brand:#003366;--brand-2:#004a99;--accent:#ffcc00;--ink:#0b1220;
+      --muted:#6b7280;--bg:#f7f9fc;--card:#ffffff;--border:#e5e7eb;--shadow:0 10px 30px rgba(0,0,0,.09)
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -34,7 +35,7 @@
     .top a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:4px 8px;border-radius:10px;transition:.2s}
     .top a:hover{background:rgba(0,70,150,.08)}
 
-    /* Header full-bleed con logo al borde izquierdo */
+    /* Header full-bleed con logo al ras de la izquierda */
     header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--border);z-index:50}
     header .nav-bleed{
       width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
@@ -44,8 +45,7 @@
       header .nav-bleed{padding-left:env(safe-area-inset-left)}
     }
     .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0;justify-self:start}
-    /* << Usa el PNG recortado que te pasé (mismo nombre/ruta) */
-    .brand img{height:160px;width:auto}
+    .brand img{height:160px;width:auto} /* usa el PNG recortado que te pasé */
     .title{font-weight:800;letter-spacing:.2px;font-size:clamp(20px,2.6vw,32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .menu{display:flex;gap:12px;align-items:center;justify-content:center;min-width:0}
     .menu a{padding:10px 12px;border-radius:10px;color:#1f2937;text-decoration:none;font-weight:600;transition:.2s;white-space:nowrap}
@@ -58,18 +58,15 @@
     .burger span{display:block;width:20px;height:2px;background:#111;margin:4px 0}
 
     /* Hero */
-    .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--border);background:
-      radial-gradient(400px 200px at 10% -10%, rgba(255,204,0,.18), transparent 60%),
-      radial-gradient(600px 300px at 100% 0%, rgba(0,70,150,.14), transparent 60%)}
+    .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
     .hero-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;padding:40px 24px}
-    .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid var(--border);font-size:12px;color:#000000a6}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid var(--border);font-size:12px;color:#0009}
     .h1{font-size:clamp(28px,4vw,44px);line-height:1.1;margin:16px 0 10px;font-weight:800}
     .lead{font-size:clamp(15px,2.1vw,18px);color:#334155;max-width:70ch;line-height:1.6}
     .hero-cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
-    .illus{position:relative;border:1px solid var(--border);border-radius:20px;min-height:260px;box-shadow:0 5px 18px rgba(0,0,0,.05);background:linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,.4))}
-    .illus::after{content:"";position:absolute;inset:0;background:conic-gradient(from 180deg at 50% 50%,rgba(255,204,0,.06),rgba(0,56,120,.07),transparent 30%);mix-blend:overlay;pointer-events:none;border-radius:20px}
-    .illus-inner{position:absolute;inset:0;display:grid;place-items:center}
-    .hex{width:120px;height:120px;border-radius:16px;background:linear-gradient(145deg,var(--accent),#ffd84d);mask:polygon(25% 6.7%,75% 6.7%,100% 50%,75% 93.3%,25% 93.3%,0 50%)}
+    .illus{position:relative;border:1px solid var(--border);border-radius:20px;min-height:260px;box-shadow:0 5px 18px rgba(0,0,0,.05);
+           background:url('assets/afm-logo-original.png') center/cover no-repeat}
+    .illus::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.2));border-radius:20px}
 
     /* Secciones */
     section{padding:42px 24px}
@@ -82,8 +79,7 @@
     .card:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(2,6,23,.12)}
     .portfolio .item{display:flex;flex-direction:column;gap:12px}
     .thumb{aspect-ratio:16/9;border-radius:14px;border:1px solid var(--border);background:#eef3fb center/cover no-repeat;box-shadow:0 6px 20px rgba(2,6,23,.06)}
-    .meta{display:flex;align-items:center;justify-content:space-between}
-    .meta .tag{font-size:12px;color:var(--brand);font-weight:700}
+    .meta{display:flex;align-items:center;justify-content:space-between}.meta .tag{font-size:12px;color:var(--brand);font-weight:700}
     .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(0,70,150,.08);color:var(--brand);font-weight:600;font-size:12px}
 
     /* Proceso */
@@ -132,7 +128,7 @@
       .container{padding:0 12px}
     }
 
-    /* Parche extra por si queda CSS viejo en caché */
+    /* Parche por si queda CSS viejo en caché que centraba el header */
     header > .container.nav,
     header > .container .nav,
     header .nav{
@@ -157,8 +153,7 @@
   <header>
     <div class="nav-bleed" id="nav">
       <a class="brand" href="#" aria-label="AFM Solutions">
-        <!-- Usa el PNG recortado en esta ruta -->
-        <img src="assets/logo-afm-horizontal.png" alt="AFM Solutions logo"/>
+        <img src="assets/logo-afm-horizontal.png" alt="AFM Solutions logo">
         <span class="title">AFM Solutions</span>
       </a>
 
@@ -171,9 +166,7 @@
 
       <div class="cta">
         <a class="btn primary" href="#contacto">Pedir presupuesto</a>
-        <button class="burger" id="burger" aria-label="Abrir menú">
-          <span></span><span></span><span></span>
-        </button>
+        <button class="burger" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
       </div>
     </div>
   </header>
@@ -190,7 +183,7 @@
           <a class="btn primary" href="#contacto">Pedir presupuesto</a>
         </div>
       </div>
-      <div class="illus reveal"><div class="illus-inner"><div class="hex" aria-hidden="true"></div></div></div>
+      <div class="illus reveal"></div>
     </div>
   </section>
 
@@ -206,7 +199,7 @@
     </div>
   </section>
 
-  <!-- Portfolio -->
+  <!-- Portfolio (miniaturas reales al hacer scroll con thum.io) -->
   <section id="portfolio" class="container portfolio">
     <h2 class="section-title reveal">Trabajos reales</h2>
     <p class="section-sub reveal">Visitá los proyectos en producción.</p>
@@ -252,9 +245,9 @@
     <p class="section-sub reveal">Contanos qué necesitás y te respondemos a la brevedad.</p>
     <form id="contactForm">
       <div class="grid g3" style="grid-template-columns:1fr 1fr 1fr">
-        <div class="field"><label>Nombre</label><input required name="name" placeholder="Tu nombre"/></div>
-        <div class="field"><label>Email</label><input required type="email" name="email" placeholder="tunombre@mail.com"/></div>
-        <div class="field"><label>Teléfono (opcional)</label><input name="phone" placeholder="Ej. +54 9 341..."/></div>
+        <div class="field"><label>Nombre</label><input required name="name" placeholder="Tu nombre"></div>
+        <div class="field"><label>Email</label><input required type="email" name="email" placeholder="tunombre@mail.com"></div>
+        <div class="field"><label>Teléfono (opcional)</label><input name="phone" placeholder="Ej. +54 9 341..."></div>
       </div>
       <div class="field"><label>Mensaje</label><textarea required name="message" rows="5" placeholder="Contanos sobre tu proyecto…"></textarea></div>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
@@ -269,7 +262,7 @@
   <footer>
     <div class="foot">
       <div style="display:flex;align-items:center;gap:10px">
-        <img src="assets/favicon.png" alt="AFM icon" width="24" height="24"/>
+        <img src="assets/favicon.png" alt="AFM icon" width="24" height="24">
         <span>© <span id="y"></span> AFM Solutions. Todos los derechos reservados.</span>
       </div>
       <div style="display:flex;gap:12px">
@@ -293,7 +286,7 @@
     // Año en el footer
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // Burger (si lo activás luego)
+    // Burger (si lo activás)
     const nav = document.getElementById('nav');
     const burger = document.getElementById('burger');
     burger?.addEventListener('click',()=> nav.classList.toggle('open'));
@@ -305,30 +298,30 @@
     document.getElementById('btnWsp').addEventListener('click',(e)=>{
       e.preventDefault();
       const f = new FormData(document.getElementById('contactForm'));
-      const msg = `${CONFIG.WHATSAPP_PREFIX}%0A%0A`+
-        `Nombre: ${encodeURIComponent(f.get('name')||'')}`+`%0A`+
-        `Email: ${encodeURIComponent(f.get('email')||'')}`+`%0A`+
-        `Teléfono: ${encodeURIComponent(f.get('phone')||'')}`+`%0A`+
-        `Mensaje: ${encodeURIComponent(f.get('message')||'')}`;
+      const msg = `${CONFIG.WHATSAPP_PREFIX}%0A%0A`
+        + `Nombre: ${encodeURIComponent(f.get('name')||'')}` + `%0A`
+        + `Email: ${encodeURIComponent(f.get('email')||'')}` + `%0A`
+        + `Teléfono: ${encodeURIComponent(f.get('phone')||'')}` + `%0A`
+        + `Mensaje: ${encodeURIComponent(f.get('message')||'')}`;
       window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${msg}`,'_blank');
     });
 
-    // Envío mailto sin backend
+    // Mailto sin backend
     document.getElementById('contactForm').addEventListener('submit',(e)=>{
       e.preventDefault();
       const f = new FormData(e.target);
-      const subject='Nuevo contacto desde AFM Solutions';
-      const body=`Nombre: ${f.get('name')}
+      const subject = 'Nuevo contacto desde AFM Solutions';
+      const body = `Nombre: ${f.get('name')}
 Email: ${f.get('email')}
 Teléfono: ${f.get('phone')||''}
 
 Mensaje:
 ${f.get('message')}`;
-      window.location.href=`mailto:${CONFIG.EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      document.getElementById('formMsg').textContent='Abriendo tu cliente de email…';
+      window.location.href = `mailto:${CONFIG.EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      document.getElementById('formMsg').textContent = 'Abriendo tu cliente de email…';
     });
 
-    // Reveal + miniaturas reales
+    // Reveal + carga perezosa de miniaturas reales
     const io = new IntersectionObserver((entries)=>{
       entries.forEach((e)=>{
         if(e.isIntersecting){

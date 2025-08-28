@@ -32,12 +32,6 @@
     img{max-width:100%;height:auto;display:block}
     .container{max-width:1200px;margin:0 auto;padding-inline: clamp(12px, 3vw, 24px)}
 
-    /* Topbar */
-    .topbar{background:linear-gradient(90deg, rgba(0,70,150,.07), rgba(255,204,0,.08));border-bottom:1px solid var(--border)}
-    .top{display:flex;gap:10px;align-items:center;justify-content:flex-end;padding-block:8px;padding-inline: clamp(12px,3vw,24px);font-size:13px;color:#334155;flex-wrap:wrap}
-    .top a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:4px 8px;border-radius:10px;transition:.2s}
-    .top a:hover{background:rgba(0,70,150,.08)}
-
     /* Header full-bleed (logo SIEMPRE a la izquierda) */
     header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--border);z-index:50}
     header .nav-bleed{
@@ -50,11 +44,7 @@
       header .nav-bleed{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
     }
     .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0;justify-self:start}
-    .brand img{
-      /* LOGO FLUIDO: grande en desktop, cómodo en móviles */
-      height: clamp(72px, 13vw, 160px);
-      width:auto
-    }
+    .brand img{height: clamp(72px, 13vw, 160px);width:auto}
     .title{font-weight:800;letter-spacing:.2px;font-size:clamp(18px,2.3vw,32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .menu{display:flex;gap:10px;align-items:center;justify-content:center;min-width:0}
     .menu a{padding:10px 12px;border-radius:10px;color:#1f2937;text-decoration:none;font-weight:600;transition:.2s;white-space:nowrap}
@@ -63,16 +53,7 @@
     .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid var(--border);background:#fff;color:inherit;text-decoration:none;font-weight:700;transition:.25s}
     .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
     .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
-    .burger{display:none;border:1px solid var(--border);padding:8px 12px;border-radius:10px;background:#fff}
-    .burger span{display:block;width:20px;height:2px;background:#111;margin:4px 0}
-
-    /* Mobile overlay menu */
-    #nav.open .menu{
-      position:fixed;left:0;right:0;top:var(--header-h,72px);
-      display:flex;flex-direction:column;gap:8px;
-      background:#fff;border-bottom:1px solid var(--border);
-      padding:12px clamp(12px,3vw,24px);z-index:45
-    }
+    .burger{display:none} /* ya no usamos overlay en mobile */
 
     /* Hero */
     .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
@@ -120,19 +101,30 @@
     .reveal{opacity:0;transform:translateY(12px);transition:opacity .5s, transform .5s}
     .reveal.show, #proceso .step.show{opacity:1;transform:none}
 
-    /* Responsive extras */
+    /* ======= Responsive header en 2 filas para móvil ======= */
+    @media (max-width:760px){
+      header .nav-bleed{
+        grid-template-columns: 1fr auto;      /* Fila 1: brand | cta  */
+        grid-template-areas:
+          "brand cta"
+          "menu  menu";                       /* Fila 2: menú full width */
+        row-gap: 8px;
+      }
+      .brand{grid-area: brand}
+      .menu{
+        grid-area: menu;
+        display:flex !important;
+        justify-content:flex-start;
+        flex-wrap:wrap;
+        gap:8px;
+        overflow:auto;           /* si no entra, hace scroll horizontal suave */
+        -webkit-overflow-scrolling:touch;
+      }
+      .cta{grid-area: cta}
+      .burger{display:none !important}        /* sin overlay */
+    }
+
     @media (max-width:1220px){ .title{display:none} }
-    @media (max-width:980px){
-      .hero-wrap{grid-template-columns:1fr}
-    }
-    @media (max-width:640px){
-      .menu{display:none}
-      .burger{display:inline-block;justify-self:end}
-    }
-    @media (max-width:420px){
-      .cta .btn:not(.primary){display:none}
-      .top{justify-content:center;font-size:12px}
-    }
     @media (prefers-reduced-motion:reduce){
       *{scroll-behavior:auto}
       .reveal,.card,#proceso .step{transition:none}
@@ -152,15 +144,7 @@
   </style>
 </head>
 <body>
-  <!-- Topbar -->
-  <div class="topbar">
-    <div class="top">
-      <a href="mailto:angelmascali@gmail.com">✉ angelmascali@gmail.com</a>
-      <a href="tel:+543417558966">📞 +54 341 755 8966</a>
-    </div>
-  </div>
-
-  <!-- Header -->
+  <!-- Header (sin topbar de contacto) -->
   <header>
     <div class="nav-bleed" id="nav">
       <a class="brand" href="#" aria-label="AFM Solutions">
@@ -216,24 +200,40 @@
     <p class="section-sub reveal">Visitá los proyectos en producción.</p>
     <div class="grid auto-fit">
       <a class="card item reveal" href="https://puntokiosco.com.ar" target="_blank" rel="noopener">
-        <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://puntokiosco.com.ar" style="background-image:url('assets/portfolio-puntokiosco.jpg')"></div>
+        <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://puntokiosco.com.ar"></div>
         <div class="meta"><strong>PuntoKiosco</strong><span class="tag">Sistema</span></div>
         <p>Gestión integral de ventas, stock, turnos y cierre de caja.</p>
       </a>
+
       <a class="card item reveal" href="https://el-tachi.netlify.app" target="_blank" rel="noopener">
-        <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://el-tachi.netlify.app" style="background-image:url('assets/portfolio-el-tachi.jpg')"></div>
+        <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://el-tachi.netlify.app"></div>
         <div class="meta"><strong>Rotisería El Tachi</strong><span class="tag">Pedidos</span></div>
         <p>Menú dinámico, carrito con WhatsApp y banners administrables.</p>
       </a>
+
       <a class="card item reveal" href="https://soldarte.vercel.app" target="_blank" rel="noopener">
-        <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://soldarte.vercel.app" style="background-image:url('assets/portfolio-soldarte.jpg')"></div>
+        <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://soldarte.vercel.app"></div>
         <div class="meta"><strong>Soldarte</strong><span class="tag">Landing</span></div>
         <p>Catálogo de herrería industrial con formulario de presupuestos.</p>
       </a>
+
       <a class="card item reveal" href="https://ludmilasolutions.github.io/mgv" target="_blank" rel="noopener">
-        <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://ludmilasolutions.github.io/mgv" style="background-image:url('assets/portfolio-mgv.jpg')"></div>
+        <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://ludmilasolutions.github.io/mgv"></div>
         <div class="meta"><strong>MGV</strong><span class="tag">Multi-local</span></div>
         <p>Plataforma multi-local con catálogo por categorías y pedidos online.</p>
+      </a>
+
+      <!-- NUEVOS -->
+      <a class="card item reveal" href="https://ludmilasolutions.github.io/losamigos/" target="_blank" rel="noopener">
+        <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://ludmilasolutions.github.io/losamigos/"></div>
+        <div class="meta"><strong>Los Amigos</strong><span class="tag">Pedidos</span></div>
+        <p>Carta online con combos, horarios y pedidos por WhatsApp.</p>
+      </a>
+
+      <a class="card item reveal" href="https://ludmilasolutions.github.io/larockola" target="_blank" rel="noopener">
+        <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://ludmilasolutions.github.io/larockola"></div>
+        <div class="meta"><strong>La Rockola</strong><span class="tag">Landing</span></div>
+        <p>Promos, galería y módulo de reservas con confirmación.</p>
       </a>
     </div>
   </section>
@@ -297,19 +297,14 @@
     // Año en el footer
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // Burger + alto dinámico del header para el overlay
+    // (Sin overlay) — mantenemos una medición por si el alto del header cambia
     const nav = document.getElementById('nav');
-    const burger = document.getElementById('burger');
     function setHeaderHeightVar(){
       const h = nav.getBoundingClientRect().height;
       document.documentElement.style.setProperty('--header-h', h + 'px');
     }
     setHeaderHeightVar();
     window.addEventListener('resize', setHeaderHeightVar, {passive:true});
-    burger?.addEventListener('click',()=> {
-      nav.classList.toggle('open');
-      setHeaderHeightVar();
-    });
 
     // Config contacto
     const CONFIG = { WHATSAPP_NUMBER:'543417558966', WHATSAPP_PREFIX:'Hola AFM Solutions, quiero un presupuesto', EMAIL_TO:'angelmascali@gmail.com' };

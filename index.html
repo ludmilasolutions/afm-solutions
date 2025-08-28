@@ -32,7 +32,7 @@
     img{max-width:100%;height:auto;display:block}
     .container{max-width:1200px;margin:0 auto;padding-inline: clamp(12px, 3vw, 24px)}
 
-    /* Header full-bleed (logo SIEMPRE a la izquierda) */
+    /* ===== Header (logo SIEMPRE a la izquierda) ===== */
     header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--border);z-index:50}
     header .nav-bleed{
       width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
@@ -51,7 +51,7 @@
     .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
     .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
 
-    /* Hero */
+    /* ===== Hero ===== */
     .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
     .hero-wrap{display:grid;grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr);gap:var(--gap);align-items:center;padding-block: clamp(28px, 5vw, 40px)}
     .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid var(--border);font-size:12px;color:#0009}
@@ -65,7 +65,7 @@
     }
     .illus::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.2));border-radius:20px}
 
-    /* Secciones */
+    /* ===== Secciones ===== */
     section{padding-block: clamp(28px, 5vw, 42px)}
     .section-title{font-size:clamp(22px,3.4vw,30px);margin:0 0 8px;font-weight:800}
     .section-sub{color:var(--muted);margin:0 0 22px}
@@ -77,7 +77,7 @@
     .card:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(2,6,23,.12)}
 
     .portfolio .item{display:flex;flex-direction:column;gap:12px}
-    .thumb{position:relative;aspect-ratio:16/9;border-radius:14px;border:1px solid var(--border);overflow:hidden;box-shadow:0 6px 20px rgba(2,6,23,.06);background:#eef3fb}
+    .thumb{position:relative;aspect-ratio:16/9;border-radius:14px;border:1px solid var(--border);overflow:hidden;box-shadow:0 6px 20px rgba(2,6,23,.06);background:#f3f6fb}
     .thumb img{width:100%;height:100%;object-fit:cover;display:block}
     .meta{display:flex;align-items:center;justify-content:space-between}.meta .tag{font-size:12px;color:var(--brand);font-weight:700}
     .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(0,70,150,.08);color:var(--brand);font-weight:600;font-size:12px}
@@ -101,7 +101,7 @@
     .reveal{opacity:0;transform:translateY(12px);transition:opacity .5s, transform .5s}
     .reveal.show, #proceso .step.show{opacity:1;transform:none}
 
-    /* Mobile: header en 2 filas */
+    /* Header en 2 filas para móvil */
     @media (max-width:760px){
       .hero-wrap{grid-template-columns:1fr}
       .illus{background-size:cover} /* móvil = cover */
@@ -113,16 +113,12 @@
         row-gap: 8px;
       }
       .brand{grid-area: brand}
-      .menu{
-        grid-area: menu; display:flex !important; justify-content:flex-start;
-        flex-wrap:wrap; gap:8px; overflow:auto; -webkit-overflow-scrolling:touch;
-      }
+      .menu{grid-area: menu; display:flex !important; justify-content:flex-start; flex-wrap:wrap; gap:8px; overflow:auto; -webkit-overflow-scrolling:touch;}
       .cta{grid-area: cta}
     }
-
     @media (max-width:1220px){ .title{display:none} }
 
-    /* Parche por si queda CSS viejo en caché que centraba el header */
+    /* Parche anti-CSS viejo en caché */
     header > .container.nav,
     header > .container .nav,
     header .nav{
@@ -184,7 +180,7 @@
     </div>
   </section>
 
-  <!-- Portfolio con miniaturas reales + fallback -->
+  <!-- Portfolio -->
   <section id="portfolio" class="container portfolio">
     <h2 class="section-title reveal">Trabajos reales</h2>
     <p class="section-sub reveal">Visitá los proyectos en producción.</p>
@@ -195,7 +191,7 @@
           <img loading="lazy"
                src="assets/portfolio-puntokiosco.jpg"
                data-fallback="assets/portfolio-puntokiosco.jpg"
-               data-live="https://image.thum.io/get/width/1600/https://puntokiosco.com.ar"
+               data-live="https://image.thum.io/get/width/1600/crop/900/noanimate/https://puntokiosco.com.ar"
                alt="PuntoKiosco — captura del sitio">
         </div>
         <div class="meta"><strong>PuntoKiosco</strong><span class="tag">Sistema</span></div>
@@ -207,7 +203,7 @@
           <img loading="lazy"
                src="assets/portfolio-el-tachi.jpg"
                data-fallback="assets/portfolio-el-tachi.jpg"
-               data-live="https://image.thum.io/get/width/1600/https://el-tachi.netlify.app"
+               data-live="https://image.thum.io/get/width/1600/crop/900/noanimate/https://el-tachi.netlify.app"
                alt="Rotisería El Tachi — captura del sitio">
         </div>
         <div class="meta"><strong>Rotisería El Tachi</strong><span class="tag">Pedidos</span></div>
@@ -219,7 +215,7 @@
           <img loading="lazy"
                src="assets/portfolio-soldarte.jpg"
                data-fallback="assets/portfolio-soldarte.jpg"
-               data-live="https://image.thum.io/get/width/1600/https://soldarte.vercel.app"
+               data-live="https://image.thum.io/get/width/1600/crop/900/noanimate/https://soldarte.vercel.app"
                alt="Soldarte — captura del sitio">
         </div>
         <div class="meta"><strong>Soldarte</strong><span class="tag">Landing</span></div>
@@ -231,7 +227,7 @@
           <img loading="lazy"
                src="assets/portfolio-mgv.jpg"
                data-fallback="assets/portfolio-mgv.jpg"
-               data-live="https://image.thum.io/get/width/1600/https://ludmilasolutions.github.io/mgv"
+               data-live="https://image.thum.io/get/width/1600/crop/900/noanimate/https://ludmilasolutions.github.io/mgv"
                alt="MGV — captura del sitio">
         </div>
         <div class="meta"><strong>MGV</strong><span class="tag">Multi-local</span></div>
@@ -244,7 +240,7 @@
           <img loading="lazy"
                src="assets/placeholder-16x9.png"
                data-fallback="assets/placeholder-16x9.png"
-               data-live="https://image.thum.io/get/width/1600/https://ludmilasolutions.github.io/losamigos/"
+               data-live="https://image.thum.io/get/width/1600/crop/900/noanimate/https://ludmilasolutions.github.io/losamigos/"
                alt="Los Amigos — captura del sitio">
         </div>
         <div class="meta"><strong>Los Amigos</strong><span class="tag">Pedidos</span></div>
@@ -256,7 +252,7 @@
           <img loading="lazy"
                src="assets/placeholder-16x9.png"
                data-fallback="assets/placeholder-16x9.png"
-               data-live="https://image.thum.io/get/width/1600/https://ludmilasolutions.github.io/LaRockola/"
+               data-live="https://image.thum.io/get/width/1600/crop/900/noanimate/https://ludmilasolutions.github.io/LaRockola/"
                alt="La Rockola — captura del sitio">
         </div>
         <div class="meta"><strong>La Rockola</strong><span class="tag">Landing</span></div>
@@ -311,6 +307,7 @@
     </div>
   </footer>
 
+  <!-- WhatsApp flotante -->
   <div class="wa"><a id="waFloat" href="https://wa.me/543417558966?text=Hola%20AFM%20Solutions,%20quiero%20un%20presupuesto" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a></div>
 
   <!-- Datos estructurados -->
@@ -322,7 +319,7 @@
     // Año en el footer
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // Reveal + carga perezosa de capturas reales (con fallback)
+    // Reveal + carga perezosa de capturas reales (con fallback robusto)
     const io = new IntersectionObserver((entries)=>{
       entries.forEach((e)=>{
         if(!e.isIntersecting) return;
@@ -332,7 +329,12 @@
         if(img){
           const live = img.getAttribute('data-live');
           const fallback = img.getAttribute('data-fallback') || img.src;
-          img.onerror = ()=> { img.src = fallback; };
+
+          img.onerror = () => { img.src = fallback; };
+          img.onload = () => {
+            if (!img.naturalWidth || img.naturalWidth < 64) img.src = fallback;
+          };
+
           img.src = live;
           img.removeAttribute('data-live');
         }
@@ -342,7 +344,11 @@
     document.querySelectorAll('.reveal, .card, #proceso .step').forEach(el=>io.observe(el));
 
     // Envío por email (mailto) sin backend
-    const CONFIG = { EMAIL_TO:'contactoafmsolutions@gmail.com', WHATSAPP_NUMBER:'543417558966', WHATSAPP_PREFIX:'Hola AFM Solutions, quiero un presupuesto' };
+    const CONFIG = {
+      EMAIL_TO:'contactoafmsolutions@gmail.com',
+      WHATSAPP_NUMBER:'543417558966',
+      WHATSAPP_PREFIX:'Hola AFM Solutions, quiero un presupuesto'
+    };
 
     document.getElementById('contactForm').addEventListener('submit',(e)=>{
       e.preventDefault();

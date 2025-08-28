@@ -31,12 +31,11 @@
     img{max-width:100%;height:auto;display:block}
     .container{max-width:1200px;margin:0 auto;padding-inline: clamp(12px, 3vw, 24px)}
 
-    /* ===== Header (logo a la izquierda, menú al medio, CTA a la derecha) ===== */
+    /* ===== Header (logo izq., menú centro, CTA der.) ===== */
     header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--border);z-index:50}
     header .nav-bleed{
       width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
-      padding-inline: clamp(12px, 3vw, 24px);
-      padding-block:10px;
+      padding-inline: clamp(12px, 3vw, 24px);padding-block:10px;
       display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px
     }
     .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0;justify-self:start}
@@ -50,7 +49,7 @@
     .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
     .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
 
-    /* ===== Header 2 filas en móvil ===== */
+    /* Header: 2 filas en móvil */
     @media (max-width:760px){
       header .nav-bleed{
         grid-template-columns: 1fr auto;
@@ -93,6 +92,13 @@
     .portfolio .item{display:flex;flex-direction:column;gap:12px}
     .thumb{position:relative;aspect-ratio:16/9;border-radius:14px;border:1px solid var(--border);overflow:hidden;box-shadow:0 6px 20px rgba(2,6,23,.06);background:#f3f6fb}
     .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    /* skeleton mientras carga */
+    .thumb.loading::before{
+      content:""; position:absolute; inset:0;
+      background:linear-gradient(90deg,#eef2f7 25%,#f7faff 50%,#eef2f7 75%);
+      animation:shimmer 1.4s infinite; filter:saturate(0.9) brightness(1.02);
+    }
+    @keyframes shimmer{ 0%{background-position:-200% 0} 100%{background-position:200% 0} }
     .meta{display:flex;align-items:center;justify-content:space-between}.meta .tag{font-size:12px;color:var(--brand);font-weight:700}
     .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(0,70,150,.08);color:var(--brand);font-weight:600;font-size:12px}
 
@@ -115,7 +121,7 @@
     .reveal{opacity:0;transform:translateY(12px);transition:opacity .5s, transform .5s}
     .reveal.show, #proceso .step.show{opacity:1;transform:none}
 
-    /* Parche anti-CSS viejo en caché (por si quedó un header centrado) */
+    /* Parche anti-CSS viejo en caché */
     header > .container.nav,
     header > .container .nav,
     header .nav{
@@ -185,7 +191,7 @@
     <div class="grid auto-fit">
       <!-- PuntoKiosco -->
       <a class="card item reveal" href="https://puntokiosco.com.ar" target="_blank" rel="noopener">
-        <div class="thumb">
+        <div class="thumb loading">
           <img loading="lazy" decoding="async" referrerpolicy="no-referrer"
                src="assets/portfolio-puntokiosco.jpg"
                data-fallback="assets/portfolio-puntokiosco.jpg"
@@ -199,7 +205,7 @@
 
       <!-- El Tachi -->
       <a class="card item reveal" href="https://el-tachi.netlify.app" target="_blank" rel="noopener">
-        <div class="thumb">
+        <div class="thumb loading">
           <img loading="lazy" decoding="async" referrerpolicy="no-referrer"
                src="assets/portfolio-el-tachi.jpg"
                data-fallback="assets/portfolio-el-tachi.jpg"
@@ -213,7 +219,7 @@
 
       <!-- Soldarte -->
       <a class="card item reveal" href="https://soldarte.vercel.app" target="_blank" rel="noopener">
-        <div class="thumb">
+        <div class="thumb loading">
           <img loading="lazy" decoding="async" referrerpolicy="no-referrer"
                src="assets/portfolio-soldarte.jpg"
                data-fallback="assets/portfolio-soldarte.jpg"
@@ -227,7 +233,7 @@
 
       <!-- MGV -->
       <a class="card item reveal" href="https://ludmilasolutions.github.io/mgv" target="_blank" rel="noopener">
-        <div class="thumb">
+        <div class="thumb loading">
           <img loading="lazy" decoding="async" referrerpolicy="no-referrer"
                src="assets/portfolio-mgv.jpg"
                data-fallback="assets/portfolio-mgv.jpg"
@@ -241,10 +247,10 @@
 
       <!-- Los Amigos -->
       <a class="card item reveal" href="https://ludmilasolutions.github.io/losamigos/" target="_blank" rel="noopener">
-        <div class="thumb">
+        <div class="thumb loading">
           <img loading="lazy" decoding="async" referrerpolicy="no-referrer"
-               src="assets/placeholder-16x9.png"
-               data-fallback="assets/placeholder-16x9.png"
+               src="assets/portfolio-los-amigos.jpg"
+               data-fallback="assets/portfolio-los-amigos.jpg"
                data-live1="https://s.wordpress.com/mshots/v1/https://ludmilasolutions.github.io/losamigos/?w=1200"
                data-live2="https://image.thum.io/get/width/1600/crop/900/noanimate/https://ludmilasolutions.github.io/losamigos/"
                alt="Los Amigos — captura del sitio">
@@ -255,10 +261,10 @@
 
       <!-- La Rockola (Netlify) -->
       <a class="card item reveal" href="https://larockola.netlify.app/" target="_blank" rel="noopener">
-        <div class="thumb">
+        <div class="thumb loading">
           <img loading="lazy" decoding="async" referrerpolicy="no-referrer"
-               src="assets/placeholder-16x9.png"
-               data-fallback="assets/placeholder-16x9.png"
+               src="assets/portfolio-larockola.jpg"
+               data-fallback="assets/portfolio-larockola.jpg"
                data-live1="https://s.wordpress.com/mshots/v1/https://larockola.netlify.app/?w=1200"
                data-live2="https://image.thum.io/get/width/1600/crop/900/noanimate/https://larockola.netlify.app/"
                alt="La Rockola — captura del sitio">
@@ -327,33 +333,64 @@
     // Año en el footer
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // === Loader de capturas: 2 proveedores (mShots + Thum.io) + fallback local ===
-    function loadScreenshot(img){
-      const urls = [img.dataset.live1, img.dataset.live2].filter(Boolean);
-      const fallback = img.dataset.fallback || img.src;
-      let i = 0;
+    // === Loader de capturas: 2 proveedores + reintentos + fallback local ===
+    function loadWithRetries(img, urls, fallback){
+      let provider = 0, attempt = 0;
+      const maxAttemptsPerProvider = 6;     // reintentos por proveedor
+      const delay = 2000;                   // ms entre reintentos
 
-      function next(){
-        if(i >= urls.length){ img.src = fallback; return; }
-        img.onerror = () => { i++; next(); };
-        // cache-bust y sin CORS explícito
-        const u = urls[i] + (urls[i].includes('?') ? '&' : '?') + 't=' + Date.now();
-        img.src = u;
+      img.onerror = () => tryNext(true);
+      img.onload  = () => {
+        // quitamos skeleton
+        img.parentElement.classList.remove('loading');
+        // si es mShots, a veces devuelve "Generating preview"; reintentar unas veces igual
+        if (attempt < 2 && urls[provider] && urls[provider].includes('/mshots/')) {
+          attempt++; setTimeout(()=> setSrc(), delay); return;
+        }
+      };
+
+      function setSrc(){
+        if (!urls[provider]) { useFallback(); return; }
+        const bust = (urls[provider].includes('?') ? '&' : '?') + 't=' + Date.now();
+        img.src = urls[provider] + bust;
       }
-      next();
+
+      function tryNext(fromError){
+        if (fromError) {
+          attempt++;
+          if (attempt < maxAttemptsPerProvider) { setTimeout(setSrc, delay); return; }
+        }
+        // siguiente proveedor
+        provider++; attempt = 0;
+        if (provider < urls.length) { setTimeout(setSrc, 200); return; }
+        useFallback();
+      }
+
+      function useFallback(){
+        img.parentElement.classList.remove('loading');
+        img.src = fallback || img.src;
+      }
+
+      setSrc();
     }
 
-    // Reveal + carga perezosa de miniaturas reales
+    // Reveal + carga perezosa
     const io = new IntersectionObserver((entries)=>{
       entries.forEach((e)=>{
         if(!e.isIntersecting) return;
         e.target.classList.add('show');
 
         const img = e.target.querySelector('.thumb img');
-        if(img && (img.dataset.live1 || img.dataset.live2)){
-          img.onerror = () => { img.src = img.dataset.fallback || img.src; };
-          loadScreenshot(img);
-          img.removeAttribute('data-live1'); img.removeAttribute('data-live2');
+        if(img){
+          const urls = [img.dataset.live1, img.dataset.live2].filter(Boolean);
+          const fallback = img.dataset.fallback || img.getAttribute('src');
+          if (urls.length){
+            loadWithRetries(img, urls, fallback);
+            // limpiar datasets para GC
+            img.removeAttribute('data-live1'); img.removeAttribute('data-live2');
+          } else {
+            img.parentElement.classList.remove('loading');
+          }
         }
         io.unobserve(e.target);
       });

@@ -104,7 +104,7 @@
     /* Header en 2 filas para móvil */
     @media (max-width:760px){
       .hero-wrap{grid-template-columns:1fr}
-      .illus{background-size:cover} /* móvil = cover */
+      .illus{background-size:cover}
       header .nav-bleed{
         grid-template-columns: 1fr auto;
         grid-template-areas:
@@ -234,7 +234,6 @@
         <p>Plataforma multi-local con catálogo por categorías y pedidos online.</p>
       </a>
 
-      <!-- Nuevos -->
       <a class="card item reveal" href="https://ludmilasolutions.github.io/losamigos/" target="_blank" rel="noopener">
         <div class="thumb">
           <img loading="lazy"
@@ -247,12 +246,13 @@
         <p>Carta online con combos, horarios y pedidos por WhatsApp.</p>
       </a>
 
-      <a class="card item reveal" href="https://ludmilasolutions.github.io/LaRockola/" target="_blank" rel="noopener">
+      <!-- La Rockola actualizado a Netlify con captura en vivo -->
+      <a class="card item reveal" href="https://larockola.netlify.app/" target="_blank" rel="noopener">
         <div class="thumb">
           <img loading="lazy"
                src="assets/placeholder-16x9.png"
                data-fallback="assets/placeholder-16x9.png"
-               data-live="https://image.thum.io/get/width/1600/crop/900/noanimate/https://ludmilasolutions.github.io/LaRockola/"
+               data-live="https://image.thum.io/get/width/1600/crop/900/noanimate/https://larockola.netlify.app/"
                alt="La Rockola — captura del sitio">
         </div>
         <div class="meta"><strong>La Rockola</strong><span class="tag">Landing</span></div>
@@ -330,10 +330,8 @@
           const live = img.getAttribute('data-live');
           const fallback = img.getAttribute('data-fallback') || img.src;
 
-          img.onerror = () => { img.src = fallback; };
-          img.onload = () => {
-            if (!img.naturalWidth || img.naturalWidth < 64) img.src = fallback;
-          };
+        img.onerror = () => { img.src = fallback; };
+        img.onload = () => { if (!img.naturalWidth || img.naturalWidth < 64) img.src = fallback; };
 
           img.src = live;
           img.removeAttribute('data-live');

@@ -32,8 +32,10 @@
     .top a:hover{background:rgba(0,70,150,.08)}
 
     header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--border);z-index:50}
-    .nav{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:10px 0}
-    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0;justify-self:start}
+    .nav{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:10px 0grid-template-columns:auto 1fr auto;align-items:center;}
+
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0;justify-self:start justify-self:start;margin-left:0;}
+
     .brand img{height:160px;width:auto;display:block;flex:0 0 auto}
     .brand .title{font-weight:800;letter-spacing:.2px;font-size:clamp(20px,2.6vw,32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .menu{display:flex;gap:12px;align-items:center;justify-content:center}
@@ -106,7 +108,8 @@
       #proceso .steps{grid-template-columns:1fr}
     }
     @media (max-width:420px){
-      .brand img{height:68px}      /* keep logo big but not blocking */
+      .brand img{height:68px .brand{justify-self:start;} .brand img{margin-left:0;} }
+      /* keep logo big but not blocking */
       .brand .title{display:none}  /* move logo to the side only */
       .cta .btn:not(.primary){display:none} /* keep only primary button */
       .top{justify-content:center;font-size:12px}
@@ -128,7 +131,7 @@
 
   <header>
     <div class="container nav" id="nav">
-      <a class="brand" href="#" aria-label="AFM Solutions">
+      <a class="brand" href="#" style="justify-self:start" aria-label="AFM Solutions">
         <img src="assets/logo-afm-horizontal.png" alt="AFM Solutions logo"/>
         <span class="title">AFM Solutions</span>
       </a>

@@ -33,11 +33,11 @@
     .top a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:4px 8px;border-radius:10px;transition:.2s ease}
     .top a:hover{background:rgba(0,70,150,.08)}
 
-    /* Header / Nav (CORREGIDO) */
+    /* Header / Nav (corregido) */
     header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--border);z-index:50}
     .nav{
       display:grid;
-      grid-template-columns:auto 1fr auto;   /* brand | menu | cta */
+      grid-template-columns:auto minmax(0,1fr) auto; /* brand | menu | cta */
       align-items:center;
       gap:12px;
       padding:10px 0;
@@ -45,13 +45,12 @@
     .brand{
       display:flex;align-items:center;gap:10px;
       text-decoration:none;color:inherit;min-width:0;
-      justify-self:start;                 /* pegado a la izquierda */
-      margin-left:0;
+      justify-self:start; margin-left:0;
     }
     .brand img{height:160px;width:auto;display:block;flex:0 0 auto}
     .brand .title{font-weight:800;letter-spacing:.2px;font-size:clamp(20px,2.6vw,32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .menu{display:flex;gap:12px;align-items:center;justify-content:center}
-    .menu a{padding:10px 12px;border-radius:10px;color:#1f2937;text-decoration:none;font-weight:600;transition:.2s ease}
+    .menu{display:flex;gap:12px;align-items:center;justify-content:center;min-width:0}
+    .menu a{padding:10px 12px;border-radius:10px;color:#1f2937;text-decoration:none;font-weight:600;transition:.2s ease;white-space:nowrap}
     .menu a:hover{background:rgba(0,70,150,.08)}
     .cta{display:flex;gap:10px;align-items:center;justify-content:flex-end}
     .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid var(--border);background:#fff;color:inherit;text-decoration:none;font-weight:700;transition:.25s ease;will-change:transform,box-shadow}
@@ -66,7 +65,7 @@
       radial-gradient(400px 200px at 10% -10%, rgba(255,204,0,.18), transparent 60%),
       radial-gradient(600px 300px at 100% 0%, rgba(0,70,150,.14), transparent 60%)}
     .hero-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;padding:40px 0}
-    .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid var(--border);font-size:12px;color:var(--muted)}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid var(--border);font-size:12px;color:#000000a6}
     .h1{font-size:clamp(28px,4vw,44px);line-height:1.1;margin:16px 0 10px;font-weight:800}
     .lead{font-size:clamp(15px,2.1vw,18px);color:#334155;max-width:70ch;line-height:1.6}
     .hero-cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
@@ -78,14 +77,14 @@
     /* Secciones */
     section{padding:42px 0}
     .section-title{font-size:clamp(22px,3vw,30px);margin:0 0 8px;font-weight:800}
-    .section-sub{color:var(--muted);margin:0 0 22px}
+    .section-sub{color:#6b7280;margin:0 0 22px}
     .grid{display:grid;gap:16px}
     .grid.g3{grid-template-columns:repeat(3,1fr)}
     .grid.g4{grid-template-columns:repeat(4,1fr)}
     .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:0 4px 14px rgba(2,6,23,.04);text-decoration:none;color:inherit;transition:.3s ease;will-change:transform,box-shadow}
     .card:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(2,6,23,.12)}
     .portfolio .item{display:flex;flex-direction:column;gap:12px}
-    .thumb{aspect-ratio:16/9;border-radius:14px;border:1px solid var(--border);background:#eef3fb center/cover no-repeat;box-shadow:0 6px 20px rgba(2,6,23,.06);transform:translateZ(0)}
+    .thumb{aspect-ratio:16/9;border-radius:14px;border:1px solid var(--border);background:#eef3fb center/cover no-repeat;box-shadow:0 6px 20px rgba(2,6,23,.06)}
     .meta{display:flex;align-items:center;justify-content:space-between}
     .meta .tag{font-size:12px;color:var(--brand);font-weight:700}
     .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(0,70,150,.08);color:var(--brand);font-weight:600;font-size:12px}
@@ -96,7 +95,7 @@
     #proceso .step .num{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--accent);font-weight:800;margin-bottom:8px}
     #proceso .step::after{content:"";position:absolute;inset:auto -10% -30% -10%;height:80px;background:radial-gradient(120px 40px at 50% 0%, rgba(0,70,150,.08), transparent)}
 
-    /* Formularios */
+    /* Formulario */
     form{display:grid;gap:12px;max-width:720px}
     .field{display:grid;gap:6px}
     .field input,.field textarea{padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:#fff;font:inherit}
@@ -113,6 +112,9 @@
     .reveal.show, #proceso .step.show{opacity:1;transform:none}
 
     /* Responsive */
+    @media (max-width:1220px){
+      .brand .title{display:none} /* evita choques con el menú */
+    }
     @media (max-width:980px){
       .brand img{height:120px}
       .hero-wrap{grid-template-columns:1fr}
@@ -123,7 +125,6 @@
     @media (max-width:640px){
       .container{padding:0 16px}
       .brand img{height:84px}
-      .brand .title{font-size:20px}
       .menu{display:none}
       .burger{display:inline-block;justify-self:end}
       .grid.g3{grid-template-columns:1fr}
@@ -132,7 +133,6 @@
     }
     @media (max-width:420px){
       .brand img{height:68px}
-      .brand .title{display:none} /* dejamos solo el logo para compactar */
       .cta .btn:not(.primary){display:none}
       .top{justify-content:center;font-size:12px}
     }
@@ -148,7 +148,6 @@
   </style>
 </head>
 <body>
-  <!-- Topbar -->
   <div class="topbar">
     <div class="container top">
       <a href="mailto:angelmascali@gmail.com">✉ angelmascali@gmail.com</a>
@@ -156,7 +155,6 @@
     </div>
   </div>
 
-  <!-- Header -->
   <header>
     <div class="container nav" id="nav">
       <a class="brand" href="#" aria-label="AFM Solutions">
@@ -180,7 +178,6 @@
     </div>
   </header>
 
-  <!-- Hero -->
   <section class="hero">
     <div class="container hero-wrap">
       <div class="reveal">
@@ -198,7 +195,6 @@
     </div>
   </section>
 
-  <!-- Servicios -->
   <section id="servicios" class="container">
     <h2 class="section-title reveal">Servicios</h2>
     <p class="section-sub reveal">Soluciones técnicas que generan resultados.</p>
@@ -210,7 +206,6 @@
     </div>
   </section>
 
-  <!-- Portfolio -->
   <section id="portfolio" class="container portfolio">
     <h2 class="section-title reveal">Trabajos reales</h2>
     <p class="section-sub reveal">Visitá los proyectos en producción.</p>
@@ -238,7 +233,6 @@
     </div>
   </section>
 
-  <!-- Proceso -->
   <section id="proceso" class="container">
     <h2 class="section-title reveal">Cómo trabajamos</h2>
     <p class="section-sub reveal">Proceso claro, entregas a tiempo y soporte post-lanzamiento.</p>
@@ -250,7 +244,6 @@
     </div>
   </section>
 
-  <!-- Contacto -->
   <section id="contacto" class="container">
     <h2 class="section-title reveal">Contacto</h2>
     <p class="section-sub reveal">Contanos qué necesitás y te respondemos a la brevedad.</p>
@@ -265,11 +258,10 @@
         <button class="btn primary" type="submit">Enviar mensaje</button>
         <a class="btn" id="btnWsp" href="#">WhatsApp</a>
       </div>
-      <p id="formMsg" style="margin:10px 0 0;color:var(--muted)"></p>
+      <p id="formMsg" style="margin:10px 0 0;color:#6b7280"></p>
     </form>
   </section>
 
-  <!-- Footer -->
   <footer>
     <div class="container foot">
       <div style="display:flex;align-items:center;gap:10px">
@@ -286,25 +278,19 @@
 
   <div class="wa"><a id="waFloat" href="https://wa.me/543417558966?text=Hola%20AFM%20Solutions,%20quiero%20un%20presupuesto" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a></div>
 
-  <!-- SEO / Schema -->
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Organization","name":"AFM Solutions","url":"https://tusitio.example","logo":"https://tusitio.example/assets/logo-afm-horizontal.png","contactPoint":[{"@type":"ContactPoint","contactType":"sales","email":"angelmascali@gmail.com","telephone":"+543417558966","areaServed":"AR","availableLanguage":["es","en"]}]}
   </script>
 
-  <!-- Scripts -->
   <script>
-    // Año en footer
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // Burger
     const nav = document.getElementById('nav');
     const burger = document.getElementById('burger');
     burger.addEventListener('click',()=> nav.classList.toggle('open'));
 
-    // Configuración contacto
     const CONFIG = { WHATSAPP_NUMBER:'543417558966', WHATSAPP_PREFIX:'Hola AFM Solutions, quiero un presupuesto', EMAIL_TO:'angelmascali@gmail.com' };
 
-    // WhatsApp desde form
     document.getElementById('btnWsp').addEventListener('click',(e)=>{
       e.preventDefault();
       const f = new FormData(document.getElementById('contactForm'));
@@ -316,7 +302,6 @@
       window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${msg}`,'_blank');
     });
 
-    // Mailto sin backend
     document.getElementById('contactForm').addEventListener('submit',(e)=>{
       e.preventDefault();
       const f = new FormData(e.target);
@@ -331,7 +316,6 @@ ${f.get('message')}`;
       document.getElementById('formMsg').textContent='Abriendo tu cliente de email…';
     });
 
-    // Scroll reveal + carga perezosa de miniaturas reales
     const io = new IntersectionObserver((entries)=>{
       entries.forEach((e)=>{
         if(e.isIntersecting){

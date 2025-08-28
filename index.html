@@ -15,7 +15,6 @@
   <link rel="icon" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://image.thum.io">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -32,7 +31,7 @@
     img{max-width:100%;height:auto;display:block}
     .container{max-width:1200px;margin:0 auto;padding-inline: clamp(12px, 3vw, 24px)}
 
-    /* ===== Header (logo SIEMPRE a la izquierda) ===== */
+    /* ===== Header (logo a la izquierda, menú al medio, CTA a la derecha) ===== */
     header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--border);z-index:50}
     header .nav-bleed{
       width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
@@ -50,6 +49,21 @@
     .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid var(--border);background:#fff;color:inherit;text-decoration:none;font-weight:700;transition:.25s}
     .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
     .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+
+    /* ===== Header 2 filas en móvil ===== */
+    @media (max-width:760px){
+      header .nav-bleed{
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+          "brand cta"
+          "menu  menu";
+        row-gap: 8px;
+      }
+      .brand{grid-area: brand}
+      .menu{grid-area: menu; display:flex !important; justify-content:flex-start; flex-wrap:wrap; gap:8px; overflow:auto; -webkit-overflow-scrolling:touch;}
+      .cta{grid-area: cta}
+    }
+    @media (max-width:1220px){ .title{display:none} }
 
     /* ===== Hero ===== */
     .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
@@ -100,23 +114,6 @@
     /* Animaciones */
     .reveal{opacity:0;transform:translateY(12px);transition:opacity .5s, transform .5s}
     .reveal.show, #proceso .step.show{opacity:1;transform:none}
-
-    /* Header en 2 filas para móvil */
-    @media (max-width:760px){
-      .hero-wrap{grid-template-columns:1fr}
-      .illus{background-size:cover}
-      header .nav-bleed{
-        grid-template-columns: 1fr auto;
-        grid-template-areas:
-          "brand cta"
-          "menu  menu";
-        row-gap: 8px;
-      }
-      .brand{grid-area: brand}
-      .menu{grid-area: menu; display:flex !important; justify-content:flex-start; flex-wrap:wrap; gap:8px; overflow:auto; -webkit-overflow-scrolling:touch;}
-      .cta{grid-area: cta}
-    }
-    @media (max-width:1220px){ .title{display:none} }
 
     /* Parche anti-CSS viejo en caché (por si quedó un header centrado) */
     header > .container.nav,
@@ -186,12 +183,13 @@
     <p class="section-sub reveal">Visitá los proyectos en producción.</p>
 
     <div class="grid auto-fit">
+      <!-- PuntoKiosco -->
       <a class="card item reveal" href="https://puntokiosco.com.ar" target="_blank" rel="noopener">
         <div class="thumb">
-          <img loading="lazy"
+          <img loading="lazy" decoding="async" referrerpolicy="no-referrer"
                src="assets/portfolio-puntokiosco.jpg"
                data-fallback="assets/portfolio-puntokiosco.jpg"
-               data-live1="https://v1.screenshot.11ty.dev/https://puntokiosco.com.ar/?width=1200&height=675"
+               data-live1="https://s.wordpress.com/mshots/v1/https://puntokiosco.com.ar?w=1200"
                data-live2="https://image.thum.io/get/width/1600/crop/900/noanimate/https://puntokiosco.com.ar/"
                alt="PuntoKiosco — captura del sitio">
         </div>
@@ -199,12 +197,13 @@
         <p>Gestión integral de ventas, stock, turnos y cierre de caja.</p>
       </a>
 
+      <!-- El Tachi -->
       <a class="card item reveal" href="https://el-tachi.netlify.app" target="_blank" rel="noopener">
         <div class="thumb">
-          <img loading="lazy"
+          <img loading="lazy" decoding="async" referrerpolicy="no-referrer"
                src="assets/portfolio-el-tachi.jpg"
                data-fallback="assets/portfolio-el-tachi.jpg"
-               data-live1="https://v1.screenshot.11ty.dev/https://el-tachi.netlify.app/?width=1200&height=675"
+               data-live1="https://s.wordpress.com/mshots/v1/https://el-tachi.netlify.app?w=1200"
                data-live2="https://image.thum.io/get/width/1600/crop/900/noanimate/https://el-tachi.netlify.app/"
                alt="Rotisería El Tachi — captura del sitio">
         </div>
@@ -212,12 +211,13 @@
         <p>Menú dinámico, carrito con WhatsApp y banners administrables.</p>
       </a>
 
+      <!-- Soldarte -->
       <a class="card item reveal" href="https://soldarte.vercel.app" target="_blank" rel="noopener">
         <div class="thumb">
-          <img loading="lazy"
+          <img loading="lazy" decoding="async" referrerpolicy="no-referrer"
                src="assets/portfolio-soldarte.jpg"
                data-fallback="assets/portfolio-soldarte.jpg"
-               data-live1="https://v1.screenshot.11ty.dev/https://soldarte.vercel.app/?width=1200&height=675"
+               data-live1="https://s.wordpress.com/mshots/v1/https://soldarte.vercel.app?w=1200"
                data-live2="https://image.thum.io/get/width/1600/crop/900/noanimate/https://soldarte.vercel.app/"
                alt="Soldarte — captura del sitio">
         </div>
@@ -225,12 +225,13 @@
         <p>Catálogo de herrería industrial con formulario de presupuestos.</p>
       </a>
 
+      <!-- MGV -->
       <a class="card item reveal" href="https://ludmilasolutions.github.io/mgv" target="_blank" rel="noopener">
         <div class="thumb">
-          <img loading="lazy"
+          <img loading="lazy" decoding="async" referrerpolicy="no-referrer"
                src="assets/portfolio-mgv.jpg"
                data-fallback="assets/portfolio-mgv.jpg"
-               data-live1="https://v1.screenshot.11ty.dev/https://ludmilasolutions.github.io/mgv/?width=1200&height=675"
+               data-live1="https://s.wordpress.com/mshots/v1/https://ludmilasolutions.github.io/mgv?w=1200"
                data-live2="https://image.thum.io/get/width/1600/crop/900/noanimate/https://ludmilasolutions.github.io/mgv/"
                alt="MGV — captura del sitio">
         </div>
@@ -238,12 +239,13 @@
         <p>Plataforma multi-local con catálogo por categorías y pedidos online.</p>
       </a>
 
+      <!-- Los Amigos -->
       <a class="card item reveal" href="https://ludmilasolutions.github.io/losamigos/" target="_blank" rel="noopener">
         <div class="thumb">
-          <img loading="lazy"
+          <img loading="lazy" decoding="async" referrerpolicy="no-referrer"
                src="assets/placeholder-16x9.png"
                data-fallback="assets/placeholder-16x9.png"
-               data-live1="https://v1.screenshot.11ty.dev/https://ludmilasolutions.github.io/losamigos/?width=1200&height=675"
+               data-live1="https://s.wordpress.com/mshots/v1/https://ludmilasolutions.github.io/losamigos/?w=1200"
                data-live2="https://image.thum.io/get/width/1600/crop/900/noanimate/https://ludmilasolutions.github.io/losamigos/"
                alt="Los Amigos — captura del sitio">
         </div>
@@ -251,12 +253,13 @@
         <p>Carta online con combos, horarios y pedidos por WhatsApp.</p>
       </a>
 
+      <!-- La Rockola (Netlify) -->
       <a class="card item reveal" href="https://larockola.netlify.app/" target="_blank" rel="noopener">
         <div class="thumb">
-          <img loading="lazy"
+          <img loading="lazy" decoding="async" referrerpolicy="no-referrer"
                src="assets/placeholder-16x9.png"
                data-fallback="assets/placeholder-16x9.png"
-               data-live1="https://v1.screenshot.11ty.dev/https://larockola.netlify.app/?width=1200&height=675"
+               data-live1="https://s.wordpress.com/mshots/v1/https://larockola.netlify.app/?w=1200"
                data-live2="https://image.thum.io/get/width/1600/crop/900/noanimate/https://larockola.netlify.app/"
                alt="La Rockola — captura del sitio">
         </div>
@@ -324,23 +327,20 @@
     // Año en el footer
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // --- Loader de capturas: 2 proveedores + fallback local ---
+    // === Loader de capturas: 2 proveedores (mShots + Thum.io) + fallback local ===
     function loadScreenshot(img){
       const urls = [img.dataset.live1, img.dataset.live2].filter(Boolean);
       const fallback = img.dataset.fallback || img.src;
+      let i = 0;
 
-      function tryNext(i){
+      function next(){
         if(i >= urls.length){ img.src = fallback; return; }
-        const test = new Image();
-        test.crossOrigin = 'anonymous';
-        test.onload = () => {
-          // Si carga, la usamos (con cache-bust)
-          img.src = urls[i] + (urls[i].includes('?') ? '&' : '?') + 't=' + Date.now();
-        };
-        test.onerror = () => tryNext(i+1);
-        test.src = urls[i] + (urls[i].includes('?') ? '&' : '?') + 't=' + Date.now();
+        img.onerror = () => { i++; next(); };
+        // cache-bust y sin CORS explícito
+        const u = urls[i] + (urls[i].includes('?') ? '&' : '?') + 't=' + Date.now();
+        img.src = u;
       }
-      tryNext(0);
+      next();
     }
 
     // Reveal + carga perezosa de miniaturas reales
@@ -351,7 +351,6 @@
 
         const img = e.target.querySelector('.thumb img');
         if(img && (img.dataset.live1 || img.dataset.live2)){
-          // Seguridad: si la respuesta es “blanca” o falla, usar fallback
           img.onerror = () => { img.src = img.dataset.fallback || img.src; };
           loadScreenshot(img);
           img.removeAttribute('data-live1'); img.removeAttribute('data-live2');

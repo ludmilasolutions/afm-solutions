@@ -34,7 +34,7 @@
     .top a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:4px 8px;border-radius:10px;transition:.2s}
     .top a:hover{background:rgba(0,70,150,.08)}
 
-    /* Header full-bleed (logo SIEMPRE a la izquierda) */
+    /* Header full-bleed con logo al borde izquierdo */
     header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--border);z-index:50}
     header .nav-bleed{
       width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
@@ -44,6 +44,7 @@
       header .nav-bleed{padding-left:env(safe-area-inset-left)}
     }
     .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0;justify-self:start}
+    /* << Usa el PNG recortado que te pasé (mismo nombre/ruta) */
     .brand img{height:160px;width:auto}
     .title{font-weight:800;letter-spacing:.2px;font-size:clamp(20px,2.6vw,32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .menu{display:flex;gap:12px;align-items:center;justify-content:center;min-width:0}
@@ -131,19 +132,16 @@
       .container{padding:0 12px}
     }
 
-    /* ===== PARCHE DURO (al final) para anular contenedores viejos y fijar logo a la izquierda ===== */
+    /* Parche extra por si queda CSS viejo en caché */
     header > .container.nav,
     header > .container .nav,
-    header .nav,
-    header .nav-bleed{
+    header .nav{
       width:100vw !important; max-width:100vw !important;
       margin-left:calc(50% - 50vw) !important; margin-right:calc(50% - 50vw) !important;
       padding-left:0 !important; padding-right:24px !important;
-      box-sizing:border-box !important; display:grid !important;
-      grid-template-columns:auto minmax(0,1fr) auto !important; align-items:center !important; gap:12px !important;
+      display:grid !important; grid-template-columns:auto minmax(0,1fr) auto !important; align-items:center !important;
     }
     header .brand{justify-self:start !important; margin-left:0 !important}
-    header .brand img{height:160px !important}
   </style>
 </head>
 <body>
@@ -159,6 +157,7 @@
   <header>
     <div class="nav-bleed" id="nav">
       <a class="brand" href="#" aria-label="AFM Solutions">
+        <!-- Usa el PNG recortado en esta ruta -->
         <img src="assets/logo-afm-horizontal.png" alt="AFM Solutions logo"/>
         <span class="title">AFM Solutions</span>
       </a>

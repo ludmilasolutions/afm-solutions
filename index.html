@@ -1,61 +1,56 @@
 <!DOCTYPE html>
 <html lang="es-AR">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>AFM Solutions — Software a medida para tu negocio</title>
-  <meta name="description" content="Desarrollo web y apps, sistemas de gestión, e-commerce e integraciones. Creamos software a medida para hacer crecer tu negocio.">
+  <meta name="description" content="Desarrollo web y mobile, sistemas de gestión, e-commerce e integraciones. Creamos software a medida para hacer crecer tu negocio."/>
   <meta name="theme-color" content="#003366"/>
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="AFM Solutions — Software a medida">
-  <meta property="og:description" content="Desarrollo web y apps, sistemas de gestión, e-commerce e integraciones.">
-  <meta property="og:image" content="assets/og-cover.jpg">
-  <meta property="og:url" content="https://tusitio.example">
-  <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="assets/favicon.png">
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="AFM Solutions — Software a medida"/>
+  <meta property="og:description" content="Desarrollo web y apps, sistemas de gestión, e-commerce e integraciones."/>
+  <meta property="og:image" content="assets/og-cover.jpg"/>
+  <meta property="og:url" content="https://tusitio.example"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="icon" href="assets/favicon.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://image.thum.io">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root{--brand:#003366;--brand-2:#004a99;--accent:#ffcc00;--ink:#0b1220;--muted:#6b7280;--bg:#f7f9fc;--card:#ffffff;--border:#e5e7eb;--shadow:0 10px 30px rgba(0,0,0,.09)}
+    :root{
+      --brand:#003366;--brand-2:#004a99;--accent:#ffcc00;--ink:#0b1220;--muted:#6b7280;--bg:#f7f9fc;--card:#ffffff;--border:#e5e7eb;--shadow:0 10px 30px rgba(0,0,0,.09)
+    }
     *{box-sizing:border-box}
     html,body{height:100%}
     html{scroll-behavior:smooth}
     body{margin:0;font-family:Poppins,system-ui,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+    img{max-width:100%;height:auto;display:block}
     .container{max-width:1200px;margin:0 auto;padding:0 24px}
 
     /* Topbar */
     .topbar{background:linear-gradient(90deg, rgba(0,70,150,.07), rgba(255,204,0,.08));border-bottom:1px solid var(--border)}
-    .topbar .container{max-width:100%;margin:0;padding-left:max(0px, env(safe-area-inset-left));padding-right:24px}
-    .top{display:flex;gap:12px;align-items:center;justify-content:flex-end;padding:8px 0;font-size:13px;color:#334155;flex-wrap:wrap}
-    .top a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:4px 8px;border-radius:10px;transition:.2s ease}
+    .top{display:flex;gap:12px;align-items:center;justify-content:flex-end;padding:8px 24px;font-size:13px;color:#334155;flex-wrap:wrap}
+    .top a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:4px 8px;border-radius:10px;transition:.2s}
     .top a:hover{background:rgba(0,70,150,.08)}
 
-    /* Header FULL-BLEED con logo pegado a la izquierda */
-    .headerbar{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--border);z-index:50}
-    .nav-bleed{
-      width:100vw;                         /* ocupar todo el viewport */
-      margin-left:calc(50% - 50vw);        /* romper centrado del body/container */
-      margin-right:calc(50% - 50vw);
-      padding-left:max(0px, env(safe-area-inset-left));  /* 0 en desktop; safe-area en iPhone */
-      padding-right:max(24px, env(safe-area-inset-right));
-      display:grid;
-      grid-template-columns:auto minmax(0,1fr) auto;     /* brand | menú | CTA */
-      align-items:center;
-      gap:12px;
-      padding-top:10px;padding-bottom:10px;
+    /* Header full-bleed (logo SIEMPRE a la izquierda) */
+    header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--border);z-index:50}
+    header .nav-bleed{
+      width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
+      padding:10px 24px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px
+    }
+    @supports (padding-left: env(safe-area-inset-left)){
+      header .nav-bleed{padding-left:env(safe-area-inset-left)}
     }
     .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0;justify-self:start}
-    .brand img{height:160px;width:auto;display:block}
-    .brand .title{font-weight:800;letter-spacing:.2px;font-size:clamp(20px,2.6vw,32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
+    .brand img{height:160px;width:auto}
+    .title{font-weight:800;letter-spacing:.2px;font-size:clamp(20px,2.6vw,32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .menu{display:flex;gap:12px;align-items:center;justify-content:center;min-width:0}
-    .menu a{padding:10px 12px;border-radius:10px;color:#1f2937;text-decoration:none;font-weight:600;transition:.2s ease;white-space:nowrap}
+    .menu a{padding:10px 12px;border-radius:10px;color:#1f2937;text-decoration:none;font-weight:600;transition:.2s;white-space:nowrap}
     .menu a:hover{background:rgba(0,70,150,.08)}
-
     .cta{display:flex;gap:10px;align-items:center;justify-content:flex-end}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid var(--border);background:#fff;color:inherit;text-decoration:none;font-weight:700;transition:.25s ease}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid var(--border);background:#fff;color:inherit;text-decoration:none;font-weight:700;transition:.25s}
     .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
     .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
     .burger{display:none;border:1px solid var(--border);padding:8px 12px;border-radius:10px;background:#fff}
@@ -65,7 +60,7 @@
     .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--border);background:
       radial-gradient(400px 200px at 10% -10%, rgba(255,204,0,.18), transparent 60%),
       radial-gradient(600px 300px at 100% 0%, rgba(0,70,150,.14), transparent 60%)}
-    .hero-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;padding:40px 0}
+    .hero-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;padding:40px 24px}
     .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid var(--border);font-size:12px;color:#000000a6}
     .h1{font-size:clamp(28px,4vw,44px);line-height:1.1;margin:16px 0 10px;font-weight:800}
     .lead{font-size:clamp(15px,2.1vw,18px);color:#334155;max-width:70ch;line-height:1.6}
@@ -73,16 +68,16 @@
     .illus{position:relative;border:1px solid var(--border);border-radius:20px;min-height:260px;box-shadow:0 5px 18px rgba(0,0,0,.05);background:linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,.4))}
     .illus::after{content:"";position:absolute;inset:0;background:conic-gradient(from 180deg at 50% 50%,rgba(255,204,0,.06),rgba(0,56,120,.07),transparent 30%);mix-blend:overlay;pointer-events:none;border-radius:20px}
     .illus-inner{position:absolute;inset:0;display:grid;place-items:center}
-    .hex{width:120px;height:120px;border-radius:16px;background:linear-gradient(145deg,var(--accent),#ffd84d);mask:polygon(25% 6.7%,75% 6.7%,100% 50%,75% 93.3%,25% 93.3%,0 50%);-webkit-mask:polygon(25% 6.7%,75% 6.7%,100% 50%,75% 93.3%,25% 93.3%,0 50%);filter:drop-shadow(0 10px 20px rgba(0,0,0,.15))}
+    .hex{width:120px;height:120px;border-radius:16px;background:linear-gradient(145deg,var(--accent),#ffd84d);mask:polygon(25% 6.7%,75% 6.7%,100% 50%,75% 93.3%,25% 93.3%,0 50%)}
 
     /* Secciones */
-    section{padding:42px 0}
+    section{padding:42px 24px}
     .section-title{font-size:clamp(22px,3vw,30px);margin:0 0 8px;font-weight:800}
-    .section-sub{color:#6b7280;margin:0 0 22px}
+    .section-sub{color:var(--muted);margin:0 0 22px}
     .grid{display:grid;gap:16px}
     .grid.g3{grid-template-columns:repeat(3,1fr)}
     .grid.g4{grid-template-columns:repeat(4,1fr)}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:0 4px 14px rgba(2,6,23,.04);text-decoration:none;color:inherit;transition:.3s ease}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:0 4px 14px rgba(2,6,23,.04);text-decoration:none;color:inherit;transition:.3s}
     .card:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(2,6,23,.12)}
     .portfolio .item{display:flex;flex-direction:column;gap:12px}
     .thumb{aspect-ratio:16/9;border-radius:14px;border:1px solid var(--border);background:#eef3fb center/cover no-repeat;box-shadow:0 6px 20px rgba(2,6,23,.06)}
@@ -92,28 +87,25 @@
 
     /* Proceso */
     #proceso .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-    #proceso .step{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;position:relative;overflow:hidden;opacity:0;transform:translateY(12px);transition:.5s ease}
+    #proceso .step{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;position:relative;overflow:hidden;opacity:0;transform:translateY(12px);transition:.5s}
     #proceso .step .num{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--accent);font-weight:800;margin-bottom:8px}
-    #proceso .step::after{content:"";position:absolute;inset:auto -10% -30% -10%;height:80px;background:radial-gradient(120px 40px at 50% 0%, rgba(0,70,150,.08), transparent)}
 
-    /* Formulario */
+    /* Form + Footer */
     form{display:grid;gap:12px;max-width:720px}
     .field{display:grid;gap:6px}
     .field input,.field textarea{padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:#fff;font:inherit}
     .field input:focus,.field textarea:focus{outline:2px solid rgba(0,70,150,.25);border-color:var(--brand-2)}
-
-    /* Footer + WA */
     footer{border-top:1px solid var(--border);background:#fff}
-    .foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:18px 0;color:#4b5563}
+    .foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:18px 24px;color:#4b5563}
     .wa{position:fixed;right:16px;bottom:16px;z-index:60}
     .wa a{display:inline-grid;place-items:center;width:56px;height:56px;border-radius:16px;background:#25D366;color:#fff;text-decoration:none;font-weight:800;box-shadow:0 10px 30px rgba(37,211,102,.45)}
 
     /* Animaciones */
-    .reveal{opacity:0;transform:translateY(12px);transition:opacity .5s ease, transform .5s ease}
+    .reveal{opacity:0;transform:translateY(12px);transition:opacity .5s, transform .5s}
     .reveal.show, #proceso .step.show{opacity:1;transform:none}
 
     /* Responsive */
-    @media (max-width:1220px){ .brand .title{display:none} }
+    @media (max-width:1220px){ .title{display:none} }
     @media (max-width:980px){
       .brand img{height:120px}
       .hero-wrap{grid-template-columns:1fr}
@@ -122,10 +114,9 @@
       #proceso .steps{grid-template-columns:repeat(2,1fr)}
     }
     @media (max-width:640px){
-      .container{padding:0 16px}
-      .brand img{height:84px}
       .menu{display:none}
       .burger{display:inline-block;justify-self:end}
+      .brand img{height:84px}
       .grid.g3{grid-template-columns:1fr}
       .grid.g4{grid-template-columns:1fr}
       #proceso .steps{grid-template-columns:1fr}
@@ -139,42 +130,36 @@
       .brand img{height:56px}
       .container{padding:0 12px}
     }
-    @media (prefers-reduced-motion:reduce){
-      *{scroll-behavior:auto}
-      .reveal,.card,#proceso .step{transition:none}
-      .card:hover{transform:none;box-shadow:0 4px 14px rgba(2,6,23,.04)}
-    }
-  
-/* === AFM HARD PATCH v2: header full-bleed + logo left === */
-header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid #e5e7eb;z-index:50}
-header .nav-bleed{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;
-  width:100vw !important;max-width:100vw !important;
-  margin-left:calc(50% - 50vw) !important;margin-right:calc(50% - 50vw) !important;
-  padding:10px 24px !important; padding-left:0 !important}
-@supports (padding-left: env(safe-area-inset-left)){ header .nav-bleed{ padding-left:env(safe-area-inset-left) !important } }
-header .brand{justify-self:start !important;margin-left:0 !important;display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
-header .brand img{height:160px;width:auto;display:block}
-@media (max-width:980px){ header .brand img{height:120px} }
-@media (max-width:640px){ header .brand img{height:84px} }
-/* neutralizar contenedores antiguos dentro del header */
-header .container, header .wrapper, header .nav{max-width:unset !important;margin:0 !important;padding:0 !important}
 
-</style>
+    /* ===== PARCHE DURO (al final) para anular contenedores viejos y fijar logo a la izquierda ===== */
+    header > .container.nav,
+    header > .container .nav,
+    header .nav,
+    header .nav-bleed{
+      width:100vw !important; max-width:100vw !important;
+      margin-left:calc(50% - 50vw) !important; margin-right:calc(50% - 50vw) !important;
+      padding-left:0 !important; padding-right:24px !important;
+      box-sizing:border-box !important; display:grid !important;
+      grid-template-columns:auto minmax(0,1fr) auto !important; align-items:center !important; gap:12px !important;
+    }
+    header .brand{justify-self:start !important; margin-left:0 !important}
+    header .brand img{height:160px !important}
+  </style>
 </head>
 <body>
   <!-- Topbar -->
   <div class="topbar">
-    <div class="container top">
+    <div class="top">
       <a href="mailto:angelmascali@gmail.com">✉ angelmascali@gmail.com</a>
       <a href="tel:+543417558966">📞 +54 341 755 8966</a>
     </div>
   </div>
 
-  <!-- Header FULL-BLEED -->
-  <header class="headerbar">
-    <div class="nav-bleed">
+  <!-- Header -->
+  <header>
+    <div class="nav-bleed" id="nav">
       <a class="brand" href="#" aria-label="AFM Solutions">
-        <img src="assets/logo-afm-horizontal.png" alt="AFM Solutions logo">
+        <img src="assets/logo-afm-horizontal.png" alt="AFM Solutions logo"/>
         <span class="title">AFM Solutions</span>
       </a>
 
@@ -268,24 +253,24 @@ header .container, header .wrapper, header .nav{max-width:unset !important;margi
     <p class="section-sub reveal">Contanos qué necesitás y te respondemos a la brevedad.</p>
     <form id="contactForm">
       <div class="grid g3" style="grid-template-columns:1fr 1fr 1fr">
-        <div class="field"><label>Nombre</label><input required name="name" placeholder="Tu nombre"></div>
-        <div class="field"><label>Email</label><input required type="email" name="email" placeholder="tunombre@mail.com"></div>
-        <div class="field"><label>Teléfono (opcional)</label><input name="phone" placeholder="Ej. +54 9 341..."></div>
+        <div class="field"><label>Nombre</label><input required name="name" placeholder="Tu nombre"/></div>
+        <div class="field"><label>Email</label><input required type="email" name="email" placeholder="tunombre@mail.com"/></div>
+        <div class="field"><label>Teléfono (opcional)</label><input name="phone" placeholder="Ej. +54 9 341..."/></div>
       </div>
       <div class="field"><label>Mensaje</label><textarea required name="message" rows="5" placeholder="Contanos sobre tu proyecto…"></textarea></div>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
         <button class="btn primary" type="submit">Enviar mensaje</button>
         <a class="btn" id="btnWsp" href="#">WhatsApp</a>
       </div>
-      <p id="formMsg" style="margin:10px 0 0;color:#6b7280"></p>
+      <p id="formMsg" style="margin:10px 0 0;color:var(--muted)"></p>
     </form>
   </section>
 
   <!-- Footer -->
   <footer>
-    <div class="container foot">
+    <div class="foot">
       <div style="display:flex;align-items:center;gap:10px">
-        <img src="assets/favicon.png" alt="AFM icon" width="24" height="24">
+        <img src="assets/favicon.png" alt="AFM icon" width="24" height="24"/>
         <span>© <span id="y"></span> AFM Solutions. Todos los derechos reservados.</span>
       </div>
       <div style="display:flex;gap:12px">
@@ -296,22 +281,29 @@ header .container, header .wrapper, header .nav{max-width:unset !important;margi
     </div>
   </footer>
 
+  <!-- WhatsApp flotante -->
   <div class="wa"><a id="waFloat" href="https://wa.me/543417558966?text=Hola%20AFM%20Solutions,%20quiero%20un%20presupuesto" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a></div>
 
+  <!-- Datos estructurados -->
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Organization","name":"AFM Solutions","url":"https://tusitio.example","logo":"https://tusitio.example/assets/logo-afm-horizontal.png","contactPoint":[{"@type":"ContactPoint","contactType":"sales","email":"angelmascali@gmail.com","telephone":"+543417558966","areaServed":"AR","availableLanguage":["es","en"]}]}
   </script>
 
+  <!-- JS -->
   <script>
+    // Año en el footer
     document.getElementById('y').textContent = new Date().getFullYear();
 
+    // Burger (si lo activás luego)
     const nav = document.getElementById('nav');
     const burger = document.getElementById('burger');
-    burger?.addEventListener('click', ()=> nav.classList.toggle('open'));
+    burger?.addEventListener('click',()=> nav.classList.toggle('open'));
 
+    // Config contacto
     const CONFIG = { WHATSAPP_NUMBER:'543417558966', WHATSAPP_PREFIX:'Hola AFM Solutions, quiero un presupuesto', EMAIL_TO:'angelmascali@gmail.com' };
 
-    document.getElementById('btnWsp').addEventListener('click', (e)=>{
+    // WhatsApp desde form
+    document.getElementById('btnWsp').addEventListener('click',(e)=>{
       e.preventDefault();
       const f = new FormData(document.getElementById('contactForm'));
       const msg = `${CONFIG.WHATSAPP_PREFIX}%0A%0A`+
@@ -322,7 +314,7 @@ header .container, header .wrapper, header .nav{max-width:unset !important;margi
       window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${msg}`,'_blank');
     });
 
-    // Envío por mail sin backend
+    // Envío mailto sin backend
     document.getElementById('contactForm').addEventListener('submit',(e)=>{
       e.preventDefault();
       const f = new FormData(e.target);
@@ -344,8 +336,8 @@ ${f.get('message')}`;
           e.target.classList.add('show');
           const t = e.target.querySelector('.thumb');
           if(t && t.dataset.live){
-            const fallback = t.style.backgroundImage || '';
-            t.style.backgroundImage = `url('${t.dataset.live}'), ${fallback}`;
+            const fb = t.style.backgroundImage || '';
+            t.style.backgroundImage = `url('${t.dataset.live}'), ${fb}`;
             t.removeAttribute('data-live');
           }
           io.unobserve(e.target);

@@ -50,7 +50,6 @@
     .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid var(--border);background:#fff;color:inherit;text-decoration:none;font-weight:700;transition:.25s}
     .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
     .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
-    .burger{display:none}
 
     /* Hero */
     .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
@@ -62,7 +61,7 @@
     .illus{
       position:relative;border:1px solid var(--border);border-radius:20px;
       min-height: clamp(220px, 36vw, 320px);box-shadow:0 5px 18px rgba(0,0,0,.05);
-      background:url('assets/afm-logo-original.png') center/contain no-repeat; /* mejor en desktop */
+      background:url('assets/afm-logo-original.png') center/contain no-repeat; /* desktop */
     }
     .illus::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.2));border-radius:20px}
 
@@ -105,7 +104,7 @@
     /* Mobile: header en 2 filas */
     @media (max-width:760px){
       .hero-wrap{grid-template-columns:1fr}
-      .illus{background-size:cover} /* en móvil se ve “cover” */
+      .illus{background-size:cover} /* móvil = cover */
       header .nav-bleed{
         grid-template-columns: 1fr auto;
         grid-template-areas:
@@ -119,7 +118,6 @@
         flex-wrap:wrap; gap:8px; overflow:auto; -webkit-overflow-scrolling:touch;
       }
       .cta{grid-area: cta}
-      .burger{display:none !important}
     }
 
     @media (max-width:1220px){ .title{display:none} }
@@ -253,12 +251,12 @@
         <p>Carta online con combos, horarios y pedidos por WhatsApp.</p>
       </a>
 
-      <a class="card item reveal" href="https://ludmilasolutions.github.io/larockola" target="_blank" rel="noopener">
+      <a class="card item reveal" href="https://ludmilasolutions.github.io/LaRockola/" target="_blank" rel="noopener">
         <div class="thumb">
           <img loading="lazy"
                src="assets/placeholder-16x9.png"
                data-fallback="assets/placeholder-16x9.png"
-               data-live="https://image.thum.io/get/width/1600/https://ludmilasolutions.github.io/larockola"
+               data-live="https://image.thum.io/get/width/1600/https://ludmilasolutions.github.io/LaRockola/"
                alt="La Rockola — captura del sitio">
         </div>
         <div class="meta"><strong>La Rockola</strong><span class="tag">Landing</span></div>
@@ -306,7 +304,7 @@
         <span>© <span id="y"></span> AFM Solutions. Todos los derechos reservados.</span>
       </div>
       <div style="display:flex;gap:12px">
-        <a class="btn" href="mailto:angelmascali@gmail.com" aria-label="Email">✉</a>
+        <a class="btn" href="mailto:contactoafmsolutions@gmail.com" aria-label="Email">✉</a>
         <a class="btn" href="tel:+543417558966" aria-label="Teléfono">📞</a>
         <a class="btn" href="https://wa.me/543417558966" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a>
       </div>
@@ -314,6 +312,11 @@
   </footer>
 
   <div class="wa"><a id="waFloat" href="https://wa.me/543417558966?text=Hola%20AFM%20Solutions,%20quiero%20un%20presupuesto" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a></div>
+
+  <!-- Datos estructurados -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Organization","name":"AFM Solutions","url":"https://tusitio.example","logo":"https://tusitio.example/assets/logo-afm-horizontal.png","contactPoint":[{"@type":"ContactPoint","contactType":"sales","email":"contactoafmsolutions@gmail.com","telephone":"+543417558966","areaServed":"AR","availableLanguage":["es","en"]}]}
+  </script>
 
   <script>
     // Año en el footer
@@ -323,22 +326,49 @@
     const io = new IntersectionObserver((entries)=>{
       entries.forEach((e)=>{
         if(!e.isIntersecting) return;
-        // animación reveal
         e.target.classList.add('show');
 
-        // si es una card con thumb
         const img = e.target.querySelector('.thumb img[data-live]');
         if(img){
           const live = img.getAttribute('data-live');
           const fallback = img.getAttribute('data-fallback') || img.src;
-          img.onerror = ()=> { img.src = fallback; }; // si thum.io falla
-          img.src = live;                               // cambia al live
+          img.onerror = ()=> { img.src = fallback; };
+          img.src = live;
           img.removeAttribute('data-live');
         }
         io.unobserve(e.target);
       });
     },{threshold:0.12});
     document.querySelectorAll('.reveal, .card, #proceso .step').forEach(el=>io.observe(el));
+
+    // Envío por email (mailto) sin backend
+    const CONFIG = { EMAIL_TO:'contactoafmsolutions@gmail.com', WHATSAPP_NUMBER:'543417558966', WHATSAPP_PREFIX:'Hola AFM Solutions, quiero un presupuesto' };
+
+    document.getElementById('contactForm').addEventListener('submit',(e)=>{
+      e.preventDefault();
+      const f = new FormData(e.target);
+      const subject = 'Nuevo contacto desde AFM Solutions';
+      const body = `Nombre: ${f.get('name')}
+Email: ${f.get('email')}
+Teléfono: ${f.get('phone')||''}
+
+Mensaje:
+${f.get('message')}`;
+      window.location.href = `mailto:${CONFIG.EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      document.getElementById('formMsg').textContent = 'Abriendo tu cliente de email…';
+    });
+
+    // WhatsApp desde form
+    document.getElementById('btnWsp').addEventListener('click',(e)=>{
+      e.preventDefault();
+      const f = new FormData(document.getElementById('contactForm'));
+      const msg = `${CONFIG.WHATSAPP_PREFIX}%0A%0A`
+        + `Nombre: ${encodeURIComponent(f.get('name')||'')}` + `%0A`
+        + `Email: ${encodeURIComponent(f.get('email')||'')}` + `%0A`
+        + `Teléfono: ${encodeURIComponent(f.get('phone')||'')}` + `%0A`
+        + `Mensaje: ${encodeURIComponent(f.get('message')||'')}`;
+      window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${msg}`,'_blank');
+    });
   </script>
 </body>
 </html>

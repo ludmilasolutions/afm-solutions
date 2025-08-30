@@ -131,6 +131,7 @@
         <a href="#servicios">Servicios</a>
         <a href="#portfolio">Trabajos</a>
         <a href="#proceso">Cómo trabajamos</a>
+        <a href="#automatizacion">Automatización</a><!-- NUEVO -->
         <a href="#contacto">Contacto</a>
       </nav>
       <div class="cta">
@@ -164,6 +165,13 @@
       <article class="card reveal"><span class="pill">📱 Apps</span><h3>Apps y Escritorio</h3><p>Android (PWA/KivyMD) y desktop (Tkinter). Diseño y empaquetado listo.</p></article>
       <article class="card reveal"><span class="pill">⚙️ Gestión</span><h3>Sistemas a medida</h3><p>Facturación, stock, reportes, roles/usuarios, tickets y cierre de caja.</p></article>
       <article class="card reveal"><span class="pill">🔌 Integraciones</span><h3>APIs & Automatización</h3><p>WhatsApp, Google Sheets/Drive, Mercado Pago/Stripe, dashboards y bots.</p></article>
+
+      <!-- NUEVA TARJETA: Marketing & Automatización de Redes -->
+      <article class="card reveal">
+        <span class="pill">🤖 Marketing & Automatización</span>
+        <h3>Redes que trabajan solas</h3>
+        <p>Calendario y publicación con Meta Business Suite, respuestas automáticas, chatbots para IG/WhatsApp, reportes y flujos con Google Sheets.</p>
+      </article>
     </div>
   </section>
 
@@ -229,6 +237,61 @@
     </div>
   </section>
 
+  <!-- Automatización de Redes (NUEVA SECCIÓN) -->
+  <section id="automatizacion" class="container">
+    <h2 class="section-title reveal">Automatización de Redes</h2>
+    <p class="section-sub reveal">Publicá sin fricción, respondé al toque y medí lo que importa.</p>
+
+    <div class="grid auto-fit">
+      <article class="card reveal">
+        <h3 style="margin-top:0">Planificación & Publicación</h3>
+        <p>Armamos un calendario en Google Sheets y lo programamos en <strong>Meta Business Suite</strong> (IG/FB). Todo queda en piloto automático.</p>
+        <ul>
+          <li>Plantillas de copy + hashtags</li>
+          <li>Programación semanal o quincenal</li>
+          <li>Revisión/OK antes de publicar</li>
+        </ul>
+      </article>
+
+      <article class="card reveal">
+        <h3 style="margin-top:0">Respuestas Automáticas</h3>
+        <p>Activamos <strong>saludo, FAQs y fuera de horario</strong> en la bandeja unificada. Opcional: <strong>bot</strong> con flujos guiados.</p>
+        <ul>
+          <li>Botones rápidos (Precios, Demo, Contacto)</li>
+          <li>Mensajes preaprobados para WhatsApp Business</li>
+          <li>Derivación a humano cuando hace falta</li>
+        </ul>
+      </article>
+
+      <article class="card reveal">
+        <h3 style="margin-top:0">Integraciones & Reportes</h3>
+        <p>Guardamos leads en <strong>Google Sheets</strong>, enviamos avisos y generamos <strong>reportes</strong> con recomendaciones.</p>
+        <ul>
+          <li>Flujos con Apps Script / Make / Zapier</li>
+          <li>KPIs: alcance, clics, mensajes, costo por lead</li>
+          <li>Resumen semanal automático</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="grid" style="margin-top:16px;gap:16px">
+      <details class="card reveal">
+        <summary style="cursor:pointer;font-weight:700">¿Qué puedo automatizar sin romper políticas?</summary>
+        <p style="margin-top:8px">Programación oficial (Meta), respuestas automáticas, FAQ, guardado de leads y reportes. <strong>No</strong> recomendamos auto-follow/auto-like/auto-comment: son prácticas penalizables.</p>
+      </details>
+
+      <details class="card reveal">
+        <summary style="cursor:pointer;font-weight:700">¿Qué entregamos?</summary>
+        <p style="margin-top:8px">Calendario de contenidos, assets editables (Canva), textos, configuración en Meta Business Suite, automatizaciones base y un tablero de métricas simple.</p>
+      </details>
+    </div>
+
+    <div class="hero-cta" style="margin-top:18px">
+      <a class="btn" href="#contacto">Quiero ver un demo</a>
+      <a class="btn primary" id="btnAutoWsp" href="#">Pedir setup de automatización</a>
+    </div>
+  </section>
+
   <!-- Contacto -->
   <section id="contacto" class="container">
     <h2 class="section-title reveal">Contacto</h2>
@@ -269,6 +332,27 @@
   <!-- Datos estructurados -->
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Organization","name":"AFM Solutions","url":"https://tusitio.example","logo":"https://tusitio.example/assets/logo-afm-horizontal.png","contactPoint":[{"@type":"ContactPoint","contactType":"sales","email":"contactoafmsolutions@gmail.com","telephone":"+543417558966","areaServed":"AR","availableLanguage":["es","en"]}]}
+  </script>
+
+  <!-- Schema.org Service (Automatización en Redes) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Service",
+    "name":"Automatización y Marketing en Redes",
+    "provider":{"@type":"Organization","name":"AFM Solutions","url":"https://tusitio.example"},
+    "areaServed":"AR",
+    "serviceType":"Social Media Marketing",
+    "description":"Planificación, programación en Meta Business Suite, respuestas automáticas, chatbots IG/WhatsApp, integraciones con Google Sheets y reportes.",
+    "hasOfferCatalog":{
+      "@type":"OfferCatalog",
+      "name":"Paquetes de Automatización",
+      "itemListElement":[
+        {"@type":"Offer","name":"Setup básico","description":"Calendario + programación + respuestas automáticas + reporte semanal"},
+        {"@type":"Offer","name":"Setup avanzado","description":"Incluye bot IG/WhatsApp y flujos con planillas + tableros"}
+      ]
+    }
+  }
   </script>
 
   <script>
@@ -319,6 +403,13 @@ Mensaje:
 ${f.get('message')}`;
       window.location.href = `mailto:${CONFIG.EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       document.getElementById('formMsg').textContent = 'Abriendo tu cliente de email…';
+    });
+
+    // Botón específico para automatización de redes (CTA sección Automatización)
+    document.getElementById('btnAutoWsp')?.addEventListener('click',(e)=>{
+      e.preventDefault();
+      const base = `Hola AFM Solutions, quiero automatizar mis redes (Meta Business Suite + respuestas automáticas + reportes). ¿Coordinamos una llamada?`;
+      window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(base)}`,'_blank');
     });
   </script>
 </body>

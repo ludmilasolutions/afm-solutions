@@ -41,7 +41,8 @@
       display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;
     }
     .brand{display:flex;align-items:center;gap:10px}
-    .brand img{height: clamp(78px, 13vw, 150px);width:auto}
+    /* LOGO MÁS GRANDE */
+    .brand img{height: clamp(96px, 14vw, 200px);width:auto}
 
     .burger{
       display:inline-flex;align-items:center;justify-content:center;
@@ -125,16 +126,40 @@
     #proceso .step{background:#fff;border:1px solid #e8eef8;border-radius:22px;padding:18px;box-shadow:0 4px 16px rgba(2,6,23,.05)}
     #proceso .num{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:14px;background:linear-gradient(180deg,#eaf4ff,#d8ecff);border:1px solid #d3e7ff;color:#0e3a66;font-weight:800;margin-bottom:10px}
 
-    /* ===== AUTOMATIZACIÓN (franja diferenciada sin CTA) ===== */
+    /* ===== AUTOMATIZACIÓN (franja diferenciada + encabezado destacado) ===== */
     .auto-band{
       width:100vw; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);
-      background:linear-gradient(135deg,#f3f9ff,#eaf3ff);
+      background:
+        radial-gradient(1200px 300px at 30% 0%, rgba(123,198,255,.25), transparent 60%),
+        linear-gradient(135deg,#f3f9ff,#eaf3ff);
       border-top:1px solid #dfefff; border-bottom:1px solid #dfefff;
     }
     .auto-hero{background:transparent;border:0;border-radius:0;padding:0}
+    .auto-head{padding:6px 0 4px; position:relative; margin-bottom:10px}
+    .auto-title{
+      font-weight:800; line-height:1.08;
+      font-size: clamp(28px, 4.6vw, 42px);
+      letter-spacing:.2px;
+    }
+    .auto-head::after{
+      content:""; display:block; height:4px; width:min(220px,35%);
+      margin-top:10px; border-radius:999px;
+      background:linear-gradient(90deg,#003366,#7bc6ff);
+      box-shadow:0 6px 20px rgba(0,70,150,.25);
+    }
+    .auto-lead{font-size:clamp(15px,2.1vw,18px); color:#2b435f; max-width:75ch; line-height:1.65}
     .auto-grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
-    .auto-block{padding:20px;border-radius:20px;background:linear-gradient(#fff,#fff),linear-gradient(135deg,rgba(0,70,150,.12),rgba(123,198,255,.22));background-origin:border-box;background-clip:padding-box,border-box;border:1px solid transparent;box-shadow:0 6px 22px rgba(2,6,23,.06)}
-    .badge-num{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:10px;background:linear-gradient(180deg,#eaf4ff,#d8ecff);border:1px solid #d3e7ff;color:#0e3a66;font-weight:800;margin-bottom:8px;font-size:14px}
+    .auto-block{
+      padding:20px;border-radius:20px;
+      background:linear-gradient(#fff,#fff),linear-gradient(135deg,rgba(0,70,150,.12),rgba(123,198,255,.22));
+      background-origin:border-box;background-clip:padding-box,border-box;border:1px solid transparent;
+      box-shadow:0 6px 22px rgba(2,6,23,.06)
+    }
+    .badge-num{
+      display:inline-grid;place-items:center;width:32px;height:32px;border-radius:10px;
+      background:linear-gradient(180deg,#eaf4ff,#d8ecff);border:1px solid #d3e7ff;
+      color:#0e3a66;font-weight:800;margin-bottom:8px;font-size:14px
+    }
     .auto-divider{height:1px;background:linear-gradient(90deg,transparent,#dfefff,transparent);margin:18px 0;border:0}
 
     /* ===== FORM & FOOTER ===== */
@@ -213,12 +238,14 @@
     </div>
   </section>
 
-  <!-- ===== AUTOMATIZACIÓN (franja diferenciada y sin CTA) ===== -->
+  <!-- ===== AUTOMATIZACIÓN (franja diferenciada + encabezado destacado, SIN CTA) ===== -->
   <section id="automatizacion" class="auto-band">
     <div class="container">
       <div class="auto-hero reveal">
-        <h3 style="margin:0 0 8px">Automatización de Redes — publicá y respondé en piloto automático</h3>
-        <p style="margin:0">
+        <div class="auto-head">
+          <h3 class="auto-title">Automatización de Redes — publicá y respondé en piloto automático</h3>
+        </div>
+        <p class="auto-lead">
           Programá semanas de contenido, activá respuestas inteligentes y recibí reportes accionables.
           Todo con herramientas oficiales de Meta y flujos auditables.
         </p>
@@ -428,8 +455,6 @@ ${f.get('message')}`;
       window.location.href=`mailto:${CONFIG.EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       document.getElementById('formMsg').textContent='Abriendo tu cliente de email…';
     });
-
-    // (Se quitó el botón de automatización, por eso no hay listener para btnAutoWsp)
   </script>
 </body>
 </html>

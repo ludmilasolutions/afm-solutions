@@ -13,174 +13,131 @@
   <meta property="og:url" content="https://tusitio.example">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --brand:#003366;--brand-2:#004a99;--accent:#7bc6ff;
+      --brand:#003366;--accent:#7bc6ff;
       --ink:#0b1220;--muted:#6b7280;--bg:#f7f9fc;--card:#ffffff;--border:#e5e7eb;
       --shadow:0 10px 30px rgba(0,0,0,.08); --elev:0 20px 50px rgba(2,6,23,.08);
-      --gap: clamp(12px, 2.5vw, 24px); --radius: 16px; --radius-xl: 22px;
+      --gap: clamp(12px, 2.5vw, 24px);
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
     html{scroll-behavior:smooth}
-    body{margin:0;font-family:Poppins,system-ui,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+    body{margin:0;font-family:Poppins,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
     .container{max-width:1200px;margin:0 auto;padding-inline: clamp(12px, 3vw, 24px)}
     img{max-width:100%;height:auto;display:block}
 
-    /* ===== ENLACES: sin subrayado en todo el sitio (incluido visited/hover) ===== */
-    a, a:visited, a:hover, a:focus { text-decoration: none; color: inherit }
+    /* ===== ENLACES: sin subrayado global ===== */
+    a,a:visited,a:hover,a:focus{ text-decoration:none; color:inherit }
 
-    /* ===== Header ===== */
-    header{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid var(--border);z-index:50}
-    header .nav-bleed{
-      width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
-      padding-inline: clamp(12px, 3vw, 24px);padding-block:10px;
-      display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px
+    /* ===== HEADER (fila desktop / burger mobile) ===== */
+    header{
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,.95);
+      backdrop-filter:saturate(160%) blur(10px);
+      border-bottom:1px solid var(--border);
     }
-    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0;justify-self:start}
-    .brand img{height: clamp(58px, 9vw, 110px);width:auto}
-    .title{font-weight:800;letter-spacing:.2px;font-size:clamp(18px,2.3vw,28px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .menu{display:flex;gap:8px;align-items:center;justify-content:center;min-width:0;flex-wrap:wrap}
-    .menu a{padding:10px 12px;border-radius:12px;color:#1f2937;font-weight:600;transition:.2s;white-space:nowrap}
+    header .nav{
+      max-width:1200px;margin:0 auto;
+      padding:12px 24px;
+      display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;
+    }
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand img{height: clamp(78px, 13vw, 150px);width:auto}
+
+    .menu{display:flex;gap:18px;justify-content:center}
+    .menu a{padding:10px 12px;border-radius:10px;font-weight:600;color:#1f2937;transition:.2s}
     .menu a:hover{background:rgba(0,70,150,.08)}
-    .cta{display:flex;gap:10px;align-items:center;justify-content:flex-end}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:14px;border:1px solid var(--border);background:#fff;color:inherit;font-weight:700;transition:.25s}
-    .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
-    .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+    .cta .btn{padding:10px 16px;border-radius:12px;font-weight:700;border:1px solid var(--brand);transition:.25s}
+    .btn.primary{background:var(--brand);color:#fff}
+    .btn.primary:hover{background:#002652}
 
     /* Burger */
-    .burger{display:none;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;border:1px solid var(--border);background:#fff;cursor:pointer}
+    .burger{display:none;width:42px;height:42px;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:10px;background:#fff;cursor:pointer}
     .burger .bar{width:20px;height:2px;background:#111;border-radius:2px;position:relative}
     .burger .bar::before,.burger .bar::after{content:"";position:absolute;left:0;width:20px;height:2px;background:#111;border-radius:2px}
     .burger .bar::before{top:-6px}.burger .bar::after{top:6px}
 
-    @media (max-width:820px){
-      header .nav-bleed{grid-template-columns:auto auto;grid-template-areas:"brand burger" "menu  menu";row-gap:8px}
-      .brand{grid-area:brand}
-      .menu{grid-area:menu; justify-content:flex-start; display:none}
+    @media(max-width:820px){
+      header .nav{grid-template-columns:auto auto}
+      .menu{display:none;position:relative;grid-column:1/-1;flex-direction:column;align-items:flex-start;margin-top:10px}
       .menu.open{display:flex}
       .cta{display:none}
-      .burger{display:flex;grid-area:burger}
+      .burger{display:flex;justify-self:end}
     }
-    @media (max-width:1220px){ .title{display:none} }
 
-    /* ===== Hero ===== */
-    .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
-    .hero-wrap{display:grid;grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr);gap:var(--gap);align-items:center;padding-block: clamp(28px, 5vw, 44px)}
-    .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid var(--border);font-size:12px;color:#0009}
-    .h1{font-size:clamp(30px,5.4vw,54px);line-height:1.08;margin:16px 0 10px;font-weight:800;letter-spacing:.2px}
+    /* ===== HERO ===== */
+    .hero{border-bottom:1px solid var(--border)}
+    .hero-wrap{
+      display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+      gap:var(--gap);align-items:center;padding-block: clamp(28px, 5vw, 44px)
+    }
+    .badge{display:inline-flex;gap:8px;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid var(--border);font-size:12px;color:#0009}
+    .h1{font-size:clamp(30px,5.2vw,52px);line-height:1.08;margin:16px 0 10px;font-weight:800}
     .lead{font-size:clamp(15px,2.1vw,18px);color:#334155;max-width:70ch;line-height:1.65}
     .hero-cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
-    .illus{
-      position:relative;border:1px solid var(--border);border-radius:24px;
-      min-height: clamp(220px, 36vw, 340px);box-shadow:0 5px 18px rgba(0,0,0,.05);
-      background:url('assets/afm-logo-original.png') center/contain no-repeat;
-    }
-    .illus::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.18));border-radius:24px}
+    .illus{border:1px solid var(--border);border-radius:22px;min-height: clamp(220px, 36vw, 340px);background:url('assets/afm-logo-original.png') center/contain no-repeat;box-shadow:0 5px 18px rgba(0,0,0,.05)}
+    @media(max-width:900px){ .hero-wrap{grid-template-columns:1fr} }
 
-    /* ===== Secciones ===== */
+    /* ===== SECCIONES & GRIDS ===== */
     section{padding-block: clamp(30px, 5.5vw, 48px)}
-    .section-title{font-size:clamp(24px,3.6vw,34px);margin:0 0 8px;font-weight:800;letter-spacing:.2px}
+    .section-title{font-size:clamp(24px,3.4vw,32px);margin:0 0 8px;font-weight:800}
     .section-sub{color:var(--muted);margin:0 0 22px}
-
-    /* Grid responsive */
     .grid{display:grid;gap:18px}
-    .auto-fit{grid-template-columns: repeat(auto-fit, minmax(270px, 1fr))}
+    .auto-fit{grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
 
-    /* ===== Tarjetas ===== */
+    /* ===== TARJETAS ===== */
     .card{
-      position:relative;background:var(--card);border-radius:22px;
-      padding:20px;border:1px solid transparent;
+      background:var(--card);border-radius:22px;padding:20px;border:1px solid transparent;
       background-image: linear-gradient(#fff,#fff), linear-gradient(135deg, rgba(0,70,150,.12), rgba(123,198,255,.22));
       background-origin: border-box; background-clip: padding-box, border-box;
-      box-shadow:0 6px 22px rgba(2,6,23,.06);
-      transition:.35s;
+      box-shadow:0 6px 22px rgba(2,6,23,.06); transition:.3s;
     }
     .card:hover{transform:translateY(-4px);box-shadow:var(--elev)}
-    .card h3{margin:6px 0 8px;font-size:clamp(18px,2.2vw,22px);letter-spacing:.2px}
-    .card p{line-height:1.65}
+    .card h3{margin:6px 0 8px;font-size:clamp(18px,2.2vw,22px)}
+    .pill{display:inline-flex;gap:8px;padding:8px 12px;border-radius:999px;background:linear-gradient(180deg,#f1f6ff,#e7f2ff);border:1px solid #d9e8ff;color:#0e3a66;font-weight:700;font-size:12px}
 
-    .pill{
-      display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
-      background:linear-gradient(180deg,#f1f6ff,#e7f2ff); border:1px solid #d9e8ff;
-      color:#0e3a66;font-weight:700;font-size:12px;letter-spacing:.2px
-    }
+    /* ===== THUMBS (Portfolio) ===== */
+    .thumb{aspect-ratio:16/9;border-radius:16px;border:1px solid var(--border);background:#eef3fb url('assets/placeholder-16x9.png') center/cover no-repeat;box-shadow:0 6px 20px rgba(2,6,23,.06)}
+    .meta{display:flex;align-items:center;justify-content:space-between}
+    .meta .tag{font-size:12px;color:var(--brand);font-weight:700}
 
-    /* Thumbs */
-    .thumb{aspect-ratio:16/9;border-radius:16px;border:1px solid var(--border);
-      background:#eef3fb url('assets/placeholder-16x9.png') center/cover no-repeat;
-      box-shadow:0 6px 20px rgba(2,6,23,.06)
-    }
+    /* ===== PROCESO ===== */
+    #proceso .steps{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    #proceso .step{background:#fff;border:1px solid #e8eef8;border-radius:22px;padding:18px;box-shadow:0 4px 16px rgba(2,6,23,.05)}
+    #proceso .num{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:14px;background:linear-gradient(180deg,#eaf4ff,#d8ecff);border:1px solid #d3e7ff;color:#0e3a66;font-weight:800;margin-bottom:10px}
 
-    /* Proceso */
-    #proceso .steps{display:grid;gap:16px;grid-template-columns: repeat(auto-fit, minmax(220px,1fr))}
-    #proceso .step{
-      background:var(--card);border-radius:22px;padding:18px;border:1px solid #e8eef8;
-      box-shadow:0 4px 16px rgba(2,6,23,.05);
-      position:relative;overflow:hidden;opacity:0;transform:translateY(12px);transition:.5s
-    }
-    #proceso .step .num{
-      display:inline-grid;place-items:center;width:44px;height:44px;border-radius:14px;
-      background:linear-gradient(180deg,#eaf4ff,#d8ecff);border:1px solid #d3e7ff;
-      color:#0e3a66;font-weight:800;margin-bottom:10px
-    }
+    /* ===== AUTOMATIZACIÓN ===== */
+    .auto-hero{background:linear-gradient(135deg,#f6fbff,#eef7ff);border:1px solid #dfefff;border-radius:24px;padding:22px;box-shadow:0 8px 28px rgba(2,6,23,.06)}
+    .auto-grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
+    .auto-block{padding:20px;border-radius:20px;background:linear-gradient(#fff,#fff),linear-gradient(135deg,rgba(0,70,150,.12),rgba(123,198,255,.22));background-origin:border-box;background-clip:padding-box,border-box;border:1px solid transparent;box-shadow:0 6px 22px rgba(2,6,23,.06)}
+    .badge-num{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:10px;background:linear-gradient(180deg,#eaf4ff,#d8ecff);border:1px solid #d3e7ff;color:#0e3a66;font-weight:800;margin-bottom:8px;font-size:14px}
+    .auto-divider{height:1px;background:linear-gradient(90deg,transparent,#dfefff,transparent);margin:18px 0;border:0}
 
-    /* Form + Footer */
+    /* ===== FORM & FOOTER ===== */
     form{display:grid;gap:12px;max-width:720px}
     .field{display:grid;gap:6px}
     .field input,.field textarea{padding:12px 14px;border-radius:14px;border:1px solid var(--border);background:#fff;font:inherit}
     .field input:focus,.field textarea:focus{outline:2px solid rgba(0,70,150,.22);border-color:#cfe6ff}
     footer{border-top:1px solid var(--border);background:#fff}
-    .foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;padding-block:18px;padding-inline: clamp(12px,3vw,24px);color:#4b5563}
+    .foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:18px 24px;color:#4b5563}
     .wa{position:fixed;right:16px;bottom:16px;z-index:60}
     .wa a{display:inline-grid;place-items:center;width:56px;height:56px;border-radius:16px;background:#25D366;color:#fff;text-decoration:none;font-weight:800;box-shadow:0 10px 30px rgba(37,211,102,.45)}
 
-    /* Animaciones */
+    /* Reveal anim */
     .reveal{opacity:0;transform:translateY(12px);transition:opacity .5s, transform .5s}
-    .reveal.show, #proceso .step.show{opacity:1;transform:none}
-
-    /* Automatización */
-    .auto-hero{
-      background:linear-gradient(135deg,#f6fbff, #eef7ff);
-      border:1px solid #dfefff;border-radius:24px;padding:22px;display:grid;gap:10px;
-      box-shadow:0 8px 28px rgba(2,6,23,.06)
-    }
-    .auto-grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
-    .auto-block{
-      position:relative;padding:20px;border-radius:20px;
-      background:linear-gradient(#fff,#fff),linear-gradient(135deg,rgba(0,70,150,.12),rgba(123,198,255,.22));
-      background-origin:border-box;background-clip:padding-box,border-box;border:1px solid transparent;
-      box-shadow:0 6px 22px rgba(2,6,23,.06)
-    }
-    .badge-num{
-      display:inline-grid;place-items:center;width:32px;height:32px;border-radius:10px;
-      background:linear-gradient(180deg,#eaf4ff,#d8ecff);border:1px solid #d3e7ff;
-      color:#0e3a66;font-weight:800;margin-bottom:8px;font-size:14px
-    }
-    .auto-divider{
-      height:1px;background:linear-gradient(90deg,transparent,#dfefff,transparent);
-      margin:18px 0;border:0
-    }
+    .reveal.show{opacity:1;transform:none}
   </style>
 </head>
 <body>
-  <!-- Header -->
+  <!-- ===== HEADER ===== -->
   <header>
-    <div class="nav-bleed" id="nav">
+    <div class="nav">
       <a class="brand" href="#" aria-label="AFM Solutions">
         <img src="assets/logo-afm-horizontal.png" alt="AFM Solutions logo">
-        <span class="title">AFM Solutions</span>
       </a>
 
-      <!-- Burger (móvil) -->
-      <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
-        <span class="bar"></span>
-      </button>
-
-      <nav class="menu" aria-label="Principal" id="menu">
+      <nav class="menu" id="menu">
         <a href="#servicios">Servicios</a>
         <a href="#automatizacion">Automatización</a>
         <a href="#portfolio">Trabajos</a>
@@ -191,10 +148,12 @@
       <div class="cta">
         <a class="btn primary" href="#contacto">Pedir presupuesto</a>
       </div>
+
+      <button class="burger" id="burger" aria-label="Menú"><span class="bar"></span></button>
     </div>
   </header>
 
-  <!-- Hero -->
+  <!-- ===== HERO ===== -->
   <section class="hero">
     <div class="container hero-wrap">
       <div class="reveal">
@@ -210,7 +169,7 @@
     </div>
   </section>
 
-  <!-- Servicios -->
+  <!-- ===== SERVICIOS ===== -->
   <section id="servicios" class="container">
     <h2 class="section-title reveal">Servicios</h2>
     <p class="section-sub reveal">Soluciones técnicas que generan resultados.</p>
@@ -219,16 +178,11 @@
       <article class="card reveal"><span class="pill">📱 Apps</span><h3>Apps y Escritorio</h3><p>Android (PWA/KivyMD) y desktop (Tkinter). Diseño y empaquetado listo.</p></article>
       <article class="card reveal"><span class="pill">⚙️ Gestión</span><h3>Sistemas a medida</h3><p>Facturación, stock, reportes, roles/usuarios, tickets y cierre de caja.</p></article>
       <article class="card reveal"><span class="pill">🔌 Integraciones</span><h3>APIs & Automatización</h3><p>WhatsApp, Google Sheets/Drive, Mercado Pago/Stripe, dashboards y bots.</p></article>
-
-      <article class="card reveal">
-        <span class="pill">🤖 Marketing & Automatización</span>
-        <h3>Redes que trabajan solas</h3>
-        <p>Calendario y publicación con Meta Business Suite, respuestas automáticas, chatbots para IG/WhatsApp, reportes y flujos con Google Sheets.</p>
-      </article>
+      <article class="card reveal"><span class="pill">🤖 Marketing & Automatización</span><h3>Redes que trabajan solas</h3><p>Calendario y publicación con Meta Business Suite, respuestas automáticas, chatbots para IG/WhatsApp, reportes y flujos con Google Sheets.</p></article>
     </div>
   </section>
 
-  <!-- Automatización -->
+  <!-- ===== AUTOMATIZACIÓN ===== -->
   <section id="automatizacion" class="container">
     <div class="auto-hero reveal">
       <h3>Automatización de Redes — que se publiquen y respondan solas</h3>
@@ -243,75 +197,55 @@
     <div class="auto-grid">
       <div class="auto-block reveal">
         <div class="badge-num">1</div>
-        <h3 style="margin:4px 0 8px">Planificación & Publicación</h3>
+        <h3>Planificación & Publicación</h3>
         <p>Calendario en Google Sheets + programación en IG/FB (Meta Business Suite).</p>
-        <ul>
-          <li>Plantillas de copy + hashtags</li>
-          <li>Programación semanal o quincenal</li>
-          <li>OK previo y control de calidad</li>
-        </ul>
+        <ul><li>Plantillas de copy + hashtags</li><li>Programación semanal o quincenal</li><li>OK previo y control de calidad</li></ul>
       </div>
-
       <div class="auto-block reveal">
         <div class="badge-num">2</div>
-        <h3 style="margin:4px 0 8px">Respuestas Automáticas</h3>
+        <h3>Respuestas Automáticas</h3>
         <p>Saludo, FAQs y fuera de horario. Opcional: bot guiado y derivación a humano.</p>
-        <ul>
-          <li>Botones: Precios, Contacto</li>
-          <li>WhatsApp Business templates</li>
-          <li>Bandeja unificada Meta</li>
-        </ul>
+        <ul><li>Botones: Precios, Contacto</li><li>WhatsApp Business templates</li><li>Bandeja unificada Meta</li></ul>
       </div>
-
       <div class="auto-block reveal">
         <div class="badge-num">3</div>
-        <h3 style="margin:4px 0 8px">Integraciones & Reportes</h3>
+        <h3>Integraciones & Reportes</h3>
         <p>Leads a Sheets, avisos automáticos y tableros con KPIs simples.</p>
-        <ul>
-          <li>Apps Script / Make / Zapier</li>
-          <li>KPIs: alcance, clics, mensajes, CPL</li>
-          <li>Resumen semanal automático</li>
-        </ul>
+        <ul><li>Apps Script / Make / Zapier</li><li>KPIs: alcance, clics, mensajes, CPL</li><li>Resumen semanal automático</li></ul>
       </div>
     </div>
   </section>
 
-  <!-- Trabajos -->
+  <!-- ===== TRABAJOS ===== -->
   <section id="portfolio" class="container portfolio">
     <h2 class="section-title reveal">Trabajos reales</h2>
     <p class="section-sub reveal">Visitá los proyectos en producción.</p>
-
     <div class="grid auto-fit">
       <a class="card item reveal" href="https://puntokiosco.com.ar" target="_blank" rel="noopener" aria-label="PuntoKiosco">
         <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://puntokiosco.com.ar"></div>
         <div class="meta"><strong>PuntoKiosco</strong><span class="tag">Sistema</span></div>
         <p>Gestión integral de ventas, stock, turnos y cierre de caja.</p>
       </a>
-
       <a class="card item reveal" href="https://el-tachi.netlify.app" target="_blank" rel="noopener" aria-label="Rotisería El Tachi">
         <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://el-tachi.netlify.app"></div>
         <div class="meta"><strong>Rotisería El Tachi</strong><span class="tag">Pedidos</span></div>
         <p>Menú dinámico, carrito con WhatsApp y banners administrables.</p>
       </a>
-
       <a class="card item reveal" href="https://soldarte.vercel.app" target="_blank" rel="noopener" aria-label="Soldarte">
         <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://soldarte.vercel.app"></div>
         <div class="meta"><strong>Soldarte</strong><span class="tag">Landing</span></div>
         <p>Catálogo de herrería industrial con formulario de presupuestos.</p>
       </a>
-
       <a class="card item reveal" href="https://ludmilasolutions.github.io/mgv" target="_blank" rel="noopener" aria-label="MGV">
         <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://ludmilasolutions.github.io/mgv"></div>
         <div class="meta"><strong>MGV</strong><span class="tag">Multi-local</span></div>
         <p>Plataforma multi-local con catálogo por categorías y pedidos online.</p>
       </a>
-
       <a class="card item reveal" href="https://ludmilasolutions.github.io/losamigos/" target="_blank" rel="noopener" aria-label="Los Amigos">
         <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://ludmilasolutions.github.io/losamigos/"></div>
         <div class="meta"><strong>Los Amigos</strong><span class="tag">Pedidos</span></div>
         <p>Carta online con combos, horarios y pedidos por WhatsApp.</p>
       </a>
-
       <a class="card item reveal" href="https://larockola.netlify.app/" target="_blank" rel="noopener" aria-label="La Rockola">
         <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://larockola.netlify.app/"></div>
         <div class="meta"><strong>La Rockola</strong><span class="tag">Landing</span></div>
@@ -320,19 +254,19 @@
     </div>
   </section>
 
-  <!-- Proceso -->
+  <!-- ===== PROCESO ===== -->
   <section id="proceso" class="container">
     <h2 class="section-title reveal">Cómo trabajamos</h2>
     <p class="section-sub reveal">Proceso claro, entregas a tiempo y soporte post-lanzamiento.</p>
     <div class="steps">
-      <div class="step"><div class="num">1</div><h3>Consulta</h3><p>Reunión breve para entender objetivos, alcance y tiempos.</p></div>
-      <div class="step"><div class="num">2</div><h3>Propuesta</h3><p>Roadmap simple por etapas, plazos y presupuesto cerrado.</p></div>
-      <div class="step"><div class="num">3</div><h3>Desarrollo</h3><p>Diseño + código con entregas parciales y feedback continuo.</p></div>
-      <div class="step"><div class="num">4</div><h3>Entrega</h3><p>Deploy, capacitación corta y soporte para asegurar resultados.</p></div>
+      <div class="step reveal"><div class="num">1</div><h3>Consulta</h3><p>Reunión breve para entender objetivos, alcance y tiempos.</p></div>
+      <div class="step reveal"><div class="num">2</div><h3>Propuesta</h3><p>Roadmap simple por etapas, plazos y presupuesto cerrado.</p></div>
+      <div class="step reveal"><div class="num">3</div><h3>Desarrollo</h3><p>Diseño + código con entregas parciales y feedback continuo.</p></div>
+      <div class="step reveal"><div class="num">4</div><h3>Entrega</h3><p>Deploy, capacitación corta y soporte para asegurar resultados.</p></div>
     </div>
   </section>
 
-  <!-- Contacto -->
+  <!-- ===== CONTACTO ===== -->
   <section id="contacto" class="container">
     <h2 class="section-title reveal">Contacto</h2>
     <p class="section-sub reveal">Contanos qué necesitás y te respondemos a la brevedad.</p>
@@ -351,7 +285,7 @@
     </form>
   </section>
 
-  <!-- Footer -->
+  <!-- ===== FOOTER ===== -->
   <footer>
     <div class="foot">
       <div style="display:flex;align-items:center;gap:10px">
@@ -369,12 +303,10 @@
   <!-- WhatsApp flotante -->
   <div class="wa"><a id="waFloat" href="https://wa.me/543417558966?text=Hola%20AFM%20Solutions,%20quiero%20un%20presupuesto" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a></div>
 
-  <!-- Datos estructurados -->
+  <!-- JSON-LD -->
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Organization","name":"AFM Solutions","url":"https://tusitio.example","logo":"https://tusitio.example/assets/logo-afm-horizontal.png","contactPoint":[{"@type":"ContactPoint","contactType":"sales","email":"contactoafmsolutions@gmail.com","telephone":"+543417558966","areaServed":"AR","availableLanguage":["es","en"]}]}
   </script>
-
-  <!-- Service -->
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Service","name":"Automatización y Marketing en Redes","provider":{"@type":"Organization","name":"AFM Solutions","url":"https://tusitio.example"},"areaServed":"AR","serviceType":"Social Media Marketing","description":"Planificación, programación en Meta Business Suite, respuestas automáticas, chatbots IG/WhatsApp, integraciones con Google Sheets y reportes."}
   </script>
@@ -384,62 +316,59 @@
     document.getElementById('y').textContent = new Date().getFullYear();
 
     // Burger toggle
-    const burger = document.getElementById('burger');
-    const menu = document.getElementById('menu');
-    burger?.addEventListener('click', ()=>{
-      const open = menu.classList.toggle('open');
-      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
+    const burger=document.getElementById('burger');
+    const menu=document.getElementById('menu');
+    burger.addEventListener('click',()=> menu.classList.toggle('open'));
 
     // Reveal + carga perezosa de miniaturas
-    const io = new IntersectionObserver((entries)=>{
+    const io=new IntersectionObserver((entries)=>{
       entries.forEach((e)=>{
         if(e.isIntersecting){
           e.target.classList.add('show');
-          const thumb = e.target.querySelector('.thumb') ?? e.target;
+          const thumb=e.target.querySelector('.thumb') ?? e.target;
           if(thumb && thumb.dataset.live){
-            const oldBg = thumb.style.backgroundImage || "url('assets/placeholder-16x9.png')";
-            thumb.style.backgroundImage = `url('${thumb.dataset.live}'), ${oldBg}`;
+            const oldBg=thumb.style.backgroundImage || "url('assets/placeholder-16x9.png')";
+            thumb.style.backgroundImage=`url('${thumb.dataset.live}'), ${oldBg}`;
             thumb.removeAttribute('data-live');
           }
           io.unobserve(e.target);
         }
       });
-    },{rootMargin:'200px 0px', threshold:0.05});
+    },{rootMargin:'200px 0px',threshold:0.05});
     document.querySelectorAll('.reveal, .card, #proceso .step').forEach(el=>io.observe(el));
 
     // WhatsApp + mailto
-    const CONFIG = { WHATSAPP_NUMBER:'543417558966', WHATSAPP_PREFIX:'Hola AFM Solutions, quiero un presupuesto', EMAIL_TO:'contactoafmsolutions@gmail.com' };
+    const CONFIG={ WHATSAPP_NUMBER:'543417558966', WHATSAPP_PREFIX:'Hola AFM Solutions, quiero un presupuesto', EMAIL_TO:'contactoafmsolutions@gmail.com' };
 
     document.getElementById('btnWsp').addEventListener('click',(e)=>{
       e.preventDefault();
-      const f = new FormData(document.getElementById('contactForm'));
-      const msg = `${CONFIG.WHATSAPP_PREFIX}%0A%0A`
-        + `Nombre: ${encodeURIComponent(f.get('name')||'')}` + `%0A`
-        + `Email: ${encodeURIComponent(f.get('email')||'')}` + `%0A`
-        + `Teléfono: ${encodeURIComponent(f.get('phone')||'')}` + `%0A`
-        + `Mensaje: ${encodeURIComponent(f.get('message')||'')}`;
+      const f=new FormData(document.getElementById('contactForm'));
+      const msg=`${CONFIG.WHATSAPP_PREFIX}%0A%0A`
+        +`Nombre: ${encodeURIComponent(f.get('name')||'')}`+`%0A`
+        +`Email: ${encodeURIComponent(f.get('email')||'')}`+`%0A`
+        +`Teléfono: ${encodeURIComponent(f.get('phone')||'')}`+`%0A`
+        +`Mensaje: ${encodeURIComponent(f.get('message')||'')}`;
       window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${msg}`,'_blank');
     });
 
     document.getElementById('contactForm').addEventListener('submit',(e)=>{
       e.preventDefault();
-      const f = new FormData(e.target);
-      const subject = 'Nuevo contacto desde AFM Solutions';
-      const body = `Nombre: ${f.get('name')}
+      const f=new FormData(e.target);
+      const subject='Nuevo contacto desde AFM Solutions';
+      const body=`Nombre: ${f.get('name')}
 Email: ${f.get('email')}
 Teléfono: ${f.get('phone')||''}
 
 Mensaje:
 ${f.get('message')}`;
-      window.location.href = `mailto:${CONFIG.EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      document.getElementById('formMsg').textContent = 'Abriendo tu cliente de email…';
+      window.location.href=`mailto:${CONFIG.EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      document.getElementById('formMsg').textContent='Abriendo tu cliente de email…';
     });
 
     // CTA de Automatización
     document.getElementById('btnAutoWsp')?.addEventListener('click',(e)=>{
       e.preventDefault();
-      const base = `Hola AFM Solutions, quiero automatizar mis redes (Meta Business Suite + respuestas automáticas + reportes). ¿Coordinamos una llamada?`;
+      const base=`Hola AFM Solutions, quiero automatizar mis redes (Meta Business Suite + respuestas automáticas + reportes). ¿Coordinamos una llamada?`;
       window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(base)}`,'_blank');
     });
   </script>

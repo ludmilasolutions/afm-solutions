@@ -18,11 +18,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --brand:#003366;--brand-2:#004a99;--accent:#ffcc00;--ink:#0b1220;
-      --muted:#6b7280;--bg:#f7f9fc;--card:#ffffff;--border:#e5e7eb;
-      --shadow:0 10px 30px rgba(0,0,0,.09);
+      --brand:#003366;--brand-2:#004a99;--accent:#7bc6ff;/* acento celeste suave */
+      --ink:#0b1220;--muted:#6b7280;--bg:#f7f9fc;--card:#ffffff;--border:#e5e7eb;
+      --shadow:0 10px 30px rgba(0,0,0,.08);
+      --elev:0 20px 50px rgba(2,6,23,.08);
       --gap: clamp(12px, 2.5vw, 24px);
-      --radius: 16px;
+      --radius: 16px; --radius-xl: 22px;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -31,8 +32,8 @@
     .container{max-width:1200px;margin:0 auto;padding-inline: clamp(12px, 3vw, 24px)}
     img{max-width:100%;height:auto;display:block}
 
-    /* ===== Header (logo izq., menú centro, CTA der.) ===== */
-    header{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--border);z-index:50}
+    /* ===== Header ===== */
+    header{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid var(--border);z-index:50}
     header .nav-bleed{
       width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
       padding-inline: clamp(12px, 3vw, 24px);padding-block:10px;
@@ -41,23 +42,16 @@
     .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;min-width:0;justify-self:start}
     .brand img{height: clamp(72px, 13vw, 160px);width:auto}
     .title{font-weight:800;letter-spacing:.2px;font-size:clamp(18px,2.3vw,32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .menu{display:flex;gap:10px;align-items:center;justify-content:center;min-width:0;flex-wrap:wrap}
-    .menu a{padding:10px 12px;border-radius:10px;color:#1f2937;text-decoration:none;font-weight:600;transition:.2s;white-space:nowrap}
+    .menu{display:flex;gap:8px;align-items:center;justify-content:center;min-width:0;flex-wrap:wrap}
+    .menu a{padding:10px 12px;border-radius:12px;color:#1f2937;text-decoration:none;font-weight:600;transition:.2s;white-space:nowrap}
     .menu a:hover{background:rgba(0,70,150,.08)}
     .cta{display:flex;gap:10px;align-items:center;justify-content:flex-end}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid var(--border);background:#fff;color:inherit;text-decoration:none;font-weight:700;transition:.25s}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:14px;border:1px solid var(--border);background:#fff;color:inherit;text-decoration:none;font-weight:700;transition:.25s}
     .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
     .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
 
-    /* Header: 2 filas en móvil */
     @media (max-width:760px){
-      header .nav-bleed{
-        grid-template-columns: 1fr auto;
-        grid-template-areas:
-          "brand cta"
-          "menu  menu";
-        row-gap: 8px;
-      }
+      header .nav-bleed{grid-template-columns: 1fr auto;grid-template-areas:"brand cta" "menu  menu";row-gap: 8px}
       .brand{grid-area: brand}
       .menu{grid-area: menu; justify-content:flex-start}
       .cta{grid-area: cta}
@@ -66,49 +60,70 @@
 
     /* ===== Hero ===== */
     .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
-    .hero-wrap{display:grid;grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr);gap:var(--gap);align-items:center;padding-block: clamp(28px, 5vw, 40px)}
+    .hero-wrap{display:grid;grid-template-columns: minmax(0,1.1fr) minmax(0,.9fr);gap:var(--gap);align-items:center;padding-block: clamp(28px, 5vw, 44px)}
     .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:#fff;border:1px solid var(--border);font-size:12px;color:#0009}
-    .h1{font-size:clamp(26px,5vw,48px);line-height:1.1;margin:16px 0 10px;font-weight:800}
-    .lead{font-size:clamp(15px,2.1vw,18px);color:#334155;max-width:70ch;line-height:1.6}
+    .h1{font-size:clamp(30px,5.4vw,54px);line-height:1.08;margin:16px 0 10px;font-weight:800;letter-spacing:.2px}
+    .lead{font-size:clamp(15px,2.1vw,18px);color:#334155;max-width:70ch;line-height:1.65}
     .hero-cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
     .illus{
-      position:relative;border:1px solid var(--border);border-radius:20px;
-      min-height: clamp(220px, 36vw, 320px);box-shadow:0 5px 18px rgba(0,0,0,.05);
+      position:relative;border:1px solid var(--border);border-radius:24px;
+      min-height: clamp(220px, 36vw, 340px);box-shadow:0 5px 18px rgba(0,0,0,.05);
       background:url('assets/afm-logo-original.png') center/contain no-repeat;
     }
-    .illus::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.2));border-radius:20px}
+    .illus::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.18));border-radius:24px}
 
     /* ===== Secciones ===== */
-    section{padding-block: clamp(28px, 5vw, 42px)}
-    .section-title{font-size:clamp(22px,3.4vw,30px);margin:0 0 8px;font-weight:800}
+    section{padding-block: clamp(30px, 5.5vw, 48px)}
+    .section-title{font-size:clamp(24px,3.6vw,34px);margin:0 0 8px;font-weight:800;letter-spacing:.2px}
     .section-sub{color:var(--muted);margin:0 0 22px}
 
-    /* Grid responsive “auto-fit” */
-    .grid{display:grid;gap:16px}
-    .auto-fit{grid-template-columns: repeat(auto-fit, minmax(260px, 1fr))}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:0 4px 14px rgba(2,6,23,.04);text-decoration:none;color:inherit;transition:.3s}
-    .card:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(2,6,23,.12)}
-    .portfolio .item{display:flex;flex-direction:column;gap:12px}
-    .meta{display:flex;align-items:center;justify-content:space-between}
-    .meta .tag{font-size:12px;color:var(--brand);font-weight:700}
-    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(0,70,150,.08);color:var(--brand);font-weight:600;font-size:12px}
+    /* Grid responsive */
+    .grid{display:grid;gap:18px}
+    .auto-fit{grid-template-columns: repeat(auto-fit, minmax(270px, 1fr))}
 
-    /* Thumbs (placeholder + live) */
-    .thumb{aspect-ratio:16/9;border-radius:14px;border:1px solid var(--border);
+    /* ===== Tarjetas mejoradas ===== */
+    .card{
+      position:relative;background:var(--card);border-radius:var(--radius-xl);
+      padding:20px;border:1px solid transparent;
+      background-image: linear-gradient(#fff,#fff), linear-gradient(135deg, rgba(0,70,150,.15), rgba(123,198,255,.25));
+      background-origin: border-box; background-clip: padding-box, border-box;
+      box-shadow:0 6px 22px rgba(2,6,23,.06);
+      transition:.35s;
+    }
+    .card:hover{transform:translateY(-4px);box-shadow:var(--elev)}
+    .card h3{margin:6px 0 8px;font-size:clamp(18px,2.2vw,22px);letter-spacing:.2px}
+    .card p{line-height:1.65}
+
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
+      background:linear-gradient(180deg,#f1f6ff,#e7f2ff); border:1px solid #d9e8ff;
+      color:#0e3a66;font-weight:700;font-size:12px;letter-spacing:.2px
+    }
+
+    /* Thumbs */
+    .thumb{aspect-ratio:16/9;border-radius:16px;border:1px solid var(--border);
       background:#eef3fb url('assets/placeholder-16x9.png') center/cover no-repeat;
       box-shadow:0 6px 20px rgba(2,6,23,.06)
     }
 
     /* Proceso */
     #proceso .steps{display:grid;gap:16px;grid-template-columns: repeat(auto-fit, minmax(220px,1fr))}
-    #proceso .step{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;position:relative;overflow:hidden;opacity:0;transform:translateY(12px);transition:.5s}
-    #proceso .step .num{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--accent);font-weight:800;margin-bottom:8px}
+    #proceso .step{
+      background:var(--card);border-radius:var(--radius-xl);padding:18px;border:1px solid #e8eef8;
+      box-shadow:0 4px 16px rgba(2,6,23,.05);
+      position:relative;overflow:hidden;opacity:0;transform:translateY(12px);transition:.5s
+    }
+    #proceso .step .num{
+      display:inline-grid;place-items:center;width:44px;height:44px;border-radius:14px;
+      background:linear-gradient(180deg,#eaf4ff,#d8ecff);border:1px solid #d3e7ff;
+      color:#0e3a66;font-weight:800;margin-bottom:10px
+    }
 
     /* Form + Footer */
     form{display:grid;gap:12px;max-width:720px}
     .field{display:grid;gap:6px}
-    .field input,.field textarea{padding:12px 14px;border-radius:12px;border:1px solid var(--border);background:#fff;font:inherit}
-    .field input:focus,.field textarea:focus{outline:2px solid rgba(0,70,150,.25);border-color:var(--brand-2)}
+    .field input,.field textarea{padding:12px 14px;border-radius:14px;border:1px solid var(--border);background:#fff;font:inherit}
+    .field input:focus,.field textarea:focus{outline:2px solid rgba(0,70,150,.22);border-color:#cfe6ff}
     footer{border-top:1px solid var(--border);background:#fff}
     .foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;padding-block:18px;padding-inline: clamp(12px,3vw,24px);color:#4b5563}
     .wa{position:fixed;right:16px;bottom:16px;z-index:60}
@@ -117,6 +132,18 @@
     /* Animaciones simples */
     .reveal{opacity:0;transform:translateY(12px);transition:opacity .5s, transform .5s}
     .reveal.show, #proceso .step.show{opacity:1;transform:none}
+
+    /* ===== Automatización — estilos extra ===== */
+    .auto-hero{
+      background:linear-gradient(135deg,#f6fbff, #eef7ff);
+      border:1px solid #dfefff;border-radius:24px;padding:22px;display:grid;gap:10px;
+      box-shadow:0 8px 28px rgba(2,6,23,.06)
+    }
+    .auto-hero h3{margin:0;font-size:clamp(20px,2.6vw,26px)}
+    .auto-hero p{margin:0;color:#425569}
+    details.card summary{list-style:none}
+    details.card summary::-webkit-details-marker{display:none}
+    details.card[open]{background-image: linear-gradient(#fff,#fff), linear-gradient(135deg, rgba(0,70,150,.12), rgba(123,198,255,.22));}
   </style>
 </head>
 <body>
@@ -131,7 +158,7 @@
         <a href="#servicios">Servicios</a>
         <a href="#portfolio">Trabajos</a>
         <a href="#proceso">Cómo trabajamos</a>
-        <a href="#automatizacion">Automatización</a><!-- NUEVO -->
+        <a href="#automatizacion">Automatización</a>
         <a href="#contacto">Contacto</a>
       </nav>
       <div class="cta">
@@ -166,7 +193,7 @@
       <article class="card reveal"><span class="pill">⚙️ Gestión</span><h3>Sistemas a medida</h3><p>Facturación, stock, reportes, roles/usuarios, tickets y cierre de caja.</p></article>
       <article class="card reveal"><span class="pill">🔌 Integraciones</span><h3>APIs & Automatización</h3><p>WhatsApp, Google Sheets/Drive, Mercado Pago/Stripe, dashboards y bots.</p></article>
 
-      <!-- NUEVA TARJETA: Marketing & Automatización de Redes -->
+      <!-- Nueva tarjeta: Marketing & Automatización de Redes -->
       <article class="card reveal">
         <span class="pill">🤖 Marketing & Automatización</span>
         <h3>Redes que trabajan solas</h3>
@@ -175,48 +202,42 @@
     </div>
   </section>
 
-  <!-- Portfolio (miniaturas EN VIVO con thum.io) -->
+  <!-- Portfolio -->
   <section id="portfolio" class="container portfolio">
     <h2 class="section-title reveal">Trabajos reales</h2>
     <p class="section-sub reveal">Visitá los proyectos en producción.</p>
 
     <div class="grid auto-fit">
-      <!-- PuntoKiosco -->
       <a class="card item reveal" href="https://puntokiosco.com.ar" target="_blank" rel="noopener" aria-label="PuntoKiosco">
         <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://puntokiosco.com.ar"></div>
         <div class="meta"><strong>PuntoKiosco</strong><span class="tag">Sistema</span></div>
         <p>Gestión integral de ventas, stock, turnos y cierre de caja.</p>
       </a>
 
-      <!-- El Tachi -->
       <a class="card item reveal" href="https://el-tachi.netlify.app" target="_blank" rel="noopener" aria-label="Rotisería El Tachi">
         <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://el-tachi.netlify.app"></div>
         <div class="meta"><strong>Rotisería El Tachi</strong><span class="tag">Pedidos</span></div>
         <p>Menú dinámico, carrito con WhatsApp y banners administrables.</p>
       </a>
 
-      <!-- Soldarte -->
       <a class="card item reveal" href="https://soldarte.vercel.app" target="_blank" rel="noopener" aria-label="Soldarte">
         <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://soldarte.vercel.app"></div>
         <div class="meta"><strong>Soldarte</strong><span class="tag">Landing</span></div>
         <p>Catálogo de herrería industrial con formulario de presupuestos.</p>
       </a>
 
-      <!-- MGV -->
       <a class="card item reveal" href="https://ludmilasolutions.github.io/mgv" target="_blank" rel="noopener" aria-label="MGV">
         <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://ludmilasolutions.github.io/mgv"></div>
         <div class="meta"><strong>MGV</strong><span class="tag">Multi-local</span></div>
         <p>Plataforma multi-local con catálogo por categorías y pedidos online.</p>
       </a>
 
-      <!-- Los Amigos -->
       <a class="card item reveal" href="https://ludmilasolutions.github.io/losamigos/" target="_blank" rel="noopener" aria-label="Los Amigos">
         <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://ludmilasolutions.github.io/losamigos/"></div>
         <div class="meta"><strong>Los Amigos</strong><span class="tag">Pedidos</span></div>
         <p>Carta online con combos, horarios y pedidos por WhatsApp.</p>
       </a>
 
-      <!-- La Rockola (URL corregida) -->
       <a class="card item reveal" href="https://larockola.netlify.app/" target="_blank" rel="noopener" aria-label="La Rockola">
         <div class="thumb" data-live="https://image.thum.io/get/width/1600/https://larockola.netlify.app/"></div>
         <div class="meta"><strong>La Rockola</strong><span class="tag">Landing</span></div>
@@ -237,58 +258,62 @@
     </div>
   </section>
 
-  <!-- Automatización de Redes (NUEVA SECCIÓN) -->
+  <!-- Automatización de Redes -->
   <section id="automatizacion" class="container">
-    <h2 class="section-title reveal">Automatización de Redes</h2>
-    <p class="section-sub reveal">Publicá sin fricción, respondé al toque y medí lo que importa.</p>
+    <div class="auto-hero reveal">
+      <h3>Automatización de Redes — que se publiquen y respondan solas</h3>
+      <p>Dejá programadas semanas de contenido, activá respuestas automáticas y recibí reportes con recomendaciones. Todo con herramientas oficiales.</p>
+      <div class="hero-cta" style="margin-top:10px">
+        <a class="btn primary" id="btnAutoWsp" href="#">Empezar setup de automatización</a>
+      </div>
+    </div>
 
+    <div style="height:14px"></div>
     <div class="grid auto-fit">
       <article class="card reveal">
-        <h3 style="margin-top:0">Planificación & Publicación</h3>
-        <p>Armamos un calendario en Google Sheets y lo programamos en <strong>Meta Business Suite</strong> (IG/FB). Todo queda en piloto automático.</p>
+        <span class="pill">📅 Planificación & Publicación</span>
+        <h3>Calendario + Meta Business Suite</h3>
+        <p>Armamos el calendario en Google Sheets y lo programamos en IG/FB de forma oficial. Opciones de revisión y OK previo.</p>
         <ul>
           <li>Plantillas de copy + hashtags</li>
           <li>Programación semanal o quincenal</li>
-          <li>Revisión/OK antes de publicar</li>
+          <li>Control de calidad antes de publicar</li>
         </ul>
       </article>
 
       <article class="card reveal">
-        <h3 style="margin-top:0">Respuestas Automáticas</h3>
-        <p>Activamos <strong>saludo, FAQs y fuera de horario</strong> en la bandeja unificada. Opcional: <strong>bot</strong> con flujos guiados.</p>
+        <span class="pill">💬 Respuestas Automáticas</span>
+        <h3>Saludo, FAQs y fuera de horario</h3>
+        <p>Activamos respuestas rápidas y flujos simples. Opcional: bot guiado y derivación a humano cuando corresponde.</p>
         <ul>
-          <li>Botones rápidos (Precios, Demo, Contacto)</li>
-          <li>Mensajes preaprobados para WhatsApp Business</li>
-          <li>Derivación a humano cuando hace falta</li>
+          <li>Botones: Precios, Demo, Contacto</li>
+          <li>WhatsApp Business templates</li>
+          <li>Bandeja unificada Meta</li>
         </ul>
       </article>
 
       <article class="card reveal">
-        <h3 style="margin-top:0">Integraciones & Reportes</h3>
-        <p>Guardamos leads en <strong>Google Sheets</strong>, enviamos avisos y generamos <strong>reportes</strong> con recomendaciones.</p>
+        <span class="pill">📈 Integraciones & Reportes</span>
+        <h3>Leads y métricas sin esfuerzo</h3>
+        <p>Leads a Google Sheets, avisos automáticos y tableros con KPIs simples para entender qué funciona y qué escalar.</p>
         <ul>
-          <li>Flujos con Apps Script / Make / Zapier</li>
-          <li>KPIs: alcance, clics, mensajes, costo por lead</li>
+          <li>Apps Script / Make / Zapier</li>
+          <li>KPIs: alcance, clics, mensajes, CPL</li>
           <li>Resumen semanal automático</li>
         </ul>
       </article>
     </div>
 
-    <div class="grid" style="margin-top:16px;gap:16px">
+    <div class="grid" style="margin-top:16px;gap:18px">
       <details class="card reveal">
         <summary style="cursor:pointer;font-weight:700">¿Qué puedo automatizar sin romper políticas?</summary>
-        <p style="margin-top:8px">Programación oficial (Meta), respuestas automáticas, FAQ, guardado de leads y reportes. <strong>No</strong> recomendamos auto-follow/auto-like/auto-comment: son prácticas penalizables.</p>
+        <p style="margin-top:8px">Programación oficial (Meta), respuestas automáticas, FAQs, guardado de leads y reportes. <strong>No</strong> usamos auto-follow/auto-like/auto-comment: son prácticas penalizables.</p>
       </details>
 
       <details class="card reveal">
         <summary style="cursor:pointer;font-weight:700">¿Qué entregamos?</summary>
-        <p style="margin-top:8px">Calendario de contenidos, assets editables (Canva), textos, configuración en Meta Business Suite, automatizaciones base y un tablero de métricas simple.</p>
+        <p style="margin-top:8px">Calendario de contenidos, assets editables (Canva), textos, configuración en Meta Business Suite, automatizaciones base y tablero de métricas simple.</p>
       </details>
-    </div>
-
-    <div class="hero-cta" style="margin-top:18px">
-      <a class="btn" href="#contacto">Quiero ver un demo</a>
-      <a class="btn primary" id="btnAutoWsp" href="#">Pedir setup de automatización</a>
     </div>
   </section>
 
@@ -359,7 +384,7 @@
     // Año en footer
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // Reveal + carga perezosa de miniaturas en vivo (thum.io)
+    // Reveal + carga perezosa de miniaturas (thum.io)
     const io = new IntersectionObserver((entries)=>{
       entries.forEach((e)=>{
         if(e.isIntersecting){
@@ -367,7 +392,6 @@
           const thumb = e.target.querySelector('.thumb') ?? e.target;
           if(thumb && thumb.dataset.live){
             const oldBg = thumb.style.backgroundImage || "url('assets/placeholder-16x9.png')";
-            // Colocamos el live primero y dejamos el placeholder atrás como fallback
             thumb.style.backgroundImage = `url('${thumb.dataset.live}'), ${oldBg}`;
             thumb.removeAttribute('data-live');
           }
@@ -405,7 +429,7 @@ ${f.get('message')}`;
       document.getElementById('formMsg').textContent = 'Abriendo tu cliente de email…';
     });
 
-    // Botón específico para automatización de redes (CTA sección Automatización)
+    // CTA de Automatización
     document.getElementById('btnAutoWsp')?.addEventListener('click',(e)=>{
       e.preventDefault();
       const base = `Hola AFM Solutions, quiero automatizar mis redes (Meta Business Suite + respuestas automáticas + reportes). ¿Coordinamos una llamada?`;

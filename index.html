@@ -28,28 +28,32 @@
     .container{max-width:1200px;margin:0 auto;padding-inline: clamp(12px, 3vw, 24px)}
     img{max-width:100%;height:auto;display:block}
 
-    /* ===== HEADER (logo + burger SIEMPRE) ===== */
+    /* ===== HEADER (compacto + logo grande) ===== */
     header{
       position:sticky;top:0;z-index:60;
       background:rgba(255,255,255,.95);
       backdrop-filter:saturate(160%) blur(10px);
       border-bottom:1px solid var(--border);
+      overflow:visible;
+      margin-bottom:-20px; /* reduce altura percibida */
     }
     .nav{
       max-width:1200px;margin:0 auto;
-      padding:12px 24px;
-      display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;
+      padding:6px 16px; /* más compacto */
+      display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;
     }
     .brand{display:flex;align-items:center;gap:10px}
-    /* LOGO AÚN MÁS GRANDE */
-    .brand img{height: clamp(120px, 18vw, 260px);width:auto}
-
+    .brand img{
+      height:clamp(120px,18vw,260px); /* logo grande */
+      width:auto;
+      margin-bottom:-14px; /* asoma sobre el hero sin achicar header */
+    }
     .burger{
       display:inline-flex;align-items:center;justify-content:center;
-      width:46px;height:46px;border:1px solid var(--border);
-      border-radius:12px;background:#fff;cursor:pointer
+      width:44px;height:44px;border:1px solid var(--border);
+      border-radius:10px;background:#fff;cursor:pointer
     }
-    .burger .bar{width:22px;height:2px;background:#111;border-radius:2px;position:relative}
+    .burger .bar{width:22px;height:2px;background:#111;position:relative;border-radius:2px}
     .burger .bar::before,.burger .bar::after{content:"";position:absolute;left:0;width:22px;height:2px;background:#111;border-radius:2px}
     .burger .bar::before{top:-7px}.burger .bar::after{top:7px}
 
@@ -84,7 +88,7 @@
     .drawer-open .drawer-backdrop{opacity:1;pointer-events:auto}
 
     /* ===== HERO ===== */
-    .hero{border-bottom:1px solid var(--border)}
+    .hero{padding-top:24px;border-bottom:1px solid var(--border)}
     .hero-wrap{
       display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
       gap:var(--gap);align-items:center;padding-block: clamp(28px, 5vw, 44px)

@@ -118,15 +118,20 @@
     /* ===== THUMBS (Portfolio) ===== */
     .thumb{aspect-ratio:16/9;border-radius:16px;border:1px solid var(--border);background:#eef3fb url('assets/placeholder-16x9.png') center/cover no-repeat;box-shadow:0 6px 20px rgba(2,6,23,.06)}
     .meta{display:flex;align-items:center;justify-content:space-between}
-    .meta .tag{font-size:12px;color:var(--brand);font-weight:700}
+    .meta .tag{font-size:12px;color:#003366;font-weight:700}
 
     /* ===== PROCESO ===== */
     #proceso .steps{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
     #proceso .step{background:#fff;border:1px solid #e8eef8;border-radius:22px;padding:18px;box-shadow:0 4px 16px rgba(2,6,23,.05)}
     #proceso .num{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:14px;background:linear-gradient(180deg,#eaf4ff,#d8ecff);border:1px solid #d3e7ff;color:#0e3a66;font-weight:800;margin-bottom:10px}
 
-    /* ===== AUTOMATIZACIÓN ===== */
-    .auto-hero{background:linear-gradient(135deg,#f6fbff,#eef7ff);border:1px solid #dfefff;border-radius:24px;padding:22px;box-shadow:0 8px 28px rgba(2,6,23,.06)}
+    /* ===== AUTOMATIZACIÓN (franja diferenciada sin CTA) ===== */
+    .auto-band{
+      width:100vw; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);
+      background:linear-gradient(135deg,#f3f9ff,#eaf3ff);
+      border-top:1px solid #dfefff; border-bottom:1px solid #dfefff;
+    }
+    .auto-hero{background:transparent;border:0;border-radius:0;padding:0}
     .auto-grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
     .auto-block{padding:20px;border-radius:20px;background:linear-gradient(#fff,#fff),linear-gradient(135deg,rgba(0,70,150,.12),rgba(123,198,255,.22));background-origin:border-box;background-clip:padding-box,border-box;border:1px solid transparent;box-shadow:0 6px 22px rgba(2,6,23,.06)}
     .badge-num{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:10px;background:linear-gradient(180deg,#eaf4ff,#d8ecff);border:1px solid #d3e7ff;color:#0e3a66;font-weight:800;margin-bottom:8px;font-size:14px}
@@ -140,7 +145,7 @@
     footer{border-top:1px solid var(--border);background:#fff}
     .foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:18px 24px;color:#4b5563}
     .wa{position:fixed;right:16px;bottom:16px;z-index:58}
-    .wa a{display:inline-grid;place-items:center;width:56px;height:56px;border-radius:16px;background:#25D366;color:#fff;text-decoration:none;font-weight:800;box-shadow:0 10px 30px rgba(37,211,102,.45)}
+    .wa a{display:inline-grid;place-items:center;width:56px;height:56px;border-radius:16px;background:#25D366;color:#fff;font-weight:800;box-shadow:0 10px 30px rgba(37,211,102,.45)}
 
     /* Reveal anim */
     .reveal{opacity:0;transform:translateY(12px);transition:opacity .5s, transform .5s}
@@ -208,36 +213,52 @@
     </div>
   </section>
 
-  <!-- ===== AUTOMATIZACIÓN ===== -->
-  <section id="automatizacion" class="container">
-    <div class="auto-hero reveal">
-      <h3>Automatización de Redes — que se publiquen y respondan solas</h3>
-      <p>Dejá programadas semanas de contenido, activá respuestas automáticas y recibí reportes con recomendaciones. Todo con herramientas oficiales.</p>
-      <div class="hero-cta" style="margin-top:10px">
-        <a class="btn primary" id="btnAutoWsp" href="#">Empezar setup de automatización</a>
+  <!-- ===== AUTOMATIZACIÓN (franja diferenciada y sin CTA) ===== -->
+  <section id="automatizacion" class="auto-band">
+    <div class="container">
+      <div class="auto-hero reveal">
+        <h3 style="margin:0 0 8px">Automatización de Redes — publicá y respondé en piloto automático</h3>
+        <p style="margin:0">
+          Programá semanas de contenido, activá respuestas inteligentes y recibí reportes accionables.
+          Todo con herramientas oficiales de Meta y flujos auditables.
+        </p>
       </div>
-    </div>
 
-    <hr class="auto-divider">
+      <hr class="auto-divider">
 
-    <div class="auto-grid">
-      <div class="auto-block reveal">
-        <div class="badge-num">1</div>
-        <h3>Planificación & Publicación</h3>
-        <p>Calendario en Google Sheets + programación en IG/FB (Meta Business Suite).</p>
-        <ul><li>Plantillas de copy + hashtags</li><li>Programación semanal o quincenal</li><li>OK previo y control de calidad</li></ul>
-      </div>
-      <div class="auto-block reveal">
-        <div class="badge-num">2</div>
-        <h3>Respuestas Automáticas</h3>
-        <p>Saludo, FAQs y fuera de horario. Opcional: bot guiado y derivación a humano.</p>
-        <ul><li>Botones: Precios, Contacto</li><li>WhatsApp Business templates</li><li>Bandeja unificada Meta</li></ul>
-      </div>
-      <div class="auto-block reveal">
-        <div class="badge-num">3</div>
-        <h3>Integraciones & Reportes</h3>
-        <p>Leads a Sheets, avisos automáticos y tableros con KPIs simples.</p>
-        <ul><li>Apps Script / Make / Zapier</li><li>KPIs: alcance, clics, mensajes, CPL</li><li>Resumen semanal automático</li></ul>
+      <div class="auto-grid">
+        <article class="auto-block reveal">
+          <div class="badge-num">1</div>
+          <h3 style="margin:4px 0 8px">Planificación & Publicación</h3>
+          <p style="margin:0 0 8px">Calendario en Google Sheets + posteo en IG/FB con Meta Business Suite.</p>
+          <ul style="margin:0;padding-left:18px;line-height:1.6">
+            <li>Plantillas de copy y hashtags</li>
+            <li>Programación semanal o quincenal</li>
+            <li>Aprobación previa y control de calidad</li>
+          </ul>
+        </article>
+
+        <article class="auto-block reveal">
+          <div class="badge-num">2</div>
+          <h3 style="margin:4px 0 8px">Respuestas Automáticas</h3>
+          <p style="margin:0 0 8px">Saludo, FAQs y fuera de horario. Flujo guiado y derivación a humano.</p>
+          <ul style="margin:0;padding-left:18px;line-height:1.6">
+            <li>Botones: Precios, Contacto, Turnos</li>
+            <li>WhatsApp Business templates</li>
+            <li>Bandeja unificada de Meta</li>
+          </ul>
+        </article>
+
+        <article class="auto-block reveal">
+          <div class="badge-num">3</div>
+          <h3 style="margin:4px 0 8px">Integraciones & Reportes</h3>
+          <p style="margin:0 0 8px">Leads a Sheets, avisos automáticos y KPIs claros.</p>
+          <ul style="margin:0;padding-left:18px;line-height:1.6">
+            <li>Apps Script / Make / Zapier</li>
+            <li>KPI: alcance, clics, mensajes, CPL</li>
+            <li>Resumen semanal automático</li>
+          </ul>
+        </article>
       </div>
     </div>
   </section>
@@ -360,9 +381,7 @@
     burger.addEventListener('click', openDrawer);
     closeDrawer.addEventListener('click', hideDrawer);
     backdrop.addEventListener('click', hideDrawer);
-    // Cerrar al hacer click en un link del menú
     drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click', hideDrawer));
-    // Esc para cerrar
     window.addEventListener('keydown',(e)=>{ if(e.key==='Escape') hideDrawer(); });
 
     // Reveal + carga perezosa de miniaturas
@@ -410,12 +429,7 @@ ${f.get('message')}`;
       document.getElementById('formMsg').textContent='Abriendo tu cliente de email…';
     });
 
-    // CTA de Automatización
-    document.getElementById('btnAutoWsp')?.addEventListener('click',(e)=>{
-      e.preventDefault();
-      const base=`Hola AFM Solutions, quiero automatizar mis redes (Meta Business Suite + respuestas automáticas + reportes). ¿Coordinamos una llamada?`;
-      window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(base)}`,'_blank');
-    });
+    // (Se quitó el botón de automatización, por eso no hay listener para btnAutoWsp)
   </script>
 </body>
 </html>

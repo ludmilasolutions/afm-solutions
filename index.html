@@ -28,30 +28,37 @@
     .container{max-width:1200px;margin:0 auto;padding-inline: clamp(12px, 3vw, 24px)}
     img{max-width:100%;height:auto;display:block}
 
-    /* ===== HEADER (compacto + logo grande) ===== */
+    /* ===== HEADER FIJO Y COMPACTO (72px) ===== */
     header{
-      position:sticky;top:0;z-index:60;
-      background:rgba(255,255,255,.95);
+      position:fixed; top:0; left:0; right:0; z-index:1000;
+      height:72px; background:rgba(255,255,255,.95);
       backdrop-filter:saturate(160%) blur(10px);
       border-bottom:1px solid var(--border);
-      overflow:visible;
-      margin-bottom:-20px; /* reduce altura percibida */
     }
+    /* El contenido se empuja debajo del header fijo */
+    body{ padding-top:72px; }
+
     .nav{
-      max-width:1200px;margin:0 auto;
-      padding:6px 16px; /* más compacto */
-      display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;
+      max-width:1200px; margin:0 auto;
+      height:72px; padding:0 16px;
+      display:flex; justify-content:space-between; align-items:center;
+      position:relative;
     }
-    .brand{display:flex;align-items:center;gap:10px}
+    /* Logo grande, sin agrandar la barra (pos. absoluta) */
+    .brand{
+      position:absolute; left:16px; top:50%; transform:translateY(-50%);
+      line-height:0; display:block;
+    }
     .brand img{
-      height:clamp(120px,18vw,260px); /* logo grande */
-      width:auto;
-      margin-bottom:-14px; /* asoma sobre el hero sin achicar header */
+      height:clamp(120px,18vw,260px); width:auto;
+      filter:drop-shadow(0 2px 6px rgba(0,0,0,.06));
+      pointer-events:auto;
     }
+
     .burger{
       display:inline-flex;align-items:center;justify-content:center;
       width:44px;height:44px;border:1px solid var(--border);
-      border-radius:10px;background:#fff;cursor:pointer
+      border-radius:10px;background:#fff;cursor:pointer; z-index:1100;
     }
     .burger .bar{width:22px;height:2px;background:#111;position:relative;border-radius:2px}
     .burger .bar::before,.burger .bar::after{content:"";position:absolute;left:0;width:22px;height:2px;background:#111;border-radius:2px}
@@ -60,35 +67,26 @@
     /* ===== DRAWER (overlay lateral) ===== */
     .drawer-backdrop{
       position:fixed;inset:0;background:rgba(0,0,0,.35);
-      opacity:0;pointer-events:none;transition:.25s;z-index:59;
+      opacity:0;pointer-events:none;transition:.25s;z-index:999;
     }
     .drawer{
       position:fixed;top:0;right:0;height:100dvh;width:min(88vw,380px);
       background:#fff;border-left:1px solid var(--border);
-      box-shadow: -20px 0 50px rgba(2,6,23,.18);
-      transform:translateX(100%);transition:transform .3s;z-index:60;
+      box-shadow:-20px 0 50px rgba(2,6,23,.18);
+      transform:translateX(100%);transition:transform .3s;z-index:1001;
       display:flex;flex-direction:column;
     }
-    .drawer-header{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:16px;border-bottom:1px solid var(--border)
-    }
+    .drawer-header{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--border)}
     .drawer-body{padding:16px;display:flex;flex-direction:column;gap:8px}
-    .drawer a{
-      display:flex;align-items:center;gap:10px;padding:12px 10px;border-radius:12px;
-      font-weight:700;color:#0b1220;border:1px solid transparent;
-    }
+    .drawer a{display:flex;align-items:center;gap:10px;padding:12px 10px;border-radius:12px;font-weight:700;color:#0b1220;border:1px solid transparent}
     .drawer a:hover{background:#f4f8ff;border-color:#e1ecff}
-    .drawer .btn{
-      display:inline-flex;align-items:center;justify-content:center;
-      padding:12px 16px;border-radius:12px;border:1px solid var(--brand);font-weight:800;
-    }
+    .drawer .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:12px;border:1px solid var(--brand);font-weight:800}
     .drawer .btn.primary{background:var(--brand);color:#fff}
     .drawer-open .drawer{transform:none}
     .drawer-open .drawer-backdrop{opacity:1;pointer-events:auto}
 
     /* ===== HERO ===== */
-    .hero{padding-top:24px;border-bottom:1px solid var(--border)}
+    .hero{border-bottom:1px solid var(--border); padding-top:10px}
     .hero-wrap{
       display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
       gap:var(--gap);align-items:center;padding-block: clamp(28px, 5vw, 44px)
@@ -173,7 +171,7 @@
     .field input:focus,.field textarea:focus{outline:2px solid rgba(0,70,150,.22);border-color:#cfe6ff}
     footer{border-top:1px solid var(--border);background:#fff}
     .foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:18px 24px;color:#4b5563}
-    .wa{position:fixed;right:16px;bottom:16px;z-index:58}
+    .wa{position:fixed;right:16px;bottom:16px;z-index:950}
     .wa a{display:inline-grid;place-items:center;width:56px;height:56px;border-radius:16px;background:#25D366;color:#fff;font-weight:800;box-shadow:0 10px 30px rgba(37,211,102,.45)}
 
     /* Reveal anim */
@@ -188,7 +186,6 @@
       <a class="brand" href="#" aria-label="AFM Solutions">
         <img src="assets/logo-afm-horizontal.png" alt="AFM Solutions logo">
       </a>
-      <div></div>
       <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="drawer">
         <span class="bar"></span>
       </button>
@@ -242,12 +239,12 @@
     </div>
   </section>
 
-  <!-- ===== AUTOMATIZACIÓN (franja diferenciada + encabezado destacado, SIN CTA) ===== -->
+  <!-- ===== AUTOMATIZACIÓN ===== -->
   <section id="automatizacion" class="auto-band">
     <div class="container">
       <div class="auto-hero reveal">
         <div class="auto-head">
-          <h3 class="auto-title">Automatización de Redes — Publicá y Respondé en Piloto Automático</h3>
+          <h3 class="auto-title">Automatización de Redes — publicá y respondé en piloto automático</h3>
         </div>
         <p class="auto-lead">
           Programá semanas de contenido, activá respuestas inteligentes y recibí reportes accionables.
@@ -399,23 +396,15 @@
     const closeDrawer = document.getElementById('closeDrawer');
     const drawer = document.getElementById('drawer');
     const backdrop = document.getElementById('backdrop');
-
-    const openDrawer = () => {
-      html.classList.add('drawer-open');
-      burger.setAttribute('aria-expanded','true');
-    };
-    const hideDrawer = () => {
-      html.classList.remove('drawer-open');
-      burger.setAttribute('aria-expanded','false');
-    };
-
+    const openDrawer = () => { html.classList.add('drawer-open'); burger.setAttribute('aria-expanded','true'); };
+    const hideDrawer = () => { html.classList.remove('drawer-open'); burger.setAttribute('aria-expanded','false'); };
     burger.addEventListener('click', openDrawer);
     closeDrawer.addEventListener('click', hideDrawer);
     backdrop.addEventListener('click', hideDrawer);
     drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click', hideDrawer));
     window.addEventListener('keydown',(e)=>{ if(e.key==='Escape') hideDrawer(); });
 
-    // Reveal + carga perezosa de miniaturas
+    // Reveal + miniaturas en vivo
     const io=new IntersectionObserver((entries)=>{
       entries.forEach((e)=>{
         if(e.isIntersecting){
@@ -434,7 +423,6 @@
 
     // WhatsApp + mailto
     const CONFIG={ WHATSAPP_NUMBER:'543417558966', WHATSAPP_PREFIX:'Hola AFM Solutions, quiero un presupuesto', EMAIL_TO:'contactoafmsolutions@gmail.com' };
-
     document.getElementById('btnWsp').addEventListener('click',(e)=>{
       e.preventDefault();
       const f=new FormData(document.getElementById('contactForm'));
@@ -445,7 +433,6 @@
         +`Mensaje: ${encodeURIComponent(f.get('message')||'')}`;
       window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${msg}`,'_blank');
     });
-
     document.getElementById('contactForm').addEventListener('submit',(e)=>{
       e.preventDefault();
       const f=new FormData(e.target);

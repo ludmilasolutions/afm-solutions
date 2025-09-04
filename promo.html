@@ -52,23 +52,57 @@
             text-align: center;
             background: var(--gradient);
             color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%);
+            opacity: 0.3;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%);
+            opacity: 0.2;
+        }
+        
+        .logo-container {
+            position: relative;
+            z-index: 2;
         }
         
         .logo {
             max-width: 280px;
             margin: 0 auto 15px;
             filter: brightness(0) invert(1);
+            display: block;
         }
         
         h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
             font-weight: 800;
+            position: relative;
+            z-index: 2;
         }
         
         .tagline {
             font-size: 1.2rem;
             font-weight: 500;
+            position: relative;
+            z-index: 2;
         }
         
         .content {
@@ -104,12 +138,14 @@
             align-items: center;
             justify-content: center;
             border: 1px solid var(--border);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
         
         .qr-placeholder {
             text-align: center;
             font-weight: 600;
             color: var(--muted);
+            font-size: 0.9rem;
         }
         
         .qr-text {
@@ -133,6 +169,13 @@
             display: flex;
             align-items: center;
             border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        
+        .service-list li:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-color: var(--accent);
         }
         
         .service-list li::before {
@@ -167,6 +210,15 @@
             color: var(--brand);
             font-weight: 600;
             margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,.05);
+        }
+        
+        .instructions {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--brand);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
         }
         
         @media (max-width: 768px) {
@@ -182,16 +234,24 @@
             .qr-section {
                 margin-left: 0;
             }
+            
+            h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="poster">
         <div class="header">
-            <!-- Logo simulado de AFM Solutions (reemplazar con logo real) -->
-            <div class="logo" style="font-weight: 800; font-size: 2rem;">AFM SOLUTIONS</div>
-            <h1>SERVICIOS DE PROGRAMACIÓN</h1>
-            <p class="tagline">Software a medida para tu negocio</p>
+            <div class="logo-container">
+                <!-- Logo de AFM Solutions -->
+                <svg class="logo" viewBox="0 0 500 120" xmlns="http://www.w3.org/2000/svg">
+                    <text x="250" y="70" font-family="Poppins" font-weight="800" font-size="50" text-anchor="middle" fill="white">AFM SOLUTIONS</text>
+                </svg>
+                <h1>SERVICIOS DE PROGRAMACIÓN</h1>
+                <p class="tagline">Software a medida para tu negocio</p>
+            </div>
         </div>
         
         <div class="content">
@@ -212,9 +272,65 @@
             
             <div class="qr-section">
                 <div class="qr-code">
-                    <div class="qr-placeholder">qr.png</div>
+                    <!-- INSTRUCCIONES: -->
+                    <!-- 
+                    1. Genera tu código QR en https://qr.io o similar
+                    2. Descarga la imagen del código QR
+                    3. Reemplaza esta sección con:
+                    <img src="ruta/a/tu-codigo-qr.png" alt="Escanea para visitar AFM Solutions" width="160">
+                    -->
+                    <div class="qr-placeholder">
+                        <!-- Código QR simulado -->
+                        <div style="text-align: center;">
+                            <div style="display: inline-block; background: #000; padding: 5px;">
+                                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; width: 120px; height: 120px;">
+                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
+                                    <div style="background: #000; width: 20px; height: 20px;"></div>
+                                    <div style="background: #000; width: 20px; height: 20px;"></div>
+                                    <div style="background: #000; width: 20px; height: 20px;"></div>
+                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
+                                    
+                                    <div style="background: #000; width: 20px; height: 20px;"></div>
+                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
+                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
+                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
+                                    <div style="background: #000; width: 20px; height: 20px;"></div>
+                                    
+                                    <div style="background: #000; width: 20px; height: 20px;"></div>
+                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
+                                    <div style="background: #000; width: 20px; height: 20px;"></div>
+                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
+                                    <div style="background: #000; width: 20px; height: 20px;"></div>
+                                    
+                                    <div style="background: #000; width: 20px; height: 20px;"></div>
+                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
+                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
+                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
+                                    <div style="background: #000; width: 20px; height: 20px;"></div>
+                                    
+                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
+                                    <div style="background: #000; width: 20px; height: 20px;"></div>
+                                    <div style="background: #000; width: 20px; height: 20px;"></div>
+                                    <div style="background: #000; width: 20px; height: 20px;"></div>
+                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
+                                </div>
+                            </div>
+                            <p style="margin-top: 5px; font-size: 0.7rem;">ESCANEAR CÓDIGO</p>
+                        </div>
+                    </div>
                 </div>
                 <p class="qr-text">Escanea el código QR para visitar nuestro sitio web y conocer todos nuestros servicios</p>
+                
+                <div class="instructions">
+                    <strong>Para implementar tu código QR real:</strong>
+                    <ol>
+                        <li>Genera tu código QR en <a href="https://qr.io" target="_blank">QR.io</a></li>
+                        <li>Selecciona la opción "Website URL"</li>
+                        <li>Ingresa: <code>https://www.afmsolutions.com.ar</code></li>
+                        <li>Personaliza el diseño si lo deseas</li>
+                        <li>Descarga la imagen y reemplaza el código QR simulado</li>
+                    </ol>
+                </div>
             </div>
         </div>
         

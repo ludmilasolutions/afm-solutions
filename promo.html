@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFM Solutions - Cartel Promocional</title>
+    <style>
+        :root {
+            --brand: #003366;
+            --brand-light: #00478a;
+            --accent: #7bc6ff;
+            --accent-light: #c2e4ff;
+            --ink: #0b1220;
+            --muted: #6b7280;
+            --bg: #f7f9fc;
+            --card: #ffffff;
+            --border: #e5e7eb;
+            --gradient: linear-gradient(135deg, var(--brand), var(--accent));
+            --gradient-light: linear-gradient(135deg, rgba(0,70,150,.12), rgba(123,198,255,.22));
+            --shadow: 0 10px 30px rgba(0,0,0,.08);
+            --radius: 16px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', system-ui, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg);
+            padding: 20px;
+        }
+        
+        .poster {
+            width: 100%;
+            max-width: 800px;
+            background: var(--card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        
+        .header {
+            padding: 30px;
+            text-align: center;
+            background: var(--gradient);
+            color: white;
+        }
+        
+        .logo {
+            max-width: 280px;
+            margin: 0 auto 15px;
+            filter: brightness(0) invert(1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .content {
+            display: flex;
+            padding: 30px;
+        }
+        
+        .services {
+            flex: 3;
+            padding-right: 20px;
+        }
+        
+        .qr-section {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-color: var(--bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+        
+        .qr-code {
+            width: 180px;
+            height: 180px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+        }
+        
+        .qr-placeholder {
+            text-align: center;
+            font-weight: 600;
+            color: var(--muted);
+        }
+        
+        .qr-text {
+            text-align: center;
+            font-size: 1rem;
+            margin-top: 10px;
+            color: var(--ink);
+            font-weight: 600;
+        }
+        
+        .service-list {
+            list-style-type: none;
+        }
+        
+        .service-list li {
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            background-color: var(--bg);
+            border-radius: 8px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border);
+        }
+        
+        .service-list li::before {
+            content: "▸";
+            margin-right: 10px;
+            color: var(--brand);
+            font-weight: bold;
+        }
+        
+        .footer {
+            padding: 20px;
+            text-align: center;
+            background-color: var(--bg);
+            border-top: 1px solid var(--border);
+        }
+        
+        .contact {
+            margin-top: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--brand);
+        }
+        
+        .badge {
+            display: inline-flex;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: #fff;
+            border: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--brand);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .services {
+                padding-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .qr-section {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="poster">
+        <div class="header">
+            <!-- Logo simulado de AFM Solutions (reemplazar con logo real) -->
+            <div class="logo" style="font-weight: 800; font-size: 2rem;">AFM SOLUTIONS</div>
+            <h1>SERVICIOS DE PROGRAMACIÓN</h1>
+            <p class="tagline">Software a medida para tu negocio</p>
+        </div>
+        
+        <div class="content">
+            <div class="services">
+                <span class="badge">⚡ Entregas rápidas · Calidad profesional</span>
+                <ul class="service-list">
+                    <li>Desarrollo Web y Aplicaciones Móviles</li>
+                    <li>Diseño UX/UI Moderno y Responsivo</li>
+                    <li>Tiendas Online y E-Commerce</li>
+                    <li>APIs y Servicios Backend</li>
+                    <li>Bases de Datos y Almacenamiento</li>
+                    <li>Automatización de Procesos</li>
+                    <li>Mantenimiento y Soporte Técnico</li>
+                    <li>Sistemas de Gestión a Medida</li>
+                    <li>Automatización de Redes Sociales</li>
+                </ul>
+            </div>
+            
+            <div class="qr-section">
+                <div class="qr-code">
+                    <div class="qr-placeholder">[CÓDIGO QR]</div>
+                </div>
+                <p class="qr-text">Escanea el código QR para visitar nuestro sitio web y conocer todos nuestros servicios</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>¡Transformamos tus ideas en realidad digital!</p>
+            <p class="contact">Contacto: contactoafmsolutions@gmail.com | +54 341 755-8966</p>
+        </div>
+    </div>
+</body>
+</html>

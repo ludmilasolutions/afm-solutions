@@ -20,14 +20,14 @@
             --shadow: 0 10px 30px rgba(0,0,0,.08);
             --radius: 16px;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', system-ui, sans-serif;
         }
-        
+
         body {
             display: flex;
             justify-content: center;
@@ -36,7 +36,7 @@
             background-color: var(--bg);
             padding: 20px;
         }
-        
+
         .poster {
             width: 100%;
             max-width: 800px;
@@ -46,7 +46,7 @@
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
         }
-        
+
         .header {
             padding: 30px;
             text-align: center;
@@ -55,7 +55,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .header::before {
             content: '';
             position: absolute;
@@ -66,7 +66,7 @@
             background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%);
             opacity: 0.3;
         }
-        
+
         .header::after {
             content: '';
             position: absolute;
@@ -77,19 +77,19 @@
             background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%);
             opacity: 0.2;
         }
-        
+
         .logo-container {
             position: relative;
             z-index: 2;
         }
-        
+
         .logo {
             max-width: 280px;
             margin: 0 auto 15px;
             filter: brightness(0) invert(1);
             display: block;
         }
-        
+
         h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
@@ -97,24 +97,24 @@
             position: relative;
             z-index: 2;
         }
-        
+
         .tagline {
             font-size: 1.2rem;
             font-weight: 500;
             position: relative;
             z-index: 2;
         }
-        
+
         .content {
             display: flex;
             padding: 30px;
         }
-        
+
         .services {
             flex: 3;
             padding-right: 20px;
         }
-        
+
         .qr-section {
             flex: 2;
             display: flex;
@@ -126,7 +126,7 @@
             border-radius: var(--radius);
             border: 1px solid var(--border);
         }
-        
+
         .qr-code {
             width: 180px;
             height: 180px;
@@ -140,14 +140,7 @@
             border: 1px solid var(--border);
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
-        
-        .qr-placeholder {
-            text-align: center;
-            font-weight: 600;
-            color: var(--muted);
-            font-size: 0.9rem;
-        }
-        
+
         .qr-text {
             text-align: center;
             font-size: 1rem;
@@ -155,11 +148,11 @@
             color: var(--ink);
             font-weight: 600;
         }
-        
+
         .service-list {
             list-style-type: none;
         }
-        
+
         .service-list li {
             padding: 12px 15px;
             margin-bottom: 12px;
@@ -171,34 +164,34 @@
             border: 1px solid var(--border);
             transition: all 0.3s ease;
         }
-        
+
         .service-list li:hover {
             transform: translateX(5px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             border-color: var(--accent);
         }
-        
+
         .service-list li::before {
             content: "▸";
             margin-right: 10px;
             color: var(--brand);
             font-weight: bold;
         }
-        
+
         .footer {
             padding: 20px;
             text-align: center;
             background-color: var(--bg);
             border-top: 1px solid var(--border);
         }
-        
+
         .contact {
             margin-top: 10px;
             font-size: 1.1rem;
             font-weight: 600;
             color: var(--brand);
         }
-        
+
         .badge {
             display: inline-flex;
             gap: 8px;
@@ -212,7 +205,7 @@
             margin-bottom: 15px;
             box-shadow: 0 4px 12px rgba(0,0,0,.05);
         }
-        
+
         .instructions {
             background-color: #f8f9fa;
             border-left: 4px solid var(--brand);
@@ -220,21 +213,21 @@
             margin: 20px 0;
             border-radius: 4px;
         }
-        
+
         @media (max-width: 768px) {
             .content {
                 flex-direction: column;
             }
-            
+
             .services {
                 padding-right: 0;
                 margin-bottom: 20px;
             }
-            
+
             .qr-section {
                 margin-left: 0;
             }
-            
+
             h1 {
                 font-size: 2rem;
             }
@@ -253,7 +246,7 @@
                 <p class="tagline">Software a medida para tu negocio</p>
             </div>
         </div>
-        
+
         <div class="content">
             <div class="services">
                 <span class="badge">⚡ Entregas rápidas · Calidad profesional</span>
@@ -269,75 +262,17 @@
                     <li>Automatización de Redes Sociales</li>
                 </ul>
             </div>
-            
+
             <div class="qr-section">
                 <div class="qr-code">
-                    <!-- INSTRUCCIONES: -->
-                    <!-- 
-                    1. Genera tu código QR en https://qr.io o similar
-                    2. Descarga la imagen del código QR
-                    3. Reemplaza esta sección con:
-                    <img src="ruta/a/tu-codigo-qr.png" alt="Escanea para visitar AFM Solutions" width="160">
-                    -->
-                    <div class="qr-placeholder">
-                        <!-- Código QR simulado -->
-                        <div style="text-align: center;">
-                            <div style="display: inline-block; background: #000; padding: 5px;">
-                                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; width: 120px; height: 120px;">
-                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
-                                    <div style="background: #000; width: 20px; height: 20px;"></div>
-                                    <div style="background: #000; width: 20px; height: 20px;"></div>
-                                    <div style="background: #000; width: 20px; height: 20px;"></div>
-                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
-                                    
-                                    <div style="background: #000; width: 20px; height: 20px;"></div>
-                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
-                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
-                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
-                                    <div style="background: #000; width: 20px; height: 20px;"></div>
-                                    
-                                    <div style="background: #000; width: 20px; height: 20px;"></div>
-                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
-                                    <div style="background: #000; width: 20px; height: 20px;"></div>
-                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
-                                    <div style="background: #000; width: 20px; height: 20px;"></div>
-                                    
-                                    <div style="background: #000; width: 20px; height: 20px;"></div>
-                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
-                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
-                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
-                                    <div style="background: #000; width: 20px; height: 20px;"></div>
-                                    
-                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
-                                    <div style="background: #000; width: 20px; height: 20px;"></div>
-                                    <div style="background: #000; width: 20px; height: 20px;"></div>
-                                    <div style="background: #000; width: 20px; height: 20px;"></div>
-                                    <div style="background: #fff; width: 20px; height: 20px;"></div>
-                                </div>
-                            </div>
-                            <p style="margin-top: 5px; font-size: 0.7rem;">ESCANEAR CÓDIGO</p>
-                        </div>
-                    </div>
+                    <img src="assets/qr.png" alt="Escanea para visitar AFM Solutions" width="160">
                 </div>
                 <p class="qr-text">Escanea el código QR para visitar nuestro sitio web y conocer todos nuestros servicios</p>
-                
+
                 <div class="instructions">
-                    <strong>Para implementar tu código QR real:</strong>
+                    <strong>¿Querés personalizar tu QR?</strong>
                     <ol>
-                        <li>Genera tu código QR en <a href="https://qr.io" target="_blank">QR.io</a></li>
-                        <li>Selecciona la opción "Website URL"</li>
-                        <li>Ingresa: <code>https://www.afmsolutions.com.ar</code></li>
-                        <li>Personaliza el diseño si lo deseas</li>
-                        <li>Descarga la imagen y reemplaza el código QR simulado</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            <p>¡Transformamos tus ideas en realidad digital!</p>
-            <p class="contact">Contacto: contactoafmsolutions@gmail.com | +54 341 755-8966</p>
-        </div>
-    </div>
-</body>
-</html>
+                        <li>Andá a <a href="https://qr.io" target="_blank">QR.io</a></li>
+                        <li>Seleccioná “Website URL”</li>
+                        <li>Ingresá: <code>https://www.afmsolutions.com.ar</code></li>
+                        <li>Descargalo como imagen y reemplazalo en <code>assets/qr.png</code></li

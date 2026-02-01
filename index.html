@@ -293,6 +293,7 @@
             position: relative;
             overflow: hidden;
             border: 3px solid transparent;
+            min-height: 350px;
         }
 
         .service-card::before {
@@ -316,6 +317,91 @@
 
         .service-card:hover::before {
             opacity: 1;
+        }
+
+        /* Hover effects con datos específicos para cada servicio */
+        .service-card[data-service="web"]:hover::after {
+            content: 'Tiempo promedio: 4-6 semanas';
+            position: absolute;
+            bottom: 15px;
+            left: 30px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            background: rgba(2, 6, 23, 0.8);
+            padding: 5px 10px;
+            border-radius: 4px;
+            z-index: 2;
+        }
+
+        .service-card[data-service="mobile"]:hover::after {
+            content: 'Tiempo promedio: 6-10 semanas';
+            position: absolute;
+            bottom: 15px;
+            left: 30px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            background: rgba(2, 6, 23, 0.8);
+            padding: 5px 10px;
+            border-radius: 4px;
+            z-index: 2;
+        }
+
+        .service-card[data-service="devops"]:hover::after {
+            content: 'Tiempo promedio: 2-4 semanas';
+            position: absolute;
+            bottom: 15px;
+            left: 30px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            background: rgba(2, 6, 23, 0.8);
+            padding: 5px 10px;
+            border-radius: 4px;
+            z-index: 2;
+        }
+
+        .service-card[data-service="custom"]:hover::after {
+            content: 'Tiempo promedio: 8-16 semanas';
+            position: absolute;
+            bottom: 15px;
+            left: 30px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            background: rgba(2, 6, 23, 0.8);
+            padding: 5px 10px;
+            border-radius: 4px;
+            z-index: 2;
+        }
+
+        .service-card[data-service="security"]:hover::after {
+            content: 'ISO 27001 | Tiempo: 3-5 semanas';
+            position: absolute;
+            bottom: 15px;
+            left: 30px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            background: rgba(2, 6, 23, 0.8);
+            padding: 5px 10px;
+            border-radius: 4px;
+            z-index: 2;
+        }
+
+        .service-card[data-service="maintenance"]:hover::after {
+            content: 'Soporte 24/7 | Respuesta: <2h';
+            position: absolute;
+            bottom: 15px;
+            left: 30px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            background: rgba(2, 6, 23, 0.8);
+            padding: 5px 10px;
+            border-radius: 4px;
+            z-index: 2;
         }
 
         .service-icon {
@@ -369,7 +455,7 @@
             flex-shrink: 0;
         }
 
-        /* Proceso Section */
+        /* Proceso Section - Mejoras con línea de tiempo */
         .process {
             position: relative;
         }
@@ -392,6 +478,25 @@
             opacity: 0.2;
         }
 
+        /* Barra de progreso animada */
+        .progress-bar-container {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            border-radius: 2px;
+            transition: width 1.5s ease-in-out;
+        }
+
         .process-step {
             flex: 1;
             padding: 0 20px;
@@ -412,6 +517,39 @@
             font-weight: 800;
             margin: 0 auto 25px;
             box-shadow: 0 10px 30px var(--glow-primary);
+            position: relative;
+        }
+
+        .step-percentage {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 3;
+        }
+
+        .step-percentage::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--accent) transparent transparent transparent;
+        }
+
+        .process-step:hover .step-percentage {
+            opacity: 1;
         }
 
         .step-content {
@@ -462,6 +600,7 @@
             background: rgba(2, 6, 23, 0.9);
             padding: 60px 0 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
         }
 
         .footer-content {
@@ -492,6 +631,42 @@
             font-size: 0.9rem;
             padding-top: 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Certificaciones sutiles */
+        .certification-badges {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .github-verified, .iso-certified {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+            color: var(--gray);
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .github-verified:hover, .iso-certified:hover {
+            opacity: 1;
+        }
+
+        .iso-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(6, 182, 212, 0.1);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-top: 10px;
+            color: var(--accent);
         }
 
         /* === NUEVOS ESTILOS PARA EL FORMULARIO === */
@@ -855,6 +1030,13 @@
                 top: 0;
             }
             
+            .progress-bar-container {
+                width: 2px;
+                height: 100%;
+                left: 40px;
+                top: 0;
+            }
+            
             .process-step {
                 display: flex;
                 align-items: center;
@@ -868,8 +1050,27 @@
                 margin: 0;
             }
             
+            .step-percentage {
+                top: 50%;
+                left: -70px;
+                transform: translateY(-50%);
+            }
+            
+            .step-percentage::after {
+                top: 50%;
+                left: 100%;
+                transform: translateY(-50%);
+                border-color: transparent transparent transparent var(--accent);
+            }
+            
             .hero-stats {
                 justify-content: space-between;
+            }
+            
+            .certification-badges {
+                position: static;
+                justify-content: center;
+                margin-top: 20px;
             }
         }
 
@@ -1068,42 +1269,45 @@
         <div class="container">
             <h2>Nuestros Servicios</h2>
             <div class="services-grid">
-                <div class="service-card float-animation">
+                <div class="service-card float-animation" data-service="web">
                     <div class="service-icon">
                         <i class="fas fa-code"></i>
                     </div>
                     <h3>Desarrollo Web</h3>
                     <p>Creación de aplicaciones web modernas, responsivas y de alto rendimiento con las últimas tecnologías del mercado.</p>
                 </div>
-                <div class="service-card float-animation" style="animation-delay: 0.2s;">
+                <div class="service-card float-animation" data-service="mobile" style="animation-delay: 0.2s;">
                     <div class="service-icon">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
                     <h3>Aplicaciones Móviles</h3>
                     <p>Desarrollo de apps nativas e híbridas para iOS y Android, optimizadas para ofrecer la mejor experiencia de usuario.</p>
                 </div>
-                <div class="service-card float-animation" style="animation-delay: 0.4s;">
+                <div class="service-card float-animation" data-service="devops" style="animation-delay: 0.4s;">
                     <div class="service-icon">
                         <i class="fas fa-server"></i>
                     </div>
                     <h3>Infraestructura y DevOps</h3>
                     <p>Configuración, despliegue y mantenimiento de servidores, bases de datos y pipelines de integración continua.</p>
                 </div>
-                <div class="service-card float-animation" style="animation-delay: 0.6s;">
+                <div class="service-card float-animation" data-service="custom" style="animation-delay: 0.6s;">
                     <div class="service-icon">
                         <i class="fas fa-cogs"></i>
                     </div>
                     <h3>Software Personalizado</h3>
                     <p>Soluciones a medida para necesidades específicas, desde automatización de procesos hasta sistemas complejos.</p>
                 </div>
-                <div class="service-card float-animation" style="animation-delay: 0.8s;">
+                <div class="service-card float-animation" data-service="security" style="animation-delay: 0.8s;">
                     <div class="service-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
                     <h3>Seguridad y Auditoría</h3>
                     <p>Análisis de vulnerabilidades, protección de datos y cumplimiento de normativas de seguridad informática.</p>
+                    <span class="iso-badge">
+                        <i class="fas fa-certificate"></i> ISO 27001
+                    </span>
                 </div>
-                <div class="service-card float-animation" style="animation-delay: 1s;">
+                <div class="service-card float-animation" data-service="maintenance" style="animation-delay: 1s;">
                     <div class="service-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
@@ -1182,8 +1386,14 @@
         <div class="container">
             <h2>Cómo Trabajamos</h2>
             <div class="process-steps">
+                <!-- Barra de progreso animada -->
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                
                 <div class="process-step">
                     <div class="step-number">1</div>
+                    <div class="step-percentage">Paso 1: Análisis (10%)</div>
                     <div class="step-content">
                         <h3>Análisis y Planificación</h3>
                         <p>Comprendemos tus necesidades, definimos objetivos y establecemos un plan de acción claro.</p>
@@ -1191,6 +1401,7 @@
                 </div>
                 <div class="process-step">
                     <div class="step-number">2</div>
+                    <div class="step-percentage">Paso 2: Diseño (30%)</div>
                     <div class="step-content">
                         <h3>Diseño y Arquitectura</h3>
                         <p>Creamos la estructura técnica y diseño de interfaz para garantizar usabilidad y escalabilidad.</p>
@@ -1198,6 +1409,7 @@
                 </div>
                 <div class="process-step">
                     <div class="step-number">3</div>
+                    <div class="step-percentage">Paso 3: Desarrollo (60%)</div>
                     <div class="step-content">
                         <h3>Desarrollo Iterativo</h3>
                         <p>Construimos en ciclos cortos con entregables frecuentes para validar progreso y dirección.</p>
@@ -1205,6 +1417,7 @@
                 </div>
                 <div class="process-step">
                     <div class="step-number">4</div>
+                    <div class="step-percentage">Paso 4: Entrega (100%)</div>
                     <div class="step-content">
                         <h3>Entrega y Soporte</h3>
                         <p>Desplegamos la solución, brindamos capacitación y ofrecemos soporte continuo post-lanzamiento.</p>
@@ -1247,6 +1460,18 @@
             </div>
             <div class="copyright">
                 &copy; 2023 AFM SOLUTIONS. Todos los derechos reservados.
+            </div>
+            
+            <!-- Certificaciones sutiles -->
+            <div class="certification-badges">
+                <div class="github-verified">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub Verified</span>
+                </div>
+                <div class="iso-certified">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>ISO 27001 Compliant</span>
+                </div>
             </div>
         </div>
     </footer>
@@ -1368,6 +1593,7 @@
         const projectForm = document.getElementById('project-briefing-form');
         const otroCheckbox = document.getElementById('otro-checkbox');
         const otroInput = document.getElementById('otro-input');
+        const progressBar = document.getElementById('progress-bar');
 
         // Función para abrir el modal
         function openBriefingModal(e) {
@@ -1407,6 +1633,41 @@
                 otroInput.value = '';
             }
         });
+
+        // Animar la barra de progreso al hacer scroll
+        function animateProgressBar() {
+            const processSection = document.querySelector('.process');
+            const processSteps = document.querySelectorAll('.process-step');
+            
+            if (!processSection || !progressBar) return;
+            
+            const sectionTop = processSection.offsetTop;
+            const sectionHeight = processSection.offsetHeight;
+            const windowHeight = window.innerHeight;
+            const scrollPosition = window.scrollY;
+            
+            // Calcular el porcentaje de scroll dentro de la sección
+            let progress = 0;
+            
+            if (scrollPosition > sectionTop - windowHeight + 100) {
+                const scrollProgress = scrollPosition - (sectionTop - windowHeight + 100);
+                const maxScroll = sectionHeight + 100;
+                progress = Math.min((scrollProgress / maxScroll) * 100, 100);
+            }
+            
+            // Actualizar la barra de progreso
+            progressBar.style.width = `${progress}%`;
+            
+            // Resaltar los pasos según el progreso
+            processSteps.forEach((step, index) => {
+                const stepPercentage = (index + 1) * 25;
+                if (progress >= stepPercentage) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+        }
 
         // Manejar envío del formulario
         projectForm.addEventListener('submit', function(e) {
@@ -1546,6 +1807,10 @@ Generar una solución técnica adecuada a este contexto.`;
             el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
             observer.observe(el);
         });
+
+        // Animar la barra de progreso al hacer scroll
+        window.addEventListener('scroll', animateProgressBar);
+        window.addEventListener('load', animateProgressBar);
 
         // Cambiar texto del CTA después de 1 minuto
         setTimeout(() => {

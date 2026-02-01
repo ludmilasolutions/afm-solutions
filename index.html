@@ -619,6 +619,22 @@
             background: rgba(255, 255, 255, 0.08);
         }
 
+        /* Corrección para los select - mejor visibilidad */
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            background-size: 16px;
+            padding-right: 50px;
+        }
+
+        select.form-control option {
+            background: var(--darker);
+            color: var(--light);
+            padding: 12px;
+        }
+
         textarea.form-control {
             min-height: 120px;
             resize: vertical;
@@ -736,6 +752,7 @@
             animation: pulse-green 2s infinite;
             text-decoration: none;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .floating-whatsapp:hover {
@@ -771,15 +788,6 @@
             background: rgba(255, 255, 255, 0.03);
             border-radius: 50px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* Número en header */
-        .header-contact {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--gray);
-            font-size: 0.9rem;
         }
 
         /* CTA de WhatsApp mejorado */
@@ -934,10 +942,6 @@
                 height: 55px;
                 font-size: 1.6rem;
             }
-            
-            .header-contact {
-                display: none;
-            }
         }
 
         @media (max-width: 576px) {
@@ -1015,11 +1019,7 @@
                     <a href="#services">Servicios</a>
                     <a href="#problems">Qué Resolvemos</a>
                     <a href="#process">Cómo Trabajamos</a>
-                    <div class="header-contact">
-                        <i class="fas fa-phone-alt"></i>
-                        <span>Consultas: +54 9 3417558966</span>
-                    </div>
-                    <a href="#contact" class="btn btn-outline">Contactar</a>
+                    <a href="#" class="btn btn-outline open-form-modal">Contactar</a>
                 </div>
                 <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
@@ -1035,7 +1035,7 @@
                 <h1>Desarrollamos <span class="highlight">soluciones digitales</span> a medida</h1>
                 <p class="hero-subtitle">Convertimos ideas y problemas complejos en software funcional, escalable y de alto rendimiento. Si se puede programar, lo hacemos.</p>
                 <div class="hero-buttons">
-                    <a href="#" class="btn btn-primary btn-large" id="open-briefing-modal">Iniciar Proyecto</a>
+                    <a href="#" class="btn btn-primary btn-large open-form-modal">Iniciar Proyecto</a>
                     <a href="#services" class="btn btn-outline">Ver Servicios</a>
                 </div>
                 <div class="hero-stats">
@@ -1221,7 +1221,7 @@
                 <div class="cta-content">
                     <h2>¿Listo para transformar tus ideas en realidad?</h2>
                     <p>Contacta con nuestro equipo de expertos para analizar tu proyecto y desarrollar una solución a medida que impulse tus resultados.</p>
-                    <a href="https://wa.me/5493417558966?text=Hola,%20estoy%20interesado%20en%20sus%20servicios%20de%20desarrollo" class="btn btn-primary btn-large pulse-animation btn-whatsapp">
+                    <a href="#" class="btn btn-primary btn-large pulse-animation btn-whatsapp open-form-modal">
                         <i class="fab fa-whatsapp"></i>
                         <div class="cta-text">
                             <span class="cta-main">Conversemos ahora</span>
@@ -1243,7 +1243,7 @@
                     <a href="#services">Servicios</a>
                     <a href="#problems">Qué Resolvemos</a>
                     <a href="#process">Cómo Trabajamos</a>
-                    <a href="#contact">Contacto</a>
+                    <a href="#" class="open-form-modal">Contacto</a>
                 </div>
             </div>
             <div class="copyright">
@@ -1319,7 +1319,7 @@
                             <span>Integración con otros sistemas</span>
                         </label>
                         <label class="checkbox-label" id="otro-checkbox">
-                            <input type="checkbox" name="funciones" value="Otro">
+                            <input type="checkbox" name="funciones" value="Otra funcionalidad específica">
                             <span class="custom-checkbox"></span>
                             <span>Otra funcionalidad específica</span>
                         </label>
@@ -1358,41 +1358,47 @@
     </div>
 
     <!-- WhatsApp flotante -->
-    <a href="https://wa.me/5493417558966?text=Hola,%20me%20interesan%20sus%20servicios%20de%20desarrollo" class="floating-whatsapp" target="_blank">
+    <div class="floating-whatsapp open-form-modal">
         <i class="fab fa-whatsapp"></i>
-    </a>
+    </div>
 
     <script>
         // Elementos del modal
         const briefingModal = document.getElementById('briefing-modal');
-        const openModalBtn = document.getElementById('open-briefing-modal');
         const closeModalBtn = document.getElementById('close-modal');
         const projectForm = document.getElementById('project-briefing-form');
         const otroCheckbox = document.getElementById('otro-checkbox');
         const otroInput = document.getElementById('otro-input');
 
-        // Abrir modal
-        openModalBtn.addEventListener('click', function(e) {
-            e.preventDefault();
+        // Función para abrir el modal
+        function openBriefingModal(e) {
+            if (e) e.preventDefault();
             briefingModal.classList.add('active');
             document.body.style.overflow = 'hidden';
-        });
+        }
 
-        // Cerrar modal
-        closeModalBtn.addEventListener('click', function() {
+        // Función para cerrar el modal
+        function closeBriefingModal() {
             briefingModal.classList.remove('active');
             document.body.style.overflow = 'auto';
+        }
+
+        // Configurar todos los botones que abren el formulario
+        document.querySelectorAll('.open-form-modal').forEach(button => {
+            button.addEventListener('click', openBriefingModal);
         });
+
+        // Cerrar modal con el botón X
+        closeModalBtn.addEventListener('click', closeBriefingModal);
 
         // Cerrar modal al hacer clic fuera
         briefingModal.addEventListener('click', function(e) {
             if (e.target === briefingModal) {
-                briefingModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
+                closeBriefingModal();
             }
         });
 
-        // Mostrar/ocultar campo "Otro"
+        // Mostrar/ocultar campo "Otra funcionalidad específica"
         otroCheckbox.addEventListener('change', function() {
             if (this.querySelector('input').checked) {
                 otroInput.style.display = 'block';
@@ -1420,9 +1426,9 @@
             
             // Obtener funciones seleccionadas
             funcionesCheckboxes.forEach(cb => {
-                if (cb.value === 'Otro' && otroInput.value.trim()) {
+                if (cb.value === 'Otra funcionalidad específica' && otroInput.value.trim()) {
                     funciones.push(otroInput.value.trim());
-                } else if (cb.value !== 'Otro') {
+                } else if (cb.value !== 'Otra funcionalidad específica') {
                     funciones.push(cb.value);
                 }
             });
@@ -1463,8 +1469,7 @@ Generar una solución técnica adecuada a este contexto.`;
             window.open(whatsappURL, '_blank');
             
             // Cerrar el modal
-            briefingModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            closeBriefingModal();
             
             // Resetear formulario
             projectForm.reset();
@@ -1491,7 +1496,11 @@ Generar una solución técnica adecuada a este contexto.`;
         
         // Cerrar menú móvil al hacer clic en un enlace
         document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', function() {
+            link.addEventListener('click', function(e) {
+                if (this.classList.contains('open-form-modal')) {
+                    e.preventDefault();
+                    openBriefingModal(e);
+                }
                 if (window.innerWidth <= 768) {
                     document.querySelector('.nav-links').style.display = 'none';
                 }

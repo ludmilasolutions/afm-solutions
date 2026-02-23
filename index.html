@@ -175,6 +175,7 @@
         .nav-links {
             display: flex;
             gap: 2rem;
+            align-items: center;
         }
 
         .nav-links a {
@@ -247,29 +248,25 @@
             margin-top: 3rem;
         }
 
-        .hero-stats {
+        /* Trust badges */
+        .trust-badges {
             display: flex;
-            gap: 3rem;
-            margin-top: 4rem;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
         }
 
-        .stat {
+        .trust-badges span {
             display: flex;
-            flex-direction: column;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--accent);
-            line-height: 1;
-        }
-
-        .stat-label {
+            align-items: center;
+            gap: 8px;
             font-size: 0.9rem;
             color: var(--gray);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         /* Servicios Section */
@@ -319,7 +316,6 @@
             opacity: 1;
         }
 
-        /* Hover effects - Sin tiempos promedios */
         .service-card:hover::after {
             content: 'Más información →';
             position: absolute;
@@ -385,7 +381,7 @@
             flex-shrink: 0;
         }
 
-        /* Proceso Section - Mejoras con línea de tiempo */
+        /* Proceso Section */
         .process {
             position: relative;
         }
@@ -408,7 +404,6 @@
             opacity: 0.2;
         }
 
-        /* Barra de progreso animada */
         .progress-bar-container {
             position: absolute;
             top: 40px;
@@ -599,9 +594,7 @@
             color: var(--accent);
         }
 
-        /* === NUEVOS ESTILOS PARA EL FORMULARIO === */
-        
-        /* Modal del formulario */
+        /* Modal del formulario de contacto */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -687,7 +680,7 @@
             transform: rotate(90deg);
         }
 
-        /* Estilos del formulario */
+        /* Estilos del formulario de contacto */
         .form-group {
             margin-bottom: 25px;
         }
@@ -724,7 +717,6 @@
             background: rgba(255, 255, 255, 0.08);
         }
 
-        /* Corrección para los select - mejor visibilidad */
         select.form-control {
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
@@ -874,27 +866,6 @@
             }
         }
 
-        /* Trust badges */
-        .trust-badges {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 40px;
-            flex-wrap: wrap;
-        }
-
-        .trust-badges span {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            color: var(--gray);
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
         /* CTA de WhatsApp mejorado */
         .btn-whatsapp {
             background: linear-gradient(90deg, #25D366, #128C7E) !important;
@@ -993,10 +964,6 @@
                 border-color: transparent transparent transparent var(--accent);
             }
             
-            .hero-stats {
-                justify-content: space-between;
-            }
-            
             .certification-badges {
                 position: static;
                 justify-content: center;
@@ -1026,11 +993,6 @@
                 align-items: flex-start;
             }
             
-            .hero-stats {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
             .footer-content {
                 flex-direction: column;
                 gap: 30px;
@@ -1042,7 +1004,6 @@
                 gap: 15px;
             }
             
-            /* Responsive para el modal */
             .briefing-modal {
                 padding: 30px 20px;
                 max-height: 95vh;
@@ -1150,6 +1111,7 @@
                     <a href="#services">Servicios</a>
                     <a href="#problems">Qué Resolvemos</a>
                     <a href="#process">Cómo Trabajamos</a>
+                    <a href="postulacion.html">Postulación</a> <!-- Nuevo enlace -->
                     <a href="#" class="btn btn-outline open-form-modal">Contactar</a>
                 </div>
                 <button class="mobile-menu-btn">
@@ -1169,21 +1131,7 @@
                     <a href="#" class="btn btn-primary btn-large open-form-modal">Iniciar Proyecto</a>
                     <a href="#services" class="btn btn-outline">Ver Servicios</a>
                 </div>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">150+</span>
-                        <span class="stat-label">Proyectos Completados</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">99%</span>
-                        <span class="stat-label">Clientes Satisfechos</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">24/7</span>
-                        <span class="stat-label">Soporte Prioritario</span>
-                    </div>
-                </div>
-                
+                <!-- Se eliminaron las estadísticas (hero-stats) -->
                 <!-- Trust badges -->
                 <div class="trust-badges">
                     <span>🔒 Código en repositorio privado</span>
@@ -1316,7 +1264,6 @@
         <div class="container">
             <h2>Cómo Trabajamos</h2>
             <div class="process-steps">
-                <!-- Barra de progreso animada -->
                 <div class="progress-bar-container">
                     <div class="progress-bar" id="progress-bar"></div>
                 </div>
@@ -1385,6 +1332,7 @@
                     <a href="#services">Servicios</a>
                     <a href="#problems">Qué Resolvemos</a>
                     <a href="#process">Cómo Trabajamos</a>
+                    <a href="postulacion.html">Postulación</a>
                     <a href="#" class="open-form-modal">Contacto</a>
                 </div>
             </div>
@@ -1392,7 +1340,6 @@
                 &copy; 2023 AFM SOLUTIONS. Todos los derechos reservados.
             </div>
             
-            <!-- Certificaciones sutiles -->
             <div class="certification-badges">
                 <div class="github-verified">
                     <i class="fab fa-github"></i>
@@ -1576,7 +1523,6 @@
             const windowHeight = window.innerHeight;
             const scrollPosition = window.scrollY;
             
-            // Calcular el porcentaje de scroll dentro de la sección
             let progress = 0;
             
             if (scrollPosition > sectionTop - windowHeight + 100) {
@@ -1585,10 +1531,8 @@
                 progress = Math.min((scrollProgress / maxScroll) * 100, 100);
             }
             
-            // Actualizar la barra de progreso
             progressBar.style.width = `${progress}%`;
             
-            // Resaltar los pasos según el progreso
             processSteps.forEach((step, index) => {
                 const stepPercentage = (index + 1) * 25;
                 if (progress >= stepPercentage) {
@@ -1603,18 +1547,15 @@
         projectForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Validar que al menos una función esté seleccionada
             const funcionesCheckboxes = document.querySelectorAll('input[name="funciones"]:checked');
             if (funcionesCheckboxes.length === 0) {
                 alert('Por favor selecciona al menos una funcionalidad clave.');
                 return;
             }
             
-            // Recolectar datos del formulario
             const formData = new FormData(this);
             const funciones = [];
             
-            // Obtener funciones seleccionadas
             funcionesCheckboxes.forEach(cb => {
                 if (cb.value === 'Otra funcionalidad específica' && otroInput.value.trim()) {
                     funciones.push(otroInput.value.trim());
@@ -1623,7 +1564,6 @@
                 }
             });
             
-            // Construir el mensaje estructurado en formato prompt para IA
             const mensaje = `CONTEXTO DEL PROYECTO
 ${formData.get('objetivo')}
 
@@ -1648,25 +1588,17 @@ ${formData.get('urgencia')}
 OBJETIVO FINAL
 Generar una solución técnica adecuada a este contexto.`;
             
-            // Codificar el mensaje para URL
             const mensajeCodificado = encodeURIComponent(mensaje);
-            
-            // Número de WhatsApp
             const phoneNumber = '5493417558966';
-            
-            // Abrir WhatsApp con el mensaje prellenado
             const whatsappURL = `https://wa.me/${phoneNumber}?text=${mensajeCodificado}`;
             window.open(whatsappURL, '_blank');
             
-            // Cerrar el modal
             closeBriefingModal();
-            
-            // Resetear formulario
             projectForm.reset();
             otroInput.style.display = 'none';
         });
 
-        // Código existente para menú móvil
+        // Menú móvil
         document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
             const navLinks = document.querySelector('.nav-links');
             navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
@@ -1684,7 +1616,6 @@ Generar una solución técnica adecuada a este contexto.`;
             }
         });
         
-        // Cerrar menú móvil al hacer clic en un enlace
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', function(e) {
                 if (this.classList.contains('open-form-modal')) {
@@ -1697,7 +1628,7 @@ Generar una solución técnica adecuada a este contexto.`;
             });
         });
         
-        // Efecto de scroll suave para enlaces internos
+        // Scroll suave
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1715,7 +1646,7 @@ Generar una solución técnica adecuada a este contexto.`;
             });
         });
         
-        // Efecto de aparición de elementos al hacer scroll
+        // Animaciones al hacer scroll
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -1730,7 +1661,6 @@ Generar una solución técnica adecuada a este contexto.`;
             });
         }, observerOptions);
         
-        // Aplicar a elementos que queremos animar al aparecer
         document.querySelectorAll('.service-card, .problem-item, .process-step').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(20px)';
@@ -1738,11 +1668,9 @@ Generar una solución técnica adecuada a este contexto.`;
             observer.observe(el);
         });
 
-        // Animar la barra de progreso al hacer scroll
         window.addEventListener('scroll', animateProgressBar);
         window.addEventListener('load', animateProgressBar);
 
-        // Cambiar texto del CTA después de 1 minuto
         setTimeout(() => {
             const ctaMain = document.querySelector('.cta-main');
             if (ctaMain && ctaMain.textContent === 'Conversemos ahora') {

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFM SOLUTIONS | Panel de Postulaciones</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --primary: #4f46e5;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .admin-title {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .login-container h2 {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 14px 18px;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: var(--light);
+            font-size: 1rem;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .login-container button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(79,70,229,0.4);
+        }
+        .login-error {
+            color: #ef4444;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+        .dashboard {
+            display: none;
+        }
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            background: var(--glass);
+            padding: 20px 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        .stat-card .label {
+            color: var(--gray);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .refresh-btn {
+            background: var(--glass);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--light);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .refresh-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--accent);
+        }
+        .table-container {
+            background: var(--glass);
+            border-radius: 16px;
+            padding: 20px;
+            overflow-x: auto;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1200px;
+        }
+        th {
+            text-align: left;
+            padding: 15px 10px;
+            background: rgba(0,0,0,0.3);
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        tr:hover td {
+            background: rgba(255,255,255,0.02);
+            color: var(--light);
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray);
+        }
+        .loading i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+        .logout-btn {
+            background: transparent;
+            border: 1px solid var(--gray);
+            color: var(--gray);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .logout-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- LOGIN -->
+        <div id="loginContainer" class="login-container">
+            <h2>Acceso Administrador</h2>
+            <input type="password" id="passwordInput" placeholder="Contraseña">
+            <button id="loginBtn">Ingresar</button>
+            <div id="loginError" class="login-error">Contraseña incorrecta</div>
+        </div>
+
+        <!-- DASHBOARD (oculto inicialmente) -->
+        <div id="dashboard" class="dashboard">
+            <header>
+                <div class="logo">AFM SOLUTIONS</div>
+                <div class="admin-title">Postulaciones de Vendedores</div>
+                <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Salir</button>
+            </header>
+
+            <div class="dashboard-header">
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="number" id="totalCount">0</div>
+                        <div class="label">Total postulaciones</div>
+                    </div>
+                </div>
+                <button class="refresh-btn" id="refreshBtn">
+                    <i class="fas fa-sync-alt"></i> Actualizar datos
+                </button>
+            </div>
+
+            <div class="table-container">
+                <div id="loadingIndicator" class="loading" style="display: none;">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Cargando postulaciones...</p>
+                </div>
+                <div id="tableWrapper">
+                    <table id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Nombre</th>
+                                <th>Edad</th>
+                                <th>Ciudad</th>
+                                <th>Teléfono</th>
+                                <th>Email</th>
+                                <th>Experiencia</th>
+                                <th>Servicios vendidos</th>
+                                <th>Comisión 40%</th>
+                                <th>¿Por qué sería buen vendedor?</th>
+                                <th>Plan primera semana</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <tr><td colspan="11" style="text-align: center; color: var(--gray);">No hay datos disponibles. Haz clic en "Actualizar".</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuración: contraseña simple (puedes cambiarla)
+        const ADMIN_PASSWORD = 'admin123'; // ¡Cámbiala por una segura!
+        // URL del Web App de Google Apps Script (GET)
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/TU_ID_DE_DEPLOY/exec';
+
+        let applications = [];
+
+        // Elementos del DOM
+        const loginContainer = document.getElementById('loginContainer');
+        const dashboard = document.getElementById('dashboard');
+        const passwordInput = document.getElementById('passwordInput');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginError = document.getElementById('loginError');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const totalCountSpan = document.getElementById('totalCount');
+        const tableBody = document.getElementById('tableBody');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const tableWrapper = document.getElementById('tableWrapper');
+
+        // Verificar si ya está autenticado (opcional, usar sessionStorage)
+        if (sessionStorage.getItem('adminLogged') === 'true') {
+            showDashboard();
+            loadData();
+        }
+
+        loginBtn.addEventListener('click', () => {
+            const pass = passwordInput.value;
+            if (pass === ADMIN_PASSWORD) {
+                sessionStorage.setItem('adminLogged', 'true');
+                showDashboard();
+                loadData();
+            } else {
+                loginError.style.display = 'block';
+                passwordInput.value = '';
+            }
+        });
+
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') loginBtn.click();
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            sessionStorage.removeItem('adminLogged');
+            dashboard.style.display = 'none';
+            loginContainer.style.display = 'block';
+            passwordInput.value = '';
+        });
+
+        refreshBtn.addEventListener('click', loadData);
+
+        function showDashboard() {
+            loginContainer.style.display = 'none';
+            dashboard.style.display = 'block';
+        }
+
+        async function loadData() {
+            // Mostrar loading
+            loadingIndicator.style.display = 'block';
+            tableWrapper.style.opacity = '0.5';
+            tableBody.innerHTML = ''; // Limpiar
+
+            try {
+                const response = await fetch(APPS_SCRIPT_URL + '?action=getApplications');
+                if (!response.ok) throw new Error('Error de red');
+                const data = await response.json();
+                applications = data; // Asumimos que data es un array de objetos
+                renderTable(applications);
+                totalCountSpan.textContent = applications.length;
+            } catch (error) {
+                console.error('Error al cargar datos:', error);
+                tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: #ef4444;">Error al cargar los datos. Intenta de nuevo.</td></tr>`;
+            } finally {
+                loadingIndicator.style.display = 'none';
+                tableWrapper.style.opacity = '1';
+            }
+        }
+
+        function renderTable(data) {
+            if (!data || data.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: var(--gray);">No hay postulaciones aún.</td></tr>`;
+                return;
+            }
+
+            // Ordenar por fecha descendente (asumiendo que timestamp es el primer campo)
+            data.sort((a, b) => {
+                return new Date(b.timestamp) - new Date(a.timestamp);
+            });
+
+            let html = '';
+            data.forEach(item => {
+                html += `<tr>
+                    <td>${formatDate(item.timestamp)}</td>
+                    <td>${escapeHtml(item.nombre || '')}</td>
+                    <td>${escapeHtml(item.edad || '')}</td>
+                    <td>${escapeHtml(item.ciudad || '')}</td>
+                    <td>${escapeHtml(item.telefono || '')}</td>
+                    <td>${escapeHtml(item.email || '')}</td>
+                    <td>${escapeHtml(item.experiencia || '')}</td>
+                    <td>${escapeHtml(item.servicios_vendidos || '')}</td>
+                    <td>${escapeHtml(item.comision_40 || '')}</td>
+                    <td>${escapeHtml(item.por_que_seria_bueno || '')}</td>
+                    <td>${escapeHtml(item.plan_primera_semana || '')}</td>
+                </tr>`;
+            });
+            tableBody.innerHTML = html;
+        }
+
+        // Utilidades
+        function formatDate(timestamp) {
+            if (!timestamp) return '';
+            const date = new Date(timestamp);
+            return date.toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+
+        function escapeHtml(unsafe) {
+            if (!unsafe) return '';
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>

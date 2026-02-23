@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AFM SOLUTIONS | Panel de Postulaciones</title>
+    <!-- Favicon vacío para evitar error 404 -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -288,7 +290,7 @@
         const loadingIndicator = document.getElementById('loadingIndicator');
         const tableWrapper = document.getElementById('tableWrapper');
 
-        // Verificar si ya está autenticado (opcional, usar sessionStorage)
+        // Verificar si ya está autenticado
         if (sessionStorage.getItem('adminLogged') === 'true') {
             showDashboard();
             loadData();
@@ -352,7 +354,7 @@
                 return;
             }
 
-            // Ordenar por fecha descendente (asumiendo que timestamp es el primer campo)
+            // Ordenar por fecha descendente (timestamp)
             data.sort((a, b) => {
                 return new Date(b.timestamp) - new Date(a.timestamp);
             });
@@ -361,16 +363,16 @@
             data.forEach(item => {
                 html += `<tr>
                     <td>${formatDate(item.timestamp)}</td>
-                    <td>${escapeHtml(item.nombre || '')}</td>
-                    <td>${escapeHtml(item.edad || '')}</td>
-                    <td>${escapeHtml(item.ciudad || '')}</td>
-                    <td>${escapeHtml(item.telefono || '')}</td>
-                    <td>${escapeHtml(item.email || '')}</td>
-                    <td>${escapeHtml(item.experiencia || '')}</td>
-                    <td>${escapeHtml(item.servicios_vendidos || '')}</td>
-                    <td>${escapeHtml(item.comision_40 || '')}</td>
-                    <td>${escapeHtml(item.por_que_seria_bueno || '')}</td>
-                    <td>${escapeHtml(item.plan_primera_semana || '')}</td>
+                    <td>${escapeHtml(item.nombre)}</td>
+                    <td>${escapeHtml(item.edad)}</td>
+                    <td>${escapeHtml(item.ciudad)}</td>
+                    <td>${escapeHtml(item.telefono)}</td>
+                    <td>${escapeHtml(item.email)}</td>
+                    <td>${escapeHtml(item.experiencia)}</td>
+                    <td>${escapeHtml(item.servicios_vendidos)}</td>
+                    <td>${escapeHtml(item.comision_40)}</td>
+                    <td>${escapeHtml(item.por_que_seria_bueno)}</td>
+                    <td>${escapeHtml(item.plan_primera_semana)}</td>
                 </tr>`;
             });
             tableBody.innerHTML = html;
@@ -380,12 +382,14 @@
         function formatDate(timestamp) {
             if (!timestamp) return '';
             const date = new Date(timestamp);
+            if (isNaN(date.getTime())) return '';
             return date.toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
         }
 
         function escapeHtml(unsafe) {
-            if (!unsafe) return '';
-            return unsafe
+            if (unsafe === null || unsafe === undefined) return '';
+            const str = String(unsafe);
+            return str
                 .replace(/&/g, "&amp;")
                 .replace(/</g, "&lt;")
                 .replace(/>/g, "&gt;")

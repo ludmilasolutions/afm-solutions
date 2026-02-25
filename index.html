@@ -594,7 +594,7 @@
             color: var(--accent);
         }
 
-        /* Modal del formulario de contacto */
+        /* Modal del formulario de contacto (lo dejamos pero lo ocultamos si usamos chatbot) */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -909,6 +909,191 @@
             }
         }
 
+        /* ===== CHATBOT ===== */
+        .chatbot-container {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 360px;
+            height: 500px;
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chatbot-container.open {
+            display: flex;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chatbot-header button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .chatbot-header button:hover {
+            opacity: 1;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            word-wrap: break-word;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.bot {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            align-self: flex-start;
+            color: var(--light);
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            align-self: flex-end;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chatbot-options {
+            padding: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .chatbot-options button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            padding: 10px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1 1 auto;
+            min-width: 120px;
+        }
+
+        .chatbot-options button:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .chatbot-options button.emphasis {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border: none;
+            font-weight: 600;
+        }
+
+        .chatbot-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            box-shadow: 0 8px 30px var(--glow-primary);
+            cursor: pointer;
+            z-index: 9999;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .chatbot-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 40px var(--glow-primary);
+        }
+
+        .chatbot-toggle i {
+            transition: transform 0.3s;
+        }
+
+        .chatbot-toggle.open i {
+            transform: rotate(90deg);
+        }
+
+        /* Ocultar el WhatsApp flotante original cuando el chat está abierto (opcional) */
+        .chatbot-container.open + .floating-whatsapp {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .chatbot-container {
+                width: calc(100% - 40px);
+                right: 20px;
+                bottom: 80px;
+                height: 60vh;
+            }
+        }
+
         /* Responsive */
         @media (max-width: 992px) {
             h1 {
@@ -1111,7 +1296,7 @@
                     <a href="#services">Servicios</a>
                     <a href="#problems">Qué Resolvemos</a>
                     <a href="#process">Cómo Trabajamos</a>
-                    <a href="postulacion.html">Postulación</a> <!-- Nuevo enlace -->
+                    <a href="postulacion.html">Postulación</a>
                     <a href="#" class="btn btn-outline open-form-modal">Contactar</a>
                 </div>
                 <button class="mobile-menu-btn">
@@ -1131,7 +1316,6 @@
                     <a href="#" class="btn btn-primary btn-large open-form-modal">Iniciar Proyecto</a>
                     <a href="#services" class="btn btn-outline">Ver Servicios</a>
                 </div>
-                <!-- Se eliminaron las estadísticas (hero-stats) -->
                 <!-- Trust badges -->
                 <div class="trust-badges">
                     <span>🔒 Código en repositorio privado</span>
@@ -1353,7 +1537,7 @@
         </div>
     </footer>
 
-    <!-- Modal del Formulario de Briefing -->
+    <!-- Modal del Formulario de Briefing (opcional, puedes dejarlo o eliminarlo) -->
     <div class="modal-overlay" id="briefing-modal">
         <div class="briefing-modal">
             <button class="close-modal" id="close-modal">
@@ -1458,13 +1642,34 @@
         </div>
     </div>
 
-    <!-- WhatsApp flotante -->
+    <!-- WhatsApp flotante (original, pero lo mantendremos) -->
     <div class="floating-whatsapp open-form-modal">
         <i class="fab fa-whatsapp"></i>
     </div>
 
+    <!-- ========== CHATBOT ========== -->
+    <!-- Botón flotante del chatbot -->
+    <button class="chatbot-toggle" id="chatbot-toggle">
+        <i class="fas fa-comment-dots"></i>
+    </button>
+
+    <!-- Ventana del chatbot -->
+    <div class="chatbot-container" id="chatbot-container">
+        <div class="chatbot-header">
+            <h3><i class="fas fa-robot"></i> Asistente AFM</h3>
+            <button id="chatbot-close"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chatbot-messages" id="chatbot-messages">
+            <!-- Mensaje inicial -->
+            <div class="message bot">¡Hola! Soy el asesor virtual de AFM SOLUTIONS. Estoy aquí para ayudarte a transformar tu idea en un proyecto real. ¿En qué etapa se encuentra tu proyecto?</div>
+        </div>
+        <div class="chatbot-options" id="chatbot-options">
+            <!-- Las opciones se generarán dinámicamente con JS -->
+        </div>
+    </div>
+
     <script>
-        // Elementos del modal
+        // Elementos del modal (original)
         const briefingModal = document.getElementById('briefing-modal');
         const closeModalBtn = document.getElementById('close-modal');
         const projectForm = document.getElementById('project-briefing-form');
@@ -1472,35 +1677,35 @@
         const otroInput = document.getElementById('otro-input');
         const progressBar = document.getElementById('progress-bar');
 
-        // Función para abrir el modal
+        // Función para abrir el modal (original)
         function openBriefingModal(e) {
             if (e) e.preventDefault();
             briefingModal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
-        // Función para cerrar el modal
+        // Función para cerrar el modal (original)
         function closeBriefingModal() {
             briefingModal.classList.remove('active');
             document.body.style.overflow = 'auto';
         }
 
-        // Configurar todos los botones que abren el formulario
+        // Configurar todos los botones que abren el formulario (original)
         document.querySelectorAll('.open-form-modal').forEach(button => {
             button.addEventListener('click', openBriefingModal);
         });
 
-        // Cerrar modal con el botón X
+        // Cerrar modal con el botón X (original)
         closeModalBtn.addEventListener('click', closeBriefingModal);
 
-        // Cerrar modal al hacer clic fuera
+        // Cerrar modal al hacer clic fuera (original)
         briefingModal.addEventListener('click', function(e) {
             if (e.target === briefingModal) {
                 closeBriefingModal();
             }
         });
 
-        // Mostrar/ocultar campo "Otra funcionalidad específica"
+        // Mostrar/ocultar campo "Otra funcionalidad específica" (original)
         otroCheckbox.addEventListener('change', function() {
             if (this.querySelector('input').checked) {
                 otroInput.style.display = 'block';
@@ -1511,7 +1716,7 @@
             }
         });
 
-        // Animar la barra de progreso al hacer scroll
+        // Animar la barra de progreso al hacer scroll (original)
         function animateProgressBar() {
             const processSection = document.querySelector('.process');
             const processSteps = document.querySelectorAll('.process-step');
@@ -1543,7 +1748,7 @@
             });
         }
 
-        // Manejar envío del formulario
+        // Manejar envío del formulario (original)
         projectForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -1598,7 +1803,7 @@ Generar una solución técnica adecuada a este contexto.`;
             otroInput.style.display = 'none';
         });
 
-        // Menú móvil
+        // Menú móvil (original)
         document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
             const navLinks = document.querySelector('.nav-links');
             navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
@@ -1628,7 +1833,7 @@ Generar una solución técnica adecuada a este contexto.`;
             });
         });
         
-        // Scroll suave
+        // Scroll suave (original)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1646,7 +1851,7 @@ Generar una solución técnica adecuada a este contexto.`;
             });
         });
         
-        // Animaciones al hacer scroll
+        // Animaciones al hacer scroll (original)
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -1671,12 +1876,268 @@ Generar una solución técnica adecuada a este contexto.`;
         window.addEventListener('scroll', animateProgressBar);
         window.addEventListener('load', animateProgressBar);
 
+        // Pequeña broma (original)
         setTimeout(() => {
             const ctaMain = document.querySelector('.cta-main');
             if (ctaMain && ctaMain.textContent === 'Conversemos ahora') {
                 ctaMain.textContent = '¿Necesitas ayuda rápida?';
             }
         }, 60000);
+
+        // ========== CHATBOT ==========
+        class Chatbot {
+            constructor() {
+                this.container = document.getElementById('chatbot-container');
+                this.toggleBtn = document.getElementById('chatbot-toggle');
+                this.closeBtn = document.getElementById('chatbot-close');
+                this.messagesDiv = document.getElementById('chatbot-messages');
+                this.optionsDiv = document.getElementById('chatbot-options');
+                
+                this.state = {
+                    etapa: null,
+                    funciones: [],
+                    usuario: null,
+                    urgencia: null,
+                    objetivo: null
+                };
+                this.step = 'etapa'; // etapa, funciones, usuario, urgencia, objetivo, final
+                
+                this.init();
+            }
+            
+            init() {
+                this.toggleBtn.addEventListener('click', () => this.toggle());
+                this.closeBtn.addEventListener('click', () => this.close());
+                this.showStep();
+            }
+            
+            toggle() {
+                this.container.classList.toggle('open');
+                this.toggleBtn.classList.toggle('open');
+                if (this.container.classList.contains('open')) {
+                    this.scrollToBottom();
+                }
+            }
+            
+            close() {
+                this.container.classList.remove('open');
+                this.toggleBtn.classList.remove('open');
+            }
+            
+            addMessage(text, sender = 'bot') {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = `message ${sender}`;
+                msgDiv.textContent = text;
+                this.messagesDiv.appendChild(msgDiv);
+                this.scrollToBottom();
+            }
+            
+            setOptions(options) {
+                this.optionsDiv.innerHTML = '';
+                options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.textContent = opt.label;
+                    if (opt.emphasis) btn.classList.add('emphasis');
+                    btn.addEventListener('click', () => opt.action());
+                    this.optionsDiv.appendChild(btn);
+                });
+            }
+            
+            scrollToBottom() {
+                this.messagesDiv.scrollTop = this.messagesDiv.scrollHeight;
+            }
+            
+            showStep() {
+                switch(this.step) {
+                    case 'etapa':
+                        this.setOptions([
+                            { label: 'Desde cero', action: () => this.handleEtapa('Desde cero') },
+                            { label: 'Ya existe (mejoras)', action: () => this.handleEtapa('Ya existe') },
+                            { label: 'Está incompleto', action: () => this.handleEtapa('Incompleto') }
+                        ]);
+                        break;
+                    case 'funciones':
+                        this.setOptions([
+                            { label: 'Sistema de usuarios', action: () => this.toggleFuncion('usuarios') },
+                            { label: 'Automatización', action: () => this.toggleFuncion('automatizacion') },
+                            { label: 'Reportes', action: () => this.toggleFuncion('reportes') },
+                            { label: 'Integraciones', action: () => this.toggleFuncion('integraciones') },
+                            { label: 'Panel admin', action: () => this.toggleFuncion('panel') },
+                            { label: '✅ Continuar', action: () => this.nextStep(), emphasis: true }
+                        ]);
+                        break;
+                    case 'usuario':
+                        this.setOptions([
+                            { label: 'Clientes finales', action: () => this.handleUsuario('Clientes finales') },
+                            { label: 'Empleados internos', action: () => this.handleUsuario('Empleados internos') },
+                            { label: 'Ambos', action: () => this.handleUsuario('Ambos') },
+                            { label: 'Otros', action: () => this.promptUsuario() }
+                        ]);
+                        break;
+                    case 'urgencia':
+                        this.setOptions([
+                            { label: 'Urgente (ASAP)', action: () => this.handleUrgencia('Lo antes posible') },
+                            { label: 'Próximas 2 semanas', action: () => this.handleUrgencia('En 2 semanas') },
+                            { label: 'En 1 mes', action: () => this.handleUrgencia('En 1 mes') },
+                            { label: 'Solo explorando', action: () => this.handleUrgencia('Explorando opciones') }
+                        ]);
+                        break;
+                    case 'objetivo':
+                        this.setOptions([
+                            { label: 'Escribir objetivo', action: () => this.promptObjetivo() }
+                        ]);
+                        break;
+                    case 'final':
+                        this.setOptions([
+                            { label: '📱 Enviar a WhatsApp', action: () => this.sendToWhatsApp(), emphasis: true },
+                            { label: 'Volver a empezar', action: () => this.reset() }
+                        ]);
+                        break;
+                }
+            }
+            
+            handleEtapa(etapa) {
+                this.state.etapa = etapa;
+                this.addMessage(etapa, 'user');
+                this.addMessage('Perfecto. ¿Qué funcionalidades clave necesitas? (puedes seleccionar varias)');
+                this.step = 'funciones';
+                this.showStep();
+            }
+            
+            toggleFuncion(funcion) {
+                const index = this.state.funciones.indexOf(funcion);
+                if (index === -1) {
+                    this.state.funciones.push(funcion);
+                } else {
+                    this.state.funciones.splice(index, 1);
+                }
+                // Mostrar feedback visual en el botón (opcional)
+                const buttons = this.optionsDiv.querySelectorAll('button');
+                buttons.forEach(btn => {
+                    if (btn.textContent.includes('Continuar')) return;
+                    // Mapeo de etiquetas a valores de estado (simplificado)
+                    let valor;
+                    if (btn.textContent.includes('Sistema de usuarios')) valor = 'usuarios';
+                    else if (btn.textContent.includes('Automatización')) valor = 'automatizacion';
+                    else if (btn.textContent.includes('Reportes')) valor = 'reportes';
+                    else if (btn.textContent.includes('Integraciones')) valor = 'integraciones';
+                    else if (btn.textContent.includes('Panel admin')) valor = 'panel';
+                    else valor = null;
+                    
+                    if (valor && this.state.funciones.includes(valor)) {
+                        btn.style.background = 'var(--primary)';
+                    } else {
+                        btn.style.background = '';
+                    }
+                });
+            }
+            
+            nextStep() {
+                if (this.state.funciones.length === 0) {
+                    this.addMessage('Por favor selecciona al menos una funcionalidad.', 'bot');
+                    return;
+                }
+                this.addMessage(`Seleccionadas: ${this.state.funciones.map(f => this.funcionLabel(f)).join(', ')}`, 'user');
+                this.addMessage('¿Quién usará principalmente esta solución?');
+                this.step = 'usuario';
+                this.showStep();
+            }
+            
+            funcionLabel(func) {
+                const labels = {
+                    usuarios: 'Sistema de usuarios',
+                    automatizacion: 'Automatización',
+                    reportes: 'Reportes',
+                    integraciones: 'Integraciones',
+                    panel: 'Panel admin'
+                };
+                return labels[func] || func;
+            }
+            
+            handleUsuario(usuario) {
+                this.state.usuario = usuario;
+                this.addMessage(usuario, 'user');
+                this.addMessage('¿Cuándo necesitas tenerla lista?');
+                this.step = 'urgencia';
+                this.showStep();
+            }
+            
+            promptUsuario() {
+                const usuario = prompt('Describe los usuarios (ej: administrativos, proveedores...):');
+                if (usuario) {
+                    this.handleUsuario(usuario);
+                }
+            }
+            
+            handleUrgencia(urgencia) {
+                this.state.urgencia = urgencia;
+                this.addMessage(urgencia, 'user');
+                this.addMessage('Cuéntame brevemente el objetivo principal de tu proyecto:');
+                this.step = 'objetivo';
+                this.showStep();
+            }
+            
+            promptObjetivo() {
+                const objetivo = prompt('Escribe el objetivo:');
+                if (objetivo) {
+                    this.state.objetivo = objetivo;
+                    this.addMessage(objetivo, 'user');
+                    this.addMessage('¡Genial! Ya tengo suficiente información. ¿Quieres enviarla a nuestro equipo por WhatsApp para recibir una asesoría personalizada?');
+                    this.step = 'final';
+                    this.showStep();
+                }
+            }
+            
+            sendToWhatsApp() {
+                const funcionesTexto = this.state.funciones.map(f => `• ${this.funcionLabel(f)}`).join('\n');
+                const mensaje = `CONTEXTO DEL PROYECTO (desde chat)
+Objetivo: ${this.state.objetivo || 'No especificado'}
+
+ETAPA DEL PROYECTO
+${this.state.etapa}
+
+FUNCIONALIDADES CLAVE
+${funcionesTexto}
+
+USUARIOS
+${this.state.usuario || 'No especificado'}
+
+URGENCIA
+${this.state.urgencia}
+
+Este mensaje fue generado automáticamente por el chatbot.`;
+                
+                const mensajeCodificado = encodeURIComponent(mensaje);
+                const phoneNumber = '5493417558966'; // Mismo número que en el formulario
+                const whatsappURL = `https://wa.me/${phoneNumber}?text=${mensajeCodificado}`;
+                window.open(whatsappURL, '_blank');
+                
+                this.addMessage('✅ Información enviada. En breve un asesor se comunicará contigo.', 'bot');
+                this.addMessage('¿Necesitas ayuda con algo más? Puedes reiniciar la conversación.', 'bot');
+                // Opción para reiniciar
+                this.setOptions([
+                    { label: 'Reiniciar', action: () => this.reset(), emphasis: true }
+                ]);
+            }
+            
+            reset() {
+                this.state = {
+                    etapa: null,
+                    funciones: [],
+                    usuario: null,
+                    urgencia: null,
+                    objetivo: null
+                };
+                this.step = 'etapa';
+                this.messagesDiv.innerHTML = '<div class="message bot">¡Hola! Soy el asesor virtual de AFM SOLUTIONS. Estoy aquí para ayudarte a transformar tu idea en un proyecto real. ¿En qué etapa se encuentra tu proyecto?</div>';
+                this.showStep();
+            }
+        }
+
+        // Inicializar el chatbot cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', () => {
+            new Chatbot();
+        });
     </script>
 </body>
 </html>

@@ -314,9 +314,39 @@
         
         @keyframes spin { to { transform: rotate(360deg); } }
         
+        /* Mejoras para móviles: scroll horizontal en tablas */
         @media (max-width: 768px) {
             .dashboard-stats { grid-template-columns: repeat(2, 1fr); }
             .form-row { grid-template-columns: 1fr; }
+            
+            /* Hace que la tabla sea desplazable horizontalmente */
+            .table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* Fuerza a la tabla a tener un ancho mínimo para que las columnas no se compriman demasiado */
+            .table-container table {
+                min-width: 650px; /* Ajustado para 6 columnas con contenido típico */
+            }
+
+            /* Reduce el padding de las celdas y evita saltos de línea */
+            th, td {
+                padding: 10px 8px;
+                font-size: 0.85rem;
+                white-space: nowrap;
+            }
+
+            /* Botones de acción un poco más pequeños */
+            .btn-icon {
+                width: 28px;
+                height: 28px;
+            }
+
+            /* Ajuste para el select de cliente en móvil */
+            select.form-control {
+                font-size: 16px; /* Evita zoom en iOS */
+            }
         }
     </style>
 </head>

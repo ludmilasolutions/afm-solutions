@@ -733,211 +733,298 @@
             const fmtDate = (s) => s ? new Date(s + 'T00:00:00').toLocaleDateString('es-AR') : '';
 
             const PW = 210, PH = 297;
-            const ML = 15,  MR = 15;
+            const ML = 14, MR = 14;
             const CW = PW - ML - MR;
 
-            // ── Paleta AFM Solutions ─────────────────────────────────
-            const PRIMARY   = [79,  70,  229];
-            const SECONDARY = [124, 58,  237];
-            const ACCENT    = [6,   182, 212];
-            const DARK      = [15,  23,  42];
-            const DARKER    = [2,   6,   23];
-            const LIGHT     = [248, 250, 252];
-            const GRAY      = [148, 163, 184];
-            const GRAY_L    = [30,  41,  59];   // gris oscuro para filas
-            const LAVENDER  = [199, 210, 254];
+            // ── Paleta ───────────────────────────────────────────────
+            const INK    = [17,  24,  39];
+            const GRAY   = [107, 114, 128];
+            const GRAY_L = [249, 250, 251];
+            const GRAY_M = [229, 231, 235];
+            const SLATE  = [30,  41,  59];
+            const GOLD   = [245, 158, 11];
+            const GOLD_L = [254, 243, 199];
+            const WHITE  = [255, 255, 255];
 
-            // ── FONDO ────────────────────────────────────────────────
-            doc.setFillColor(...DARKER);
+            // ── FONDO BLANCO ─────────────────────────────────────────
+            doc.setFillColor(...WHITE);
             doc.rect(0, 0, PW, PH, 'F');
 
-            // ── HEADER ───────────────────────────────────────────────
-            const HEADER_H = 50;
-            // Gradiente simulado primary → secondary (20 franjas)
-            for (let i = 0; i < 20; i++) {
-                const t = i / 20;
-                const r = Math.round(PRIMARY[0] + (SECONDARY[0]-PRIMARY[0])*t);
-                const g = Math.round(PRIMARY[1] + (SECONDARY[1]-PRIMARY[1])*t);
-                const b = Math.round(PRIMARY[2] + (SECONDARY[2]-PRIMARY[2])*t);
-                doc.setFillColor(r, g, b);
-                doc.rect(PW * i/20, 0, PW/20 + 0.5, HEADER_H - 8, 'F');
-            }
-            // Franja accent inferior del header
-            doc.setFillColor(...ACCENT);
-            doc.rect(0, HEADER_H - 8, PW, 2.5, 'F');
-            // Fondo oscuro del resto de la página
-            doc.setFillColor(...DARK);
-            doc.rect(0, HEADER_H, PW, PH - HEADER_H, 'F');
+            // ════════════════════════════════════════════════════════
+            // HEADER
+            // ════════════════════════════════════════════════════════
+            const HH = 48;
 
-            // Nombre empresa
-            doc.setTextColor(...LIGHT);
+            // Mitad izquierda oscura
+            doc.setFillColor(...SLATE);
+            doc.rect(0, 0, PW * 0.42, HH, 'F');
+            // Mitad derecha blanca
+            doc.setFillColor(...WHITE);
+            doc.rect(PW * 0.42, 0, PW * 0.58, HH, 'F');
+            // Franja dorada izquierda
+            doc.setFillColor(...GOLD);
+            doc.rect(0, 0, 4, HH, 'F');
+            // Línea dorada inferior
+            doc.setFillColor(...GOLD);
+            doc.rect(0, HH, PW, 2, 'F');
+
+            // Empresa — izquierda
+            doc.setTextColor(...WHITE);
             doc.setFont('helvetica', 'bold');
-            doc.setFontSize(22);
-            doc.text('AFM Solutions', ML, 18);
+            doc.setFontSize(18);
+            doc.text('AFM Solutions', ML + 2, 19);
+            doc.setTextColor(...GOLD);
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(7.5);
+            doc.text('DESARROLLO DE SOFTWARE', ML + 2, 26);
+            doc.setTextColor(148, 163, 184);
             doc.setFont('helvetica', 'normal');
-            doc.setFontSize(9);
-            doc.setTextColor(...LAVENDER);
-            doc.text('afmsolutions.com.ar', ML, 25);
+            doc.setFontSize(7.5);
+            doc.text('afmsolutions.com.ar', ML + 2, 32);
+            doc.text('contacto@afmsolutions.com.ar', ML + 2, 37.5);
+            doc.text('Rosario, Argentina', ML + 2, 43);
 
-            // Bloque derecho header
-            doc.setTextColor(...LIGHT);
+            // Presupuesto — derecha
+            doc.setTextColor(...SLATE);
             doc.setFont('helvetica', 'bold');
-            doc.setFontSize(16);
-            doc.text('PRESUPUESTO', PW - MR, 16, { align: 'right' });
-            doc.setFillColor(...ACCENT);
+            doc.setFontSize(26);
+            doc.text('PRESUPUESTO', PW - MR, 22, { align: 'right' });
+            doc.setTextColor(...GOLD);
             doc.setFont('helvetica', 'bold');
             doc.setFontSize(10);
-            doc.setTextColor(...ACCENT);
-            doc.text('N\u00b0 ' + data.number, PW - MR, 23, { align: 'right' });
-            doc.setTextColor(...LAVENDER);
+            doc.text('N\u00b0 ' + data.number, PW - MR, 30, { align: 'right' });
+            doc.setTextColor(...GRAY);
             doc.setFont('helvetica', 'normal');
             doc.setFontSize(8.5);
-            doc.text('Fecha: ' + fmtDate(data.date), PW - MR, 30, { align: 'right' });
-            doc.text('Validez: 30 d\u00edas', PW - MR, 37, { align: 'right' });
+            doc.text('Emisi\u00f3n: ' + fmtDate(data.date), PW - MR, 37, { align: 'right' });
+            doc.text('Validez: 30 d\u00edas corridos', PW - MR, 43, { align: 'right' });
 
-            let y = HEADER_H + 12;
+            let y = HH + 10;
 
-            // ── CLIENTE ──────────────────────────────────────────────
-            const CH = 28;
-            doc.setFillColor(15, 23, 42);
-            doc.setDrawColor(30, 41, 59);
-            doc.setLineWidth(0.5);
-            doc.roundedRect(ML, y, CW, CH, 3, 3, 'FD');
-            // Franja accent izquierda
-            doc.setFillColor(...ACCENT);
-            doc.rect(ML, y, 3.5, CH, 'F');
+            // ════════════════════════════════════════════════════════
+            // CLIENTE + ESTADO
+            // ════════════════════════════════════════════════════════
+            const CH = 26;
+
+            // Bloque cliente — izquierda
+            doc.setFillColor(...GRAY_L);
+            doc.setDrawColor(...GRAY_M);
+            doc.setLineWidth(0.4);
+            doc.roundedRect(ML, y, CW * 0.55, CH, 2, 2, 'FD');
+            doc.setFillColor(...GOLD);
+            doc.rect(ML, y, 3, CH, 'F');
 
             doc.setTextColor(...GRAY);
             doc.setFont('helvetica', 'bold');
             doc.setFontSize(7);
-            doc.text('CLIENTE', ML + 8, y + 8);
-
-            doc.setTextColor(...LIGHT);
+            doc.text('FACTURAR A', ML + 7, y + 8);
+            doc.setTextColor(...INK);
             doc.setFont('helvetica', 'bold');
-            doc.setFontSize(13);
-            doc.text(data.clientName, ML + 8, y + 16);
-
+            doc.setFontSize(11);
+            doc.text(data.clientName, ML + 7, y + 15);
             doc.setTextColor(...GRAY);
             doc.setFont('helvetica', 'normal');
             doc.setFontSize(8.5);
-            const det = [];
-            if (data.clientPhone) det.push('Tel: ' + data.clientPhone);
-            if (data.clientEmail) det.push(data.clientEmail);
-            if (det.length) doc.text(det.join('    \u2022    '), ML + 8, y + 23);
+            if (data.clientPhone) doc.text(data.clientPhone, ML + 7, y + 21);
+            if (data.clientEmail) doc.text(data.clientEmail, ML + 7 + (data.clientPhone ? 35 : 0), y + 21);
+
+            // Bloque estado — derecha
+            const BW = CW * 0.38;
+            const BX = ML + CW - BW;
+            doc.setFillColor(...SLATE);
+            doc.roundedRect(BX, y, BW, CH, 2, 2, 'F');
+            doc.setTextColor(148, 163, 184);
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(7);
+            doc.text('ESTADO', BX + 5, y + 8);
+            doc.setTextColor(...GOLD);
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(8.5);
+            doc.text('\u25cf PENDIENTE DE APROBACI\u00d3N', BX + 5, y + 15);
+            doc.setTextColor(148, 163, 184);
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(7);
+            doc.text('MONEDA', BX + 5, y + 20);
+            doc.setTextColor(...WHITE);
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(8.5);
+            doc.text('Pesos Argentinos (ARS)', BX + 5, y + 26);
 
             y += CH + 8;
 
-            // ── TABLA ────────────────────────────────────────────────
-            const TH = 8;
-            // Header tabla
-            doc.setFillColor(...PRIMARY);
-            doc.rect(ML, y, CW, TH, 'F');
-            doc.setTextColor(...LIGHT);
+            // ════════════════════════════════════════════════════════
+            // TABLA
+            // ════════════════════════════════════════════════════════
+            const TH = 9;
+            doc.setFillColor(...SLATE);
+            doc.roundedRect(ML, y, CW, TH, 1.5, 1.5, 'F');
+            doc.rect(ML, y + TH/2, CW, TH/2, 'F');
+
+            doc.setTextColor(...WHITE);
             doc.setFont('helvetica', 'bold');
-            doc.setFontSize(8);
-            doc.text('#',            ML + 2,   y + 5.5);
-            doc.text('Descripci\u00f3n', ML + 10, y + 5.5);
-            doc.text('Cant.',   ML + 112, y + 5.5, { align: 'right' });
-            doc.text('P. Unit.',ML + 140, y + 5.5, { align: 'right' });
-            doc.text('Subtotal',ML + 172, y + 5.5, { align: 'right' });
+            doc.setFontSize(7.5);
+            doc.text('\u00cdTEM',              ML + 3,   y + 6);
+            doc.text('DESCRIPCI\u00d3N',       ML + 20,  y + 6);
+            doc.text('CANT.',   ML + 108, y + 6, { align: 'right' });
+            doc.text('P. UNIT.',ML + 137, y + 6, { align: 'right' });
+            doc.text('SUBTOTAL',ML + 173, y + 6, { align: 'right' });
             y += TH;
 
-            const ROW_H = 9;
+            const ROW_H = 10;
             data.items.forEach((item, i) => {
-                if (i % 2 === 0) {
-                    doc.setFillColor(17, 24, 39);
-                } else {
-                    doc.setFillColor(15, 23, 42);
-                }
+                doc.setFillColor(...(i % 2 === 0 ? GRAY_L : WHITE));
                 doc.rect(ML, y, CW, ROW_H, 'F');
 
-                const cy = y + 6;
-                doc.setTextColor(...GRAY);
-                doc.setFont('helvetica', 'normal');
-                doc.setFontSize(8);
-                doc.text(String(i + 1), ML + 2, cy);
+                const cy = y + 6.5;
 
-                doc.setTextColor(...LIGHT);
+                // Chip numerado dorado
+                doc.setFillColor(...GOLD);
+                doc.roundedRect(ML + 1.5, y + 2, 6, 6, 1, 1, 'F');
+                doc.setTextColor(...WHITE);
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(7.5);
+                doc.text(String(i + 1), ML + 4.5, y + 6.5, { align: 'center' });
+
+                doc.setTextColor(...INK);
+                doc.setFont('helvetica', 'normal');
                 doc.setFontSize(8.5);
-                const descTxt = doc.splitTextToSize(item.desc, 95)[0];
+                const descTxt = doc.splitTextToSize(item.desc, 88)[0];
                 doc.text(descTxt, ML + 10, cy);
 
                 doc.setTextColor(...GRAY);
-                doc.text(String(item.qty), ML + 112, cy, { align: 'right' });
-                doc.text(fmt(item.price),  ML + 140, cy, { align: 'right' });
+                doc.text(String(item.qty),  ML + 108, cy, { align: 'right' });
+                doc.text(fmt(item.price),   ML + 137, cy, { align: 'right' });
 
-                doc.setTextColor(...LIGHT);
+                doc.setTextColor(...INK);
                 doc.setFont('helvetica', 'bold');
-                doc.text(fmt(item.total),  ML + 172, cy, { align: 'right' });
+                doc.text(fmt(item.total),   ML + 173, cy, { align: 'right' });
 
-                doc.setDrawColor(30, 41, 59);
-                doc.setLineWidth(0.3);
+                doc.setDrawColor(...GRAY_M);
+                doc.setLineWidth(0.25);
                 doc.line(ML, y + ROW_H, ML + CW, y + ROW_H);
                 y += ROW_H;
             });
 
-            y += 5;
+            y += 4;
 
-            // ── TOTAL ────────────────────────────────────────────────
-            const TW = 72, TOT_H = 14;
-            const TOT_X = ML + CW - TW;
-            // Gradiente primary → secondary en el total
-            for (let i = 0; i < 15; i++) {
-                const t = i / 15;
-                const r = Math.round(PRIMARY[0] + (SECONDARY[0]-PRIMARY[0])*t);
-                const g = Math.round(PRIMARY[1] + (SECONDARY[1]-PRIMARY[1])*t);
-                const b = Math.round(PRIMARY[2] + (SECONDARY[2]-PRIMARY[2])*t);
-                doc.setFillColor(r, g, b);
-                doc.rect(TOT_X + TW*i/15, y, TW/15 + 0.3, TOT_H, 'F');
-            }
-            doc.setDrawColor(...SECONDARY);
+            // ════════════════════════════════════════════════════════
+            // COLUMNA DE TOTALES
+            // ════════════════════════════════════════════════════════
+            const TW = 78;
+            const TX = ML + CW - TW;
+            const total = data.total;
+
+            const drawTotalRow = (label, valor, yy, highlight) => {
+                if (highlight) {
+                    doc.setFillColor(...SLATE);
+                    doc.roundedRect(TX, yy, TW, 10, 1.5, 1.5, 'F');
+                    doc.setTextColor(...GOLD);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setFontSize(9);
+                    doc.text(label, TX + 5, yy + 6.5);
+                    doc.setTextColor(...WHITE);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setFontSize(13);
+                    doc.text(valor, TX + TW - 4, yy + 7, { align: 'right' });
+                } else {
+                    doc.setFillColor(...GRAY_L);
+                    doc.rect(TX, yy, TW, 7, 'F');
+                    doc.setDrawColor(...GRAY_M);
+                    doc.setLineWidth(0.3);
+                    doc.line(TX, yy + 7, TX + TW, yy + 7);
+                    doc.setTextColor(...GRAY);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setFontSize(8);
+                    doc.text(label, TX + 5, yy + 4.5);
+                    doc.setTextColor(...INK);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setFontSize(8.5);
+                    doc.text(valor, TX + TW - 4, yy + 4.5, { align: 'right' });
+                }
+            };
+
+            drawTotalRow('Subtotal',    fmt(total), y);        y += 7;
+            drawTotalRow('IVA (0%)',    fmt(0),     y);        y += 7;
+            drawTotalRow('Descuento',   fmt(0),     y);        y += 4;
+            drawTotalRow('TOTAL FINAL', fmt(total), y, true);  y += 16;
+
+            // ════════════════════════════════════════════════════════
+            // CONDICIONES + FIRMA
+            // ════════════════════════════════════════════════════════
+            const COND_H = 26;
+
+            // Condiciones — izquierda
+            doc.setFillColor(255, 251, 235);
+            doc.setDrawColor(...GOLD);
             doc.setLineWidth(0.5);
-            doc.roundedRect(TOT_X, y, TW, TOT_H, 2, 2, 'D');
+            doc.roundedRect(ML, y, CW * 0.57, COND_H, 2, 2, 'FD');
+            doc.setFillColor(...GOLD);
+            doc.rect(ML, y, 3, COND_H, 'F');
 
-            doc.setTextColor(...LAVENDER);
+            doc.setTextColor(146, 64, 14);
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(7);
+            doc.text('CONDICIONES Y NOTAS', ML + 7, y + 7);
+            doc.setTextColor(...INK);
             doc.setFont('helvetica', 'normal');
             doc.setFontSize(8);
-            doc.text('TOTAL A PAGAR', TOT_X + 4, y + 5);
-            doc.setTextColor(...LIGHT);
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(13);
-            doc.text(fmt(data.total), TOT_X + TW - 4, y + 10, { align: 'right' });
+            const condiciones = [
+                '\u2022 Los precios tienen validez por 30 d\u00edas desde la emisi\u00f3n.',
+                '\u2022 El trabajo inicia al confirmar la aceptaci\u00f3n.',
+                '\u2022 Forma de pago: 50% al inicio, 50% al finalizar.'
+            ];
 
-            y += TOT_H + 10;
-
-            // ── OBSERVACIONES ────────────────────────────────────────
             if (data.observations) {
-                const OBS_H = 22;
-                doc.setFillColor(15, 23, 42);
-                doc.setDrawColor(...ACCENT);
-                doc.setLineWidth(0.5);
-                doc.roundedRect(ML, y, CW, OBS_H, 2, 2, 'FD');
-                doc.setFillColor(...ACCENT);
-                doc.rect(ML, y, 3.5, OBS_H, 'F');
-
-                doc.setTextColor(...ACCENT);
-                doc.setFont('helvetica', 'bold');
-                doc.setFontSize(7);
-                doc.text('OBSERVACIONES', ML + 8, y + 7);
-                doc.setTextColor(...GRAY);
-                doc.setFont('helvetica', 'normal');
-                doc.setFontSize(8.5);
-                const obsLines = doc.splitTextToSize(data.observations, CW - 12);
-                doc.text(obsLines.slice(0, 3), ML + 8, y + 14);
-                y += OBS_H + 8;
+                const obsLines = doc.splitTextToSize('\u2022 ' + data.observations, CW * 0.57 - 14);
+                condiciones.push(obsLines[0]);
             }
 
-            // ── PIE ──────────────────────────────────────────────────
-            doc.setFillColor(...DARK);
-            doc.rect(0, PH - 12, PW, 12, 'F');
-            doc.setFillColor(...PRIMARY);
-            doc.rect(0, PH - 12, PW, 2, 'F');
+            condiciones.forEach((line, i) => {
+                doc.text(line, ML + 7, y + 13 + i * 6.5);
+            });
+
+            // Firma — derecha
+            const FX = ML + CW * 0.62;
+            const FW = CW * 0.38;
+            doc.setFillColor(...GRAY_L);
+            doc.setDrawColor(...GRAY_M);
+            doc.setLineWidth(0.4);
+            doc.roundedRect(FX, y, FW, COND_H, 2, 2, 'FD');
+            doc.setTextColor(...GRAY);
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(7);
+            doc.text('Firma y aclaración', FX + FW / 2, y + 13, { align: 'center' });
+            doc.setDrawColor(...GRAY_M);
+            doc.setLineWidth(0.5);
+            doc.line(FX + 5, y + 20, FX + FW - 5, y + 20);
+            doc.text('Fecha de aceptaci\u00f3n: ___/___/______', FX + FW / 2, y + 25, { align: 'center' });
+
+            // ════════════════════════════════════════════════════════
+            // PIE DE PÁGINA
+            // ════════════════════════════════════════════════════════
+            doc.setDrawColor(...GRAY_M);
+            doc.setLineWidth(0.5);
+            doc.line(ML, PH - 18, PW - MR, PH - 18);
+            doc.setDrawColor(...GOLD);
+            doc.setLineWidth(2);
+            doc.line(ML, PH - 18, ML + 35, PH - 18);
+
             doc.setTextColor(...GRAY);
             doc.setFont('helvetica', 'normal');
             doc.setFontSize(7.5);
-            doc.text('AFM Solutions  \u2014  afmsolutions.com.ar', ML, PH - 5);
-            doc.setTextColor(...LAVENDER);
-            doc.text('Gracias por su confianza', PW - MR, PH - 5, { align: 'right' });
+            doc.text('AFM Solutions  \u2014  afmsolutions.com.ar  \u2014  contacto@afmsolutions.com.ar', ML, PH - 12);
+            doc.text('P\u00e1gina 1 de 1', PW - MR, PH - 12, { align: 'right' });
+
+            doc.setTextColor(...GOLD);
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(7);
+            doc.text('CONFIDENCIAL \u2014 Este documento es para uso exclusivo del destinatario.', ML, PH - 7);
+
+            // Creado con
+            doc.setTextColor(...GRAY);
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(6.5);
+            doc.text('Creado con la herramienta de presupuestos gratuita de afmsolutions.com.ar', PW / 2, PH - 2, { align: 'center' });
 
             doc.save('presupuesto-' + data.number + '.pdf');
         }

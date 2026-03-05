@@ -515,17 +515,15 @@
     <script src="/js/crm.js"></script>
 
     <script>
-        // ── Helpers ───────────────────────────────────────────────
+        // ── Helpers UI ────────────────────────────────────────────
         function showLoader() {
             const el = document.getElementById('loader');
             if (el) el.style.display = 'flex';
         }
-
         function hideLoader() {
             const el = document.getElementById('loader');
             if (el) el.style.display = 'none';
         }
-
         function showError(msg) { alert('❌ ' + msg); }
         function showSuccess(msg) { alert('✅ ' + msg); }
 
@@ -552,7 +550,6 @@
             } else {
                 document.getElementById('userSection').style.display = 'none';
                 document.getElementById('loginLink').style.display = 'block';
-                // Modo sin auth: listas vacías
                 AFPCRM.clients = [];
                 AFPCRM.jobs = [];
                 AFPCRM.renderClients();
@@ -581,16 +578,17 @@
             const clientData = {
                 name,
                 phone,
-                email: document.getElementById('clientEmail').value.trim(),
+                email:   document.getElementById('clientEmail').value.trim(),
                 address: document.getElementById('clientAddress').value.trim(),
-                notes: document.getElementById('clientNotes').value.trim()
+                notes:   document.getElementById('clientNotes').value.trim()
             };
 
             showLoader();
             try {
                 if (editingClientId) {
                     await AFPCRM.updateClient(editingClientId, clientData);
-                    cancelEditClient();
+                    editingClientId = null;
+                    document.getElementById('cancelEditClientBtn').style.display = 'none';
                     showSuccess('Cliente actualizado');
                 } else {
                     await AFPCRM.createClient(clientData);
@@ -608,15 +606,16 @@
             }
         }
 
-        function editClient(id) {
+        // Estos nombres los usa crm.js en los onclick de renderClients()
+        function AFPCRMEditClient(id) {
             const client = AFPCRM.clients.find(c => c.id === id);
             if (!client) return;
             editingClientId = id;
-            document.getElementById('clientName').value = client.name;
-            document.getElementById('clientPhone').value = client.phone || '';
-            document.getElementById('clientEmail').value = client.email || '';
+            document.getElementById('clientName').value    = client.name;
+            document.getElementById('clientPhone').value   = client.phone || '';
+            document.getElementById('clientEmail').value   = client.email || '';
             document.getElementById('clientAddress').value = client.address || '';
-            document.getElementById('clientNotes').value = client.notes || '';
+            document.getElementById('clientNotes').value   = client.notes || '';
             document.getElementById('cancelEditClientBtn').style.display = 'inline-flex';
             document.getElementById('clientName').focus();
         }
@@ -632,8 +631,8 @@
                 .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
         }
 
-        async function deleteClient(id) {
-            if (!confirm('¿Eliminar este cliente? Los trabajos asociados también podrían verse afectados.')) return;
+        async function AFPCRMDeleteClient(id) {
+            if (!confirm('¿Eliminar este cliente?')) return;
             showLoader();
             try {
                 await AFPCRM.deleteClient(id);
@@ -649,42 +648,28 @@
             }
         }
 
-        // Alias requeridos por crm.js (renderClients usa estos nombres en los onclick)
-        const AFPCRMEditClient = editClient;
-        const AFPCRMDeleteClient = deleteClient;
-
-        async function AFPCRMUpdateStatus(id, status) {
-            try { await AFPCRM.updateJobStatus(id, status); AFPCRM.updateDashboard(); }
-            catch (error) { console.error(error); }
-        }
-
-        function AFPCRMEditJob(id) { /* edición inline por estado */ }
-        async function AFPCRMDeleteJob(id) { await deleteJob(id); }
-
-
         // ── Trabajos ─────────────────────────────────────────────
         async function handleAddJob() {
-            const clientId = document.getElementById('jobClient').value;
+            const clientId    = document.getElementById('jobClient').value;
             const description = document.getElementById('jobDescription').value.trim();
 
-            if (!clientId) { showError('Seleccioná un cliente'); return; }
+            if (!clientId)    { showError('Seleccioná un cliente'); return; }
             if (!description) { showError('La descripción es obligatoria'); return; }
 
             const jobData = {
                 clientId,
-                date: document.getElementById('jobDate').value || new Date().toISOString().split('T')[0],
-                status: document.getElementById('jobStatus').value,
+                date:        document.getElementById('jobDate').value || new Date().toISOString().split('T')[0],
+                status:      document.getElementById('jobStatus').value,
                 description,
-                amount: parseFloat(document.getElementById('jobAmount').value) || 0
+                amount:      parseFloat(document.getElementById('jobAmount').value) || 0
             };
 
             showLoader();
             try {
                 await AFPCRM.createJob(jobData);
-                // Limpiar formulario
                 document.getElementById('jobDescription').value = '';
-                document.getElementById('jobAmount').value = '';
-                document.getElementById('jobClient').value = '';
+                document.getElementById('jobAmount').value      = '';
+                document.getElementById('jobClient').value      = '';
                 AFPCRM.renderJobs();
                 AFPCRM.updateDashboard();
                 showSuccess('Trabajo agregado');
@@ -696,7 +681,10 @@
             }
         }
 
-        async function deleteJob(id) {
+        // Estos nombres los usa crm.js en los onclick de renderJobs()
+        function AFPCRMEditJob(id) { /* pendiente */ }
+
+        async function AFPCRMDeleteJob(id) {
             if (!confirm('¿Eliminar este trabajo?')) return;
             showLoader();
             try {
@@ -712,9 +700,9 @@
             }
         }
 
-        async function updateJobStatus(id, status) {
+        async function AFPCRMUpdateStatus(id, status) {
             try {
-                await AFPCRM.updateJob(id, { status });
+                await AFPCRM.updateJobStatus(id, status);
                 AFPCRM.updateDashboard();
             } catch (error) {
                 console.error(error);
@@ -724,7 +712,6 @@
         // ── Inicialización ────────────────────────────────────────
         document.addEventListener('DOMContentLoaded', async function() {
             showLoader();
-            // Fecha de hoy por defecto en el form de trabajos
             document.getElementById('jobDate').value = new Date().toISOString().split('T')[0];
             await checkAuth();
             hideLoader();

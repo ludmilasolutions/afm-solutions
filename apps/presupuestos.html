@@ -67,9 +67,30 @@
         
         .logo i { color: var(--accent); }
         
-        .header-links { display: flex; gap: 20px; }
+        .header-links { display: flex; gap: 20px; align-items: center; }
         .header-links a { color: var(--gray); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
         .header-links a:hover { color: var(--accent); }
+        
+        .user-menu { display: flex; align-items: center; gap: 15px; }
+        .user-name { font-size: 0.9rem; color: var(--gray); }
+        .btn-logout { 
+            background: rgba(255,255,255,0.1); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            color: var(--gray); 
+            padding: 8px 15px; 
+            border-radius: 6px; 
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+        .btn-logout:hover { background: rgba(255,255,255,0.2); color: var(--light); }
+        
+        .auth-required {
+            text-align: center;
+            padding: 100px 20px;
+        }
+        .auth-required h2 { margin-bottom: 20px; }
+        .auth-required p { margin-bottom: 30px; color: var(--gray); }
         
         .app-container { padding: 40px 0; }
         
@@ -343,6 +364,11 @@
                 </a>
                 <div class="header-links">
                     <a href="/presupuestos-online-gratis.html"><i class="fas fa-arrow-left"></i> Volver</a>
+                    <a href="/apps/login.html" id="loginLink"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a>
+                    <div class="user-menu" id="userSection" style="display: none;">
+                        <span class="user-name" id="userNameDisplay"></span>
+                        <button class="btn-logout" onclick="handleLogout()">Cerrar Sesión</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -433,6 +459,9 @@
                     <button type="button" class="btn btn-whatsapp" onclick="shareWhatsApp()">
                         <i class="fab fa-whatsapp"></i> Compartir por WhatsApp
                     </button>
+                    <button type="button" class="btn btn-primary" id="saveCloudBtn" onclick="saveBudget()" style="display: none;">
+                        <i class="fas fa-cloud-upload-alt"></i> Guardar en la nube
+                    </button>
                     <button type="button" class="btn btn-reset" onclick="resetForm()">
                         <i class="fas fa-redo"></i> Nuevo Presupuesto
                     </button>
@@ -444,22 +473,183 @@
             </div>
         </div>
     </div>
+    
+    <!-- Loader -->
+    <div class="loader-overlay" id="loader" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+    
+    <!-- Historial de presupuestos -->
+    <section id="historySection" class="history-section" style="display: none;">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 30px;">Mis Presupuestos</h2>
+            <div id="budgetsList" class="budgets-grid">
+                <!-- Lista de presupuestos -->
+            </div>
+        </div>
+    </section>
+    
+    <style>
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 6, 23, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .history-section { padding: 50px 0; background: rgba(15,23,42,0.5); }
+        
+        .budgets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .budget-item {
+            background: var(--glass);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .budget-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .budget-number {
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .budget-date {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        
+        .budget-client {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .budget-client i { margin-right: 8px; }
+        
+        .budget-total {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--light);
+            margin-bottom: 15px;
+        }
+        
+        .budget-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-sm {
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+        
+        .btn-success { background: var(--success); color: white; }
+        .btn-success:hover { opacity: 0.9; }
+        .btn-danger { background: rgba(239,68,68,0.2); color: #ef4444; }
+        .btn-danger:hover { background: rgba(239,68,68,0.4); }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray);
+        }
+        .empty-state i { font-size: 3rem; margin-bottom: 15px; opacity: 0.5; }
+    </style>
 
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/js/supabase.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/presupuestos.js"></script>
+    
     <script>
+        // Verificar autenticación
+        let isAuthenticated = false;
+        
+        async function checkAuth() {
+            await AFMAuth.init();
+            isAuthenticated = AFMAuth.isAuthenticated();
+            
+            if (isAuthenticated) {
+                document.getElementById('userSection').style.display = 'flex';
+                document.getElementById('loginLink').style.display = 'none';
+                document.getElementById('userNameDisplay').textContent = AFMAuth.getDisplayName();
+                document.getElementById('mainContent').style.display = 'block';
+                document.getElementById('historySection').style.display = 'block';
+                document.getElementById('saveCloudBtn').style.display = 'inline-flex';
+                
+                // Cargar presupuestos
+                await AFPLoadBudgets();
+            } else {
+                document.getElementById('userSection').style.display = 'none';
+                document.getElementById('loginLink').style.display = 'block';
+                document.getElementById('mainContent').style.display = 'block';
+                document.getElementById('historySection').style.display = 'none';
+                document.getElementById('saveCloudBtn').style.display = 'none';
+            }
+        }
+        
+        async function handleLogout() {
+            await AFMAuth.logout();
+            window.location.reload();
+        }
+        
         // Inicialización
-        document.addEventListener('DOMContentLoaded', function() {
-            // Generar número de presupuesto automático
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-            document.getElementById('budgetNumber').value = `PRES-${year}${month}-${random}`;
+        document.addEventListener('DOMContentLoaded', async function() {
+            showLoader();
             
-            // Establecer fecha actual
-            document.getElementById('budgetDate').value = now.toISOString().split('T')[0];
+            await checkAuth();
             
-            // Agregar primer ítem
-            addItem();
+            if (isAuthenticated) {
+                // Establecer fecha actual
+                const now = new Date();
+                document.getElementById('budgetDate').value = now.toISOString().split('T')[0];
+                addItem();
+            } else {
+                // Modo sin autenticación - generar número local
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+                document.getElementById('budgetNumber').value = `PRES-${year}${month}-${random}`;
+                document.getElementById('budgetDate').value = now.toISOString().split('T')[0];
+                addItem();
+            }
+            
+            hideLoader();
         });
         
         let itemCount = 0;
@@ -666,6 +856,63 @@
                 addItem();
                 calculateTotal();
             }
+        }
+        
+        // Función para agregar ítem con valores
+        function addItemRow(desc = '', qty = 1, price = 0) {
+            itemCount++;
+            const tbody = document.getElementById('itemsBody');
+            const row = document.createElement('tr');
+            row.id = `item-${itemCount}`;
+            row.innerHTML = `
+                <td>
+                    <input type="text" placeholder="Descripción del servicio o producto" class="item-desc" value="${desc}">
+                </td>
+                <td>
+                    <input type="number" value="${qty}" min="1" class="item-qty" onchange="calculateRow(${itemCount})" oninput="calculateRow(${itemCount})">
+                </td>
+                <td>
+                    <input type="number" value="${price}" min="0" step="0.01" class="item-price" placeholder="$0" onchange="calculateRow(${itemCount})" oninput="calculateRow(${itemCount})">
+                </td>
+                <td>
+                    <div class="total-cell">$<span id="row-total-${itemCount}">${(qty * price).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</span></div>
+                </td>
+                <td>
+                    <button type="button" class="btn-delete" onclick="deleteItem(${itemCount})">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        }
+        
+        // Guardar presupuesto en Supabase
+        async function saveBudget() {
+            const data = getFormData();
+            
+            if (!data.clientName) {
+                alert('Por favor ingresa el nombre del cliente');
+                return;
+            }
+            
+            if (data.items.length === 0) {
+                alert('Por favor agrega al menos un ítem');
+                return;
+            }
+            
+            const budgetData = {
+                date: data.date,
+                clientId: null,
+                total: data.total,
+                observations: data.observations,
+                items: data.items.map(item => ({
+                    description: item.desc,
+                    quantity: item.qty,
+                    price: item.price
+                }))
+            };
+            
+            await AFPSaveBudget(budgetData);
         }
     </script>
 </body>

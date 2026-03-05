@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión | AFM Tools</title>
+    <meta name="description" content="Accede a AFM Presupuestos y AFM CRM">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #4f46e5;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glow-primary: rgba(79, 70, 229, 0.4);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background: rgba(2, 6, 23, 0.95);
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i { color: var(--accent); }
+        
+        .header-links { display: flex; gap: 20px; }
+        .header-links a { color: var(--gray); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+        .header-links a:hover { color: var(--accent); }
+        
+        .login-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        
+        .login-card {
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .login-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .login-header p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--light);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 8px 24px var(--glow-primary);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px var(--glow-primary);
+        }
+        
+        .btn-google {
+            background: #fff;
+            color: #333;
+        }
+        
+        .btn-google:hover {
+            background: #f5f5f5;
+        }
+        
+        .btn-google img {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .divider span {
+            padding: 0 15px;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+        
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+        }
+        
+        .user-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.5rem;
+        }
+        
+        .user-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .user-email {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        footer {
+            background: rgba(2, 6, 23, 0.9);
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+        
+        footer p {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin: 0;
+        }
+        
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 6, 23, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        
+        .loader-overlay.active {
+            display: flex;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 30px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <i class="fas fa-tools"></i>
+                    AFM Tools
+                </a>
+                <div class="header-links">
+                    <a href="/">Volver al inicio</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>Bienvenido</h1>
+                <p>Accede a tus herramientas gratuitas</p>
+            </div>
+            
+            <!-- Usuario logueado -->
+            <div id="loggedInView" style="display: none;">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-name" id="userName">Usuario</div>
+                    <div class="user-email" id="userEmail">email@example.com</div>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <a href="/apps/presupuestos.html" class="btn btn-primary">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        Ir a Presupuestos
+                    </a>
+                    <a href="/apps/crm.html" class="btn btn-primary">
+                        <i class="fas fa-users-cog"></i>
+                        Ir a CRM
+                    </a>
+                    <button class="btn" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);" onclick="handleLogout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Formulario de login -->
+            <div id="loginView">
+                <div id="alertContainer"></div>
+                
+                <!-- Login con Google -->
+                <button class="btn btn-google" onclick="handleGoogleLogin()">
+                    <img src="https://www.google.com/favicon.ico" alt="Google">
+                    Continuar con Google
+                </button>
+                
+                <div class="divider">
+                    <span>o</span>
+                </div>
+                
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('login')">Iniciar Sesión</button>
+                    <button class="tab-btn" onclick="switchTab('register')">Registrarse</button>
+                </div>
+                
+                <!-- Login con email -->
+                <div id="loginTab" class="tab-content active">
+                    <form onsubmit="handleEmailLogin(event)">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="loginEmail" class="form-control" required placeholder="tu@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <input type="password" id="loginPassword" class="form-control" required placeholder="••••••••">
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Iniciar Sesión
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Registro -->
+                <div id="registerTab" class="tab-content">
+                    <form onsubmit="handleEmailRegister(event)">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="registerEmail" class="form-control" required placeholder="tu@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <input type="password" id="registerPassword" class="form-control" required placeholder="••••••••" minlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label>Confirmar Contraseña</label>
+                            <input type="password" id="registerConfirmPassword" class="form-control" required placeholder="••••••••" minlength="6">
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-user-plus"></i>
+                            Crear Cuenta
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="loader-overlay" id="loader">
+        <div class="spinner"></div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>AFM Tools - Herramientas gratuitas desarrolladas por AFM Solutions</p>
+        </div>
+    </footer>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/js/supabase.js"></script>
+    <script src="/js/auth.js"></script>
+    
+    <script>
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', async () => {
+            showLoader();
+            await AFMAuth.init();
+            
+            if (AFMAuth.isAuthenticated()) {
+                showLoggedInView();
+            } else {
+                showLoginView();
+            }
+            hideLoader();
+        });
+        
+        function showLoader() {
+            document.getElementById('loader').classList.add('active');
+        }
+        
+        function hideLoader() {
+            document.getElementById('loader').classList.remove('active');
+        }
+        
+        function showLoggedInView() {
+            document.getElementById('loggedInView').style.display = 'block';
+            document.getElementById('loginView').style.display = 'none';
+            
+            document.getElementById('userName').textContent = AFMAuth.getDisplayName();
+            document.getElementById('userEmail').textContent = AFMAuth.getEmail();
+        }
+        
+        function showLoginView() {
+            document.getElementById('loggedInView').style.display = 'none';
+            document.getElementById('loginView').style.display = 'block';
+        }
+        
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            if (tab === 'login') {
+                document.querySelector('.tab-btn:first-child').classList.add('active');
+                document.getElementById('loginTab').classList.add('active');
+            } else {
+                document.querySelector('.tab-btn:last-child').classList.add('active');
+                document.getElementById('registerTab').classList.add('active');
+            }
+        }
+        
+        function showAlert(message, type = 'error') {
+            const container = document.getElementById('alertContainer');
+            container.innerHTML = `
+                <div class="alert alert-${type}">
+                    ${message}
+                </div>
+            `;
+        }
+        
+        async function handleGoogleLogin() {
+            showLoader();
+            try {
+                await AFMAuth.signInWithGoogle();
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('Error al iniciar sesión con Google');
+                hideLoader();
+            }
+        }
+        
+        async function handleEmailLogin(e) {
+            e.preventDefault();
+            showLoader();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                await AFMAuth.signInWithEmail(email, password);
+                showLoggedInView();
+            } catch (error) {
+                showAlert(error.message);
+            }
+            
+            hideLoader();
+        }
+        
+        async function handleEmailRegister(e) {
+            e.preventDefault();
+            showLoader();
+            
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                showAlert('Las contraseñas no coinciden');
+                hideLoader();
+                return;
+            }
+            
+            try {
+                const data = await AFMAuth.signUpWithEmail(email, password);
+                if (data.user) {
+                    showAlert('Cuenta creada. Por favor verifica tu email.', 'success');
+                } else {
+                    showAlert('Cuenta creada. Puedes iniciar sesión.', 'success');
+                    switchTab('login');
+                }
+            } catch (error) {
+                showAlert(error.message);
+            }
+            
+            hideLoader();
+        }
+        
+        async function handleLogout() {
+            showLoader();
+            await AFMAuth.logout();
+            showLoginView();
+            hideLoader();
+        }
+        
+        // Verificar redirección después de OAuth
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('error')) {
+            showAlert('Error: ' + urlParams.get('error'));
+        }
+    </script>
+</body>
+</html>

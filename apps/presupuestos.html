@@ -85,13 +85,6 @@
         }
         .btn-logout:hover { background: rgba(255,255,255,0.2); color: var(--light); }
         
-        .auth-required {
-            text-align: center;
-            padding: 100px 20px;
-        }
-        .auth-required h2 { margin-bottom: 20px; }
-        .auth-required p { margin-bottom: 30px; color: var(--gray); }
-        
         .app-container { padding: 40px 0; }
         
         .app-title {
@@ -125,13 +118,17 @@
         }
         
         .form-section h3 {
-            font-size: 1.1rem;
+            font-size: 1rem;
+            font-weight: 600;
             margin-bottom: 15px;
-            color: var(--accent);
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
+        
+        .form-section h3 i { color: var(--accent); }
         
         .form-row {
             display: grid;
@@ -139,37 +136,42 @@
             gap: 15px;
         }
         
-        @media (max-width: 600px) {
-            .form-row { grid-template-columns: 1fr; }
+        .form-group {
+            margin-bottom: 15px;
         }
-        
-        .form-group { margin-bottom: 15px; }
         
         .form-group label {
             display: block;
-            margin-bottom: 6px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--gray);
+            margin-bottom: 6px;
         }
         
         .form-control {
             width: 100%;
-            padding: 12px 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
             color: var(--light);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
             font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            transition: all 0.3s;
+            transition: border-color 0.3s;
         }
         
         .form-control:focus {
             outline: none;
-            border-color: var(--accent);
-            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary);
         }
         
+        .form-control[readonly] {
+            opacity: 0.7;
+            cursor: default;
+        }
+        
+        textarea.form-control { resize: vertical; }
+        
+        /* Tabla de ítems */
         .items-table {
             width: 100%;
             border-collapse: collapse;
@@ -178,166 +180,216 @@
         
         .items-table th {
             text-align: left;
-            padding: 12px 10px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--gray);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         
-        .items-table td {
-            padding: 10px;
-            vertical-align: top;
-        }
+        .items-table td { padding: 8px 5px; }
         
-        .items-table input {
-            width: 100%;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
-            color: var(--light);
-            font-family: 'Inter', sans-serif;
-        }
+        .col-desc { width: 45%; }
+        .col-qty { width: 15%; }
+        .col-price { width: 20%; }
+        .col-total { width: 15%; }
+        .col-action { width: 5%; }
         
-        .items-table input:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-        
-        .items-table .col-desc { width: 45%; }
-        .items-table .col-qty { width: 15%; }
-        .items-table .col-price { width: 20%; }
-        .items-table .col-total { width: 15%; }
-        .items-table .col-action { width: 5%; }
-        
-        .items-table .total-cell {
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 6px;
-            font-weight: 600;
+        .item-total {
+            font-size: 0.9rem;
             color: var(--accent);
+            display: flex;
+            align-items: center;
+            height: 40px;
         }
         
         .btn-delete {
-            background: rgba(239, 68, 68, 0.2);
+            background: rgba(239,68,68,0.2);
             border: none;
             color: #ef4444;
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 6px;
             cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn-delete:hover { background: rgba(239, 68, 68, 0.4); }
-        
-        .btn-add {
-            background: rgba(6, 182, 212, 0.1);
-            border: 1px dashed var(--accent);
-            color: var(--accent);
-            padding: 12px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 0.95rem;
-            transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            transition: all 0.3s;
         }
+        .btn-delete:hover { background: rgba(239,68,68,0.4); }
         
-        .btn-add:hover {
-            background: rgba(6, 182, 212, 0.2);
+        .btn-add {
+            background: rgba(79,70,229,0.2);
+            border: 1px dashed rgba(79,70,229,0.4);
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
         }
+        .btn-add:hover { background: rgba(79,70,229,0.3); }
         
         .budget-total {
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            padding: 20px;
-            background: rgba(6, 182, 212, 0.1);
-            border-radius: 10px;
-            margin-top: 20px;
+            gap: 15px;
+            padding: 15px 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
         
         .budget-total-label {
-            font-size: 1.1rem;
-            margin-right: 20px;
+            font-size: 1rem;
+            font-weight: 600;
             color: var(--gray);
         }
         
         .budget-total-amount {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 800;
-            color: var(--accent);
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         
+        /* Botones de acción */
         .form-actions {
             display: flex;
-            gap: 15px;
-            margin-top: 30px;
+            gap: 10px;
             flex-wrap: wrap;
         }
         
         .btn {
-            flex: 1;
-            min-width: 200px;
-            padding: 16px 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 10px;
+            padding: 12px 20px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            border: none;
+            gap: 8px;
+            transition: all 0.3s;
+            text-decoration: none;
         }
         
         .btn-primary {
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             color: white;
-            box-shadow: 0 8px 24px var(--glow-primary);
         }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 32px var(--glow-primary);
-        }
+        .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
         
         .btn-whatsapp {
-            background: linear-gradient(90deg, #25D366, #128C7E);
+            background: #25D366;
             color: white;
         }
-        
-        .btn-whatsapp:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
-        }
+        .btn-whatsapp:hover { opacity: 0.9; transform: translateY(-1px); }
         
         .btn-reset {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
             color: var(--gray);
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
-        .btn-reset:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--light);
-        }
+        .btn-reset:hover { background: rgba(255,255,255,0.1); color: var(--light); }
         
         .footer-note {
             text-align: center;
-            padding: 30px 0;
+            margin-top: 20px;
             color: var(--gray);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
         
-        /* Nota: Esta es una versión frontend MVP. 
-           Para persistencia de datos, integrar con Supabase:
+        /* Loader */
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 6, 23, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        /* Historial */
+        .history-section {
+            padding: 40px 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .budgets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .budget-item {
+            background: var(--glass);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .budget-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .budget-number { font-weight: 700; font-size: 0.9rem; }
+        .budget-date { color: var(--gray); font-size: 0.85rem; }
+        .budget-client { color: var(--gray); font-size: 0.9rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .budget-total { font-size: 1.1rem; font-weight: 700; color: var(--accent); margin-bottom: 15px; }
+        
+        .budget-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-sm {
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+        
+        .btn-success { background: var(--success); color: white; }
+        .btn-success:hover { opacity: 0.9; }
+        .btn-danger { background: rgba(239,68,68,0.2); color: #ef4444; }
+        .btn-danger:hover { background: rgba(239,68,68,0.4); }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray);
+        }
+        .empty-state i { font-size: 3rem; margin-bottom: 15px; opacity: 0.5; }
+
+        /*
+        Para persistencia de datos, integrar con Supabase:
            - Crear tabla 'presupuestos' en Supabase
            - Agregar funciones de guardado/carga
            - Implementar autenticación opcional
@@ -488,106 +540,6 @@
             </div>
         </div>
     </section>
-    
-    <style>
-        .loader-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(2, 6, 23, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        
-        .history-section { padding: 50px 0; background: rgba(15,23,42,0.5); }
-        
-        .budgets-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        
-        .budget-item {
-            background: var(--glass);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 12px;
-            padding: 20px;
-        }
-        
-        .budget-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-        
-        .budget-number {
-            font-weight: 600;
-            color: var(--accent);
-        }
-        
-        .budget-date {
-            font-size: 0.85rem;
-            color: var(--gray);
-        }
-        
-        .budget-client {
-            font-size: 0.9rem;
-            color: var(--gray);
-            margin-bottom: 10px;
-        }
-        
-        .budget-client i { margin-right: 8px; }
-        
-        .budget-total {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--light);
-            margin-bottom: 15px;
-        }
-        
-        .budget-actions {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        
-        .btn-sm {
-            padding: 8px 12px;
-            font-size: 0.85rem;
-            border-radius: 6px;
-            cursor: pointer;
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.3s;
-        }
-        
-        .btn-success { background: var(--success); color: white; }
-        .btn-success:hover { opacity: 0.9; }
-        .btn-danger { background: rgba(239,68,68,0.2); color: #ef4444; }
-        .btn-danger:hover { background: rgba(239,68,68,0.4); }
-        
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: var(--gray);
-        }
-        .empty-state i { font-size: 3rem; margin-bottom: 15px; opacity: 0.5; }
-    </style>
 
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -596,81 +548,100 @@
     <script src="/js/presupuestos.js"></script>
     
     <script>
-        // Verificar autenticación
+        // ── Helpers ──────────────────────────────────────────────
+        function setDisplay(id, value) {
+            const el = document.getElementById(id);
+            if (el) el.style.display = value;
+        }
+
+        function showLoader() {
+            setDisplay('loader', 'flex');
+        }
+
+        function hideLoader() {
+            setDisplay('loader', 'none');
+        }
+
+        // ── Auth ──────────────────────────────────────────────────
         let isAuthenticated = false;
-        
+
         async function checkAuth() {
             await AFMAuth.init();
             isAuthenticated = AFMAuth.isAuthenticated();
-            
+
             if (isAuthenticated) {
-                document.getElementById('userSection').style.display = 'flex';
-                document.getElementById('loginLink').style.display = 'none';
-                document.getElementById('userNameDisplay').textContent = AFMAuth.getDisplayName();
-                document.getElementById('mainContent').style.display = 'block';
-                document.getElementById('historySection').style.display = 'block';
-                document.getElementById('saveCloudBtn').style.display = 'inline-flex';
-                
-                // Cargar presupuestos
+                setDisplay('userSection', 'flex');
+                setDisplay('loginLink', 'none');
+                setDisplay('historySection', 'block');
+                setDisplay('saveCloudBtn', 'inline-flex');
+
+                const nameEl = document.getElementById('userNameDisplay');
+                if (nameEl) nameEl.textContent = AFMAuth.getDisplayName();
+
                 await AFPLoadBudgets();
             } else {
-                document.getElementById('userSection').style.display = 'none';
-                document.getElementById('loginLink').style.display = 'block';
-                document.getElementById('mainContent').style.display = 'block';
-                document.getElementById('historySection').style.display = 'none';
-                document.getElementById('saveCloudBtn').style.display = 'none';
+                setDisplay('userSection', 'none');
+                setDisplay('loginLink', 'block');
+                setDisplay('historySection', 'none');
+                setDisplay('saveCloudBtn', 'none');
             }
         }
-        
+
         async function handleLogout() {
             await AFMAuth.logout();
             window.location.reload();
         }
-        
-        // Inicialización
+
+        // ── Inicialización ────────────────────────────────────────
         document.addEventListener('DOMContentLoaded', async function() {
             showLoader();
-            
+
             await checkAuth();
-            
+
+            const now = new Date();
+            const dateValue = now.toISOString().split('T')[0];
+
             if (isAuthenticated) {
-                // Establecer fecha actual
-                const now = new Date();
-                document.getElementById('budgetDate').value = now.toISOString().split('T')[0];
+                const dateEl = document.getElementById('budgetDate');
+                if (dateEl) dateEl.value = dateValue;
                 addItem();
             } else {
-                // Modo sin autenticación - generar número local
-                const now = new Date();
                 const year = now.getFullYear();
                 const month = String(now.getMonth() + 1).padStart(2, '0');
                 const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-                document.getElementById('budgetNumber').value = `PRES-${year}${month}-${random}`;
-                document.getElementById('budgetDate').value = now.toISOString().split('T')[0];
+
+                const numEl = document.getElementById('budgetNumber');
+                if (numEl) numEl.value = `PRES-${year}${month}-${random}`;
+
+                const dateEl = document.getElementById('budgetDate');
+                if (dateEl) dateEl.value = dateValue;
+
                 addItem();
             }
-            
+
             hideLoader();
         });
-        
+
+        // ── Ítems ─────────────────────────────────────────────────
         let itemCount = 0;
-        
-        function addItem() {
+
+        function addItem(desc = '', qty = 1, price = 0) {
             itemCount++;
             const tbody = document.getElementById('itemsBody');
             const row = document.createElement('tr');
             row.id = `item-${itemCount}`;
             row.innerHTML = `
-                <td>
-                    <input type="text" placeholder="Descripción del servicio o producto" class="item-desc">
+                <td class="col-desc">
+                    <input type="text" class="form-control item-desc" placeholder="Descripción del ítem" value="${desc}" oninput="calculateTotal()">
                 </td>
-                <td>
-                    <input type="number" value="1" min="1" class="item-qty" onchange="calculateRow(${itemCount})" oninput="calculateRow(${itemCount})">
+                <td class="col-qty">
+                    <input type="number" class="form-control item-qty" min="0.01" step="0.01" value="${qty}" oninput="calculateTotal()">
                 </td>
-                <td>
-                    <input type="number" value="0" min="0" step="0.01" class="item-price" placeholder="$0" onchange="calculateRow(${itemCount})" oninput="calculateRow(${itemCount})">
+                <td class="col-price">
+                    <input type="number" class="form-control item-price" min="0" step="0.01" value="${price}" oninput="calculateTotal()">
                 </td>
-                <td>
-                    <div class="total-cell">$<span id="row-total-${itemCount}">0</span></div>
+                <td class="col-total">
+                    <div class="item-total"><span id="subtotal-${itemCount}">$${(qty * price).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</span></div>
                 </td>
                 <td>
                     <button type="button" class="btn-delete" onclick="deleteItem(${itemCount})">
@@ -679,41 +650,36 @@
                 </td>
             `;
             tbody.appendChild(row);
-        }
-        
-        function deleteItem(id) {
-            const row = document.getElementById(`item-${id}`);
-            if (row) {
-                row.remove();
-                calculateTotal();
-            }
-        }
-        
-        function calculateRow(id) {
-            const row = document.getElementById(`item-${id}`);
-            if (!row) return;
-            
-            const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
-            const price = parseFloat(row.querySelector('.item-price').value) || 0;
-            const total = qty * price;
-            
-            document.getElementById(`row-total-${id}`).textContent = total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
             calculateTotal();
         }
-        
+
+        function deleteItem(id) {
+            const row = document.getElementById(`item-${id}`);
+            if (row) row.remove();
+            calculateTotal();
+        }
+
         function calculateTotal() {
             const rows = document.querySelectorAll('#itemsBody tr');
             let total = 0;
-            
+
             rows.forEach(row => {
                 const qty = parseFloat(row.querySelector('.item-qty')?.value) || 0;
                 const price = parseFloat(row.querySelector('.item-price')?.value) || 0;
-                total += qty * price;
+                const subtotal = qty * price;
+                total += subtotal;
+
+                // Actualizar subtotal de la fila
+                const subtotalEl = row.querySelector('[id^="subtotal-"]');
+                if (subtotalEl) {
+                    subtotalEl.textContent = '$' + subtotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                }
             });
-            
-            document.getElementById('totalAmount').textContent = '$' + total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+            const totalEl = document.getElementById('totalAmount');
+            if (totalEl) totalEl.textContent = '$' + total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
         }
-        
+
         function getFormData() {
             const items = [];
             document.querySelectorAll('#itemsBody tr').forEach(row => {
@@ -724,7 +690,7 @@
                     items.push({ desc, qty, price, total: qty * price });
                 }
             });
-            
+
             return {
                 number: document.getElementById('budgetNumber').value,
                 date: document.getElementById('budgetDate').value,
@@ -736,31 +702,28 @@
                 total: items.reduce((sum, item) => sum + item.total, 0)
             };
         }
-        
+
+        // ── PDF / WhatsApp ────────────────────────────────────────
         function generatePDF() {
             const data = getFormData();
-            
+
             if (!data.clientName) {
                 alert('Por favor ingresa el nombre del cliente');
                 return;
             }
-            
             if (data.items.length === 0) {
                 alert('Por favor agrega al menos un ítem');
                 return;
             }
-            
-            // Generar contenido textual del presupuesto (simulación de PDF)
+
             const formatDate = (dateStr) => {
-                const d = new Date(dateStr);
+                const d = new Date(dateStr + 'T00:00:00');
                 return d.toLocaleDateString('es-AR');
             };
-            
-            const formatCurrency = (num) => {
-                return '$' + num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            };
-            
-            let content = `PRESUPUETO N°: ${data.number}\n`;
+
+            const formatCurrency = (num) => '$' + num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+            let content = `PRESUPUESTO N°: ${data.number}\n`;
             content += `Fecha: ${formatDate(data.date)}\n\n`;
             content += `CLIENTE:\n`;
             content += `Nombre: ${data.clientName}\n`;
@@ -768,24 +731,23 @@
             if (data.clientEmail) content += `Email: ${data.clientEmail}\n`;
             content += `\nDETALLE:\n`;
             content += `${'─'.repeat(50)}\n`;
-            
+
             data.items.forEach(item => {
                 content += `${item.desc}\n`;
                 content += `  Cantidad: ${item.qty} x ${formatCurrency(item.price)} = ${formatCurrency(item.total)}\n`;
             });
-            
+
             content += `${'─'.repeat(50)}\n`;
             content += `TOTAL: ${formatCurrency(data.total)}\n`;
-            
+
             if (data.observations) {
                 content += `\nOBSERVACIONES:\n${data.observations}\n`;
             }
-            
+
             content += `\n${'─'.repeat(50)}\n`;
             content += `Este presupuesto tiene validez de 30 días.\n`;
-            content += `AFM Presupuesos - Herramienta gratuita\n`;
-            
-            // Descargar como texto
+            content += `AFM Presupuestos - Herramienta gratuita\n`;
+
             const blob = new Blob([content], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -794,112 +756,84 @@
             a.click();
             URL.revokeObjectURL(url);
         }
-        
+
         function shareWhatsApp() {
             const data = getFormData();
-            
+
             if (!data.clientName) {
                 alert('Por favor ingresa el nombre del cliente');
                 return;
             }
-            
             if (data.items.length === 0) {
                 alert('Por favor agrega al menos un ítem');
                 return;
             }
-            
-            const formatCurrency = (num) => {
-                return '$' + num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            };
-            
-            let message = `*PRESUPUETO N° ${data.number}*\n\n`;
+
+            const formatCurrency = (num) => '$' + num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+            let message = `*PRESUPUESTO N° ${data.number}*\n\n`;
             message += `*Cliente:* ${data.clientName}\n`;
             if (data.clientPhone) message += `*Teléfono:* ${data.clientPhone}\n`;
             message += `\n*DETALLE:*\n`;
-            
+
             data.items.forEach(item => {
                 message += `• ${item.desc}\n`;
                 message += `  ${item.qty} x ${formatCurrency(item.price)} = ${formatCurrency(item.total)}\n`;
             });
-            
+
             message += `\n*TOTAL: ${formatCurrency(data.total)}*\n`;
-            
+
             if (data.observations) {
                 message += `\n*Observaciones:* ${data.observations}\n`;
             }
-            
+
             message += `\n¡Gracias por confiar en nosotros!`;
-            
+
             const encodedMessage = encodeURIComponent(message);
             window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
         }
-        
+
         function resetForm() {
             if (confirm('¿Estás seguro de crear un nuevo presupuesto? Se borrarán todos los datos.')) {
-                // Generar nuevo número
-                const now = new Date();
-                const year = now.getFullYear();
-                const month = String(now.getMonth() + 1).padStart(2, '0');
-                const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-                document.getElementById('budgetNumber').value = `PRES-${year}${month}-${random}`;
-                document.getElementById('budgetDate').value = now.toISOString().split('T')[0];
-                
-                // Limpiar campos
-                document.getElementById('clientName').value = '';
-                document.getElementById('clientPhone').value = '';
-                document.getElementById('clientEmail').value = '';
-                document.getElementById('observations').value = '';
-                
-                // Limpiar items y agregar uno nuevo
+                document.getElementById('budgetForm').reset();
                 document.getElementById('itemsBody').innerHTML = '';
                 itemCount = 0;
+
+                const now = new Date();
+                const dateValue = now.toISOString().split('T')[0];
+
+                if (isAuthenticated) {
+                    const dateEl = document.getElementById('budgetDate');
+                    if (dateEl) dateEl.value = dateValue;
+                } else {
+                    const year = now.getFullYear();
+                    const month = String(now.getMonth() + 1).padStart(2, '0');
+                    const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+                    const numEl = document.getElementById('budgetNumber');
+                    if (numEl) numEl.value = `PRES-${year}${month}-${random}`;
+                    const dateEl = document.getElementById('budgetDate');
+                    if (dateEl) dateEl.value = dateValue;
+                }
+
                 addItem();
-                calculateTotal();
+                const totalEl = document.getElementById('totalAmount');
+                if (totalEl) totalEl.textContent = '$0';
             }
         }
-        
-        // Función para agregar ítem con valores
-        function addItemRow(desc = '', qty = 1, price = 0) {
-            itemCount++;
-            const tbody = document.getElementById('itemsBody');
-            const row = document.createElement('tr');
-            row.id = `item-${itemCount}`;
-            row.innerHTML = `
-                <td>
-                    <input type="text" placeholder="Descripción del servicio o producto" class="item-desc" value="${desc}">
-                </td>
-                <td>
-                    <input type="number" value="${qty}" min="1" class="item-qty" onchange="calculateRow(${itemCount})" oninput="calculateRow(${itemCount})">
-                </td>
-                <td>
-                    <input type="number" value="${price}" min="0" step="0.01" class="item-price" placeholder="$0" onchange="calculateRow(${itemCount})" oninput="calculateRow(${itemCount})">
-                </td>
-                <td>
-                    <div class="total-cell">$<span id="row-total-${itemCount}">${(qty * price).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</span></div>
-                </td>
-                <td>
-                    <button type="button" class="btn-delete" onclick="deleteItem(${itemCount})">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </td>
-            `;
-            tbody.appendChild(row);
-        }
-        
-        // Guardar presupuesto en Supabase
+
+        // ── Guardar en la nube ────────────────────────────────────
         async function saveBudget() {
             const data = getFormData();
-            
+
             if (!data.clientName) {
                 alert('Por favor ingresa el nombre del cliente');
                 return;
             }
-            
             if (data.items.length === 0) {
                 alert('Por favor agrega al menos un ítem');
                 return;
             }
-            
+
             const budgetData = {
                 date: data.date,
                 clientId: null,
@@ -911,7 +845,7 @@
                     price: item.price
                 }))
             };
-            
+
             await AFPSaveBudget(budgetData);
         }
     </script>

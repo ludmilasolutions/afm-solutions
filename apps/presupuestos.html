@@ -21,7 +21,6 @@
             --light: #f8fafc;
             --gray: #94a3b8;
             --glass: rgba(255, 255, 255, 0.05);
-            --glow-primary: rgba(79, 70, 229, 0.4);
             --success: #10b981;
         }
         
@@ -534,11 +533,12 @@
         </div>
     </section>
 
-    <!-- jsPDF para generación de PDF real -->
+    <!-- Librerías para PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- Supabase (opcional, para funcionalidad en la nube) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+    
+    <!-- Supabase (opcional) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Scripts de integración (pueden estar vacíos si no se usan) -->
     <script src="/js/supabase.js"></script>
     <script src="/js/auth.js"></script>
     <script src="/js/presupuestos.js"></script>
@@ -558,7 +558,7 @@
             setDisplay('loader', 'none');
         }
 
-        // ── Auth stubs (para que funcione sin backend) ───────────
+        // ── Auth stubs ───────────────────────────────────────────
         window.AFMAuth = window.AFMAuth || {
             init: async () => {},
             isAuthenticated: () => false,
@@ -615,7 +615,6 @@
             const now = new Date();
             const dateValue = now.toISOString().split('T')[0];
 
-            // Generar número de presupuesto
             let number = '';
             if (isAuthenticated && typeof AFMPresupuestos !== 'undefined' && AFMPresupuestos.generateBudgetNumber) {
                 try {
@@ -637,7 +636,6 @@
             const dateEl = document.getElementById('budgetDate');
             if (dateEl) dateEl.value = dateValue;
 
-            // Agregar primer item vacío
             addItem();
 
             hideLoader();
@@ -723,7 +721,7 @@
             };
         }
 
-        // ── PDF (CORREGIDO) ────────────────────────────────────────
+        // ── PDF (NUEVO, CON AUTOTABLE) ───────────────────────────
         function generatePDF() {
             const data = getFormData();
             if (!data.clientName) { alert('Por favor ingresa el nombre del cliente'); return; }
@@ -732,315 +730,214 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({ unit: 'mm', format: 'a4' });
 
-            // Formato de moneda: 2 decimales, separador de miles con punto
+            // Configuración de márgenes
+            const marginLeft = 15;
+            const marginRight = 15;
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const contentWidth = pageWidth - marginLeft - marginRight;
+
+            // Colores
+            const gold = [245, 158, 11];
+            const slate = [30, 41, 59];
+            const gray = [107, 114, 128];
+            const lightGray = [249, 250, 251];
+
+            // Formato de moneda
             const fmt = (n) => '$ ' + Number(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
-            // Fecha formateada (evitar problemas de zona horaria)
+            // Fecha legible
             const fmtDate = (s) => {
                 if (!s) return '';
                 const [y, m, d] = s.split('-');
                 return new Date(y, m-1, d).toLocaleDateString('es-AR');
             };
 
-            const PW = 210, PH = 297; // mm
-            const ML = 14, MR = 14;
-            const CW = PW - ML - MR;
+            // --- Cabecera ---
+            doc.setFillColor(...slate);
+            doc.rect(0, 0, pageWidth, 40, 'F');
+            doc.setFillColor(...gold);
+            doc.rect(0, 38, pageWidth, 2, 'F');
 
-            // Colores (RGB)
-            const INK    = [17,  24,  39];
-            const GRAY   = [107, 114, 128];
-            const GRAY_L = [249, 250, 251];
-            const GRAY_M = [229, 231, 235];
-            const SLATE  = [30,  41,  59];
-            const GOLD   = [245, 158, 11];
-            const WHITE  = [255, 255, 255];
-
-            // Fondo blanco
-            doc.setFillColor(...WHITE);
-            doc.rect(0, 0, PW, PH, 'F');
-
-            // Cabecera
-            const HH = 48;
-            doc.setFillColor(...SLATE);
-            doc.rect(0, 0, PW * 0.42, HH, 'F');
-            doc.setFillColor(...WHITE);
-            doc.rect(PW * 0.42, 0, PW * 0.58, HH, 'F');
-            doc.setFillColor(...GOLD);
-            doc.rect(0, 0, 4, HH, 'F');
-            doc.setFillColor(...GOLD);
-            doc.rect(0, HH, PW, 2, 'F');
-
-            // Info empresa
-            doc.setTextColor(...WHITE);
+            doc.setTextColor(255, 255, 255);
             doc.setFont('helvetica', 'bold');
             doc.setFontSize(18);
-            doc.text('AFM Solutions', ML + 2, 19);
-            doc.setTextColor(...GOLD);
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(7.5);
-            doc.text('DESARROLLO DE SOFTWARE', ML + 2, 26);
-            doc.setTextColor(148, 163, 184);
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(7.5);
-            doc.text('afmsolutions.com.ar', ML + 2, 32);
-            doc.text('contacto@afmsolutions.com.ar', ML + 2, 37.5);
-            doc.text('Rosario, Argentina', ML + 2, 43);
+            doc.text('AFM Solutions', marginLeft, 20);
 
-            // Título y número
-            doc.setTextColor(...SLATE);
+            doc.setTextColor(...gold);
+            doc.setFontSize(8);
+            doc.text('DESARROLLO DE SOFTWARE', marginLeft, 27);
+
+            doc.setTextColor(200, 200, 200);
+            doc.setFontSize(8);
+            doc.text('afmsolutions.com.ar', marginLeft, 33);
+            doc.text('contacto@afmsolutions.com.ar', marginLeft, 38);
+
+            // Título y número a la derecha
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(22);
             doc.setFont('helvetica', 'bold');
-            doc.setFontSize(26);
-            doc.text('PRESUPUESTO', PW - MR, 22, { align: 'right' });
-            doc.setTextColor(...GOLD);
-            doc.setFont('helvetica', 'bold');
+            doc.text('PRESUPUESTO', pageWidth - marginRight, 22, { align: 'right' });
+
+            doc.setTextColor(...gold);
             doc.setFontSize(10);
-            doc.text('N° ' + data.number, PW - MR, 30, { align: 'right' });
-            doc.setTextColor(...GRAY);
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(8.5);
-            doc.text('Emisión: ' + fmtDate(data.date), PW - MR, 37, { align: 'right' });
-            doc.text('Validez: 30 días corridos', PW - MR, 43, { align: 'right' });
+            doc.text('N° ' + data.number, pageWidth - marginRight, 30, { align: 'right' });
 
-            let y = HH + 10;
+            doc.setTextColor(200, 200, 200);
+            doc.setFontSize(8);
+            doc.text('Emisión: ' + fmtDate(data.date), pageWidth - marginRight, 37, { align: 'right' });
+            doc.text('Validez: 30 días corridos', pageWidth - marginRight, 42, { align: 'right' });
 
-            // Bloque cliente + estado
-            const CH = 26;
-            // Cliente
-            doc.setFillColor(...GRAY_L);
-            doc.setDrawColor(...GRAY_M);
-            doc.setLineWidth(0.4);
-            doc.roundedRect(ML, y, CW * 0.55, CH, 2, 2, 'FD');
-            doc.setFillColor(...GOLD);
-            doc.rect(ML, y, 3, CH, 'F');
+            let yPos = 50;
 
-            doc.setTextColor(...GRAY);
+            // --- Datos del cliente ---
+            doc.setFillColor(...lightGray);
+            doc.setDrawColor(...gray);
+            doc.setLineWidth(0.2);
+            doc.roundedRect(marginLeft, yPos, contentWidth, 25, 2, 2, 'FD');
+            doc.setFillColor(...gold);
+            doc.rect(marginLeft, yPos, 3, 25, 'F');
+
+            doc.setTextColor(...slate);
             doc.setFont('helvetica', 'bold');
-            doc.setFontSize(7);
-            doc.text('FACTURAR A', ML + 7, y + 8);
-            doc.setTextColor(...INK);
+            doc.setFontSize(8);
+            doc.text('FACTURAR A', marginLeft + 7, yPos + 7);
+
+            doc.setFontSize(11);
+            doc.text(data.clientName, marginLeft + 7, yPos + 15);
+
+            doc.setFontSize(9);
+            doc.setFont('helvetica', 'normal');
+            doc.setTextColor(...gray);
+            let contactX = marginLeft + 7;
+            if (data.clientPhone) {
+                doc.text(data.clientPhone, contactX, yPos + 22);
+                contactX += 40;
+            }
+            if (data.clientEmail) {
+                doc.text(data.clientEmail, contactX, yPos + 22);
+            }
+
+            yPos += 35;
+
+            // --- Tabla de ítems con AutoTable ---
+            const tableHeaders = [['Ítem', 'Descripción', 'Cantidad', 'P. Unitario', 'Subtotal']];
+            const tableBody = data.items.map((item, idx) => [
+                (idx + 1).toString(),
+                item.desc,
+                item.qty.toString(),
+                fmt(item.price),
+                fmt(item.total)
+            ]);
+
+            doc.autoTable({
+                startY: yPos,
+                head: tableHeaders,
+                body: tableBody,
+                theme: 'striped',
+                headStyles: { fillColor: slate, textColor: 255, fontSize: 9, halign: 'center' },
+                bodyStyles: { fontSize: 8, textColor: slate },
+                columnStyles: {
+                    0: { cellWidth: 15, halign: 'center' },
+                    1: { cellWidth: 'auto' },
+                    2: { cellWidth: 20, halign: 'right' },
+                    3: { cellWidth: 30, halign: 'right' },
+                    4: { cellWidth: 30, halign: 'right' }
+                },
+                margin: { left: marginLeft, right: marginRight },
+                didDrawPage: (data) => {
+                    // Pie de página en cada página
+                    let pageCount = doc.internal.getNumberOfPages();
+                    for (let i = 1; i <= pageCount; i++) {
+                        doc.setPage(i);
+                        doc.setFontSize(7);
+                        doc.setTextColor(...gray);
+                        doc.text('AFM Solutions — afmsolutions.com.ar — contacto@afmsolutions.com.ar', marginLeft, doc.internal.pageSize.height - 10);
+                        doc.text('Página ' + i + ' de ' + pageCount, pageWidth - marginRight, doc.internal.pageSize.height - 10, { align: 'right' });
+                    }
+                }
+            });
+
+            // Posición después de la tabla
+            yPos = doc.lastAutoTable.finalY + 10;
+
+            // --- Totales ---
+            const total = data.total;
+            const totalsX = pageWidth - marginRight - 50;
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(10);
+            doc.setTextColor(...gray);
+            doc.text('Subtotal:', totalsX, yPos);
+            doc.setFont('helvetica', 'bold');
+            doc.setTextColor(...slate);
+            doc.text(fmt(total), pageWidth - marginRight, yPos, { align: 'right' });
+
+            yPos += 6;
+            doc.setFont('helvetica', 'normal');
+            doc.setTextColor(...gray);
+            doc.text('IVA (0%):', totalsX, yPos);
+            doc.text(fmt(0), pageWidth - marginRight, yPos, { align: 'right' });
+
+            yPos += 6;
+            doc.text('Descuento:', totalsX, yPos);
+            doc.text(fmt(0), pageWidth - marginRight, yPos, { align: 'right' });
+
+            yPos += 8;
+            doc.setFillColor(...slate);
+            doc.roundedRect(totalsX - 5, yPos - 4, 70, 10, 2, 2, 'F');
+            doc.setTextColor(...gold);
             doc.setFont('helvetica', 'bold');
             doc.setFontSize(11);
-            let clientName = data.clientName;
-            if (clientName.length > 30) clientName = clientName.substring(0, 27) + '...';
-            doc.text(clientName, ML + 7, y + 15);
-            doc.setTextColor(...GRAY);
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(8.5);
-            let phoneY = y + 21;
-            if (data.clientPhone) doc.text(data.clientPhone, ML + 7, phoneY);
-            if (data.clientEmail) {
-                const emailX = data.clientPhone ? ML + 45 : ML + 7;
-                doc.text(data.clientEmail, emailX, phoneY);
-            }
+            doc.text('TOTAL FINAL', totalsX, yPos + 2);
+            doc.setTextColor(255, 255, 255);
+            doc.text(fmt(total), pageWidth - marginRight, yPos + 2, { align: 'right' });
 
-            // Estado
-            const BW = CW * 0.38;
-            const BX = ML + CW - BW;
-            doc.setFillColor(...SLATE);
-            doc.roundedRect(BX, y, BW, CH, 2, 2, 'F');
-            doc.setTextColor(148, 163, 184);
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(7);
-            doc.text('ESTADO', BX + 5, y + 8);
-            doc.setTextColor(...GOLD);
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(8.5);
-            doc.text('● PENDIENTE DE APROBACIÓN', BX + 5, y + 15);
-            doc.setTextColor(148, 163, 184);
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(7);
-            doc.text('MONEDA', BX + 5, y + 20);
-            doc.setTextColor(...WHITE);
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(8.5);
-            doc.text('Pesos Argentinos (ARS)', BX + 5, y + 26);
+            yPos += 20;
 
-            y += CH + 8;
-
-            // Tabla de items
-            const TH = 9;
-            doc.setFillColor(...SLATE);
-            doc.roundedRect(ML, y, CW, TH, 1.5, 1.5, 'F');
-            doc.rect(ML, y + TH/2, CW, TH/2, 'F');
-
-            doc.setTextColor(...WHITE);
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(7.5);
-            doc.text('ÍTEM',          ML + 3,   y + 6);
-            doc.text('DESCRIPCIÓN',   ML + 20,  y + 6);
-            doc.text('CANT.',         ML + 108, y + 6, { align: 'right' });
-            doc.text('P. UNIT.',      ML + 137, y + 6, { align: 'right' });
-            doc.text('SUBTOTAL',      ML + 173, y + 6, { align: 'right' });
-            y += TH;
-
-            const ROW_H = 10;
-            const MAX_DESC_WIDTH = 88; // ancho disponible para descripción
-
-            for (let i = 0; i < data.items.length; i++) {
-                const item = data.items[i];
-                doc.setFillColor(...(i % 2 === 0 ? GRAY_L : WHITE));
-                doc.rect(ML, y, CW, ROW_H, 'F');
-
-                const cy = y + 6.5;
-
-                // Chip numerado
-                doc.setFillColor(...GOLD);
-                doc.roundedRect(ML + 1.5, y + 2, 6, 6, 1, 1, 'F');
-                doc.setTextColor(...WHITE);
-                doc.setFont('helvetica', 'bold');
-                doc.setFontSize(7.5);
-                doc.text(String(i + 1), ML + 4.5, y + 6.5, { align: 'center' });
-
-                // Descripción (recortar si muy larga)
-                doc.setTextColor(...INK);
-                doc.setFont('helvetica', 'normal');
-                doc.setFontSize(8.5);
-                let desc = item.desc;
-                if (doc.getTextWidth(desc) > MAX_DESC_WIDTH) {
-                    while (doc.getTextWidth(desc + '...') > MAX_DESC_WIDTH && desc.length > 0) {
-                        desc = desc.slice(0, -1);
-                    }
-                    desc += '...';
-                }
-                doc.text(desc, ML + 10, cy);
-
-                // Cantidad, precio unitario, subtotal
-                doc.setTextColor(...GRAY);
-                doc.text(String(item.qty), ML + 108, cy, { align: 'right' });
-                doc.text(fmt(item.price), ML + 137, cy, { align: 'right' });
-
-                doc.setTextColor(...INK);
-                doc.setFont('helvetica', 'bold');
-                doc.text(fmt(item.total), ML + 173, cy, { align: 'right' });
-
-                doc.setDrawColor(...GRAY_M);
-                doc.setLineWidth(0.25);
-                doc.line(ML, y + ROW_H, ML + CW, y + ROW_H);
-
-                y += ROW_H;
-
-                // Salto de página si quedan pocos mm
-                if (y > PH - 50 && i < data.items.length - 1) {
-                    doc.addPage();
-                    y = 20; // reiniciar posición en nueva página
-                }
-            }
-
-            y += 4;
-
-            // Totales
-            const TW = 78;
-            const TX = ML + CW - TW;
-            const total = data.total;
-
-            const drawTotalRow = (label, valor, yy, highlight) => {
-                if (highlight) {
-                    doc.setFillColor(...SLATE);
-                    doc.roundedRect(TX, yy, TW, 10, 1.5, 1.5, 'F');
-                    doc.setTextColor(...GOLD);
-                    doc.setFont('helvetica', 'bold');
-                    doc.setFontSize(9);
-                    doc.text(label, TX + 5, yy + 6.5);
-                    doc.setTextColor(...WHITE);
-                    doc.setFont('helvetica', 'bold');
-                    doc.setFontSize(13);
-                    doc.text(valor, TX + TW - 4, yy + 7, { align: 'right' });
-                } else {
-                    doc.setFillColor(...GRAY_L);
-                    doc.rect(TX, yy, TW, 7, 'F');
-                    doc.setDrawColor(...GRAY_M);
-                    doc.setLineWidth(0.3);
-                    doc.line(TX, yy + 7, TX + TW, yy + 7);
-                    doc.setTextColor(...GRAY);
-                    doc.setFont('helvetica', 'normal');
-                    doc.setFontSize(8);
-                    doc.text(label, TX + 5, yy + 4.5);
-                    doc.setTextColor(...INK);
-                    doc.setFont('helvetica', 'bold');
-                    doc.setFontSize(8.5);
-                    doc.text(valor, TX + TW - 4, yy + 4.5, { align: 'right' });
-                }
-            };
-
-            drawTotalRow('Subtotal',    fmt(total), y);        y += 7;
-            drawTotalRow('IVA (0%)',    fmt(0),     y);        y += 7;
-            drawTotalRow('Descuento',   fmt(0),     y);        y += 4;
-            drawTotalRow('TOTAL FINAL', fmt(total), y, true);  y += 16;
-
-            // Condiciones y firma
-            const COND_H = 26;
-
-            // Bloque condiciones
+            // --- Condiciones y observaciones ---
             doc.setFillColor(255, 251, 235);
-            doc.setDrawColor(...GOLD);
-            doc.setLineWidth(0.5);
-            doc.roundedRect(ML, y, CW * 0.57, COND_H, 2, 2, 'FD');
-            doc.setFillColor(...GOLD);
-            doc.rect(ML, y, 3, COND_H, 'F');
+            doc.setDrawColor(...gold);
+            doc.roundedRect(marginLeft, yPos, contentWidth * 0.6, 30, 2, 2, 'FD');
+            doc.setFillColor(...gold);
+            doc.rect(marginLeft, yPos, 3, 30, 'F');
 
             doc.setTextColor(146, 64, 14);
             doc.setFont('helvetica', 'bold');
-            doc.setFontSize(7);
-            doc.text('CONDICIONES Y NOTAS', ML + 7, y + 7);
-            doc.setTextColor(...INK);
+            doc.setFontSize(8);
+            doc.text('CONDICIONES Y NOTAS', marginLeft + 7, yPos + 7);
+
+            doc.setTextColor(...slate);
             doc.setFont('helvetica', 'normal');
             doc.setFontSize(8);
-            const condiciones = [
-                '• Los precios tienen validez por 30 días desde la emisión.',
-                '• El trabajo inicia al confirmar la aceptación.',
-                '• Forma de pago: 50% al inicio, 50% al finalizar.'
-            ];
+            let condY = yPos + 13;
+            doc.text('• Los precios tienen validez por 30 días desde la emisión.', marginLeft + 7, condY);
+            condY += 5;
+            doc.text('• El trabajo inicia al confirmar la aceptación.', marginLeft + 7, condY);
+            condY += 5;
+            doc.text('• Forma de pago: 50% al inicio, 50% al finalizar.', marginLeft + 7, condY);
 
             if (data.observations) {
-                const obsLines = doc.splitTextToSize('• ' + data.observations, CW * 0.57 - 14);
-                condiciones.push(obsLines[0]);
+                condY += 5;
+                doc.text('• ' + data.observations, marginLeft + 7, condY);
             }
 
-            condiciones.forEach((line, i) => {
-                doc.text(line, ML + 7, y + 13 + i * 6.5);
-            });
-
-            // Bloque firma
-            const FX = ML + CW * 0.62;
-            const FW = CW * 0.38;
-            doc.setFillColor(...GRAY_L);
-            doc.setDrawColor(...GRAY_M);
-            doc.setLineWidth(0.4);
-            doc.roundedRect(FX, y, FW, COND_H, 2, 2, 'FD');
-            doc.setTextColor(...GRAY);
+            // --- Firma (a la derecha) ---
+            const firmaX = marginLeft + contentWidth * 0.65;
+            const firmaW = contentWidth * 0.35 - 5;
+            doc.setFillColor(...lightGray);
+            doc.setDrawColor(...gray);
+            doc.roundedRect(firmaX, yPos, firmaW, 30, 2, 2, 'FD');
+            doc.setTextColor(...gray);
             doc.setFont('helvetica', 'normal');
-            doc.setFontSize(7);
-            doc.text('Firma y aclaración', FX + FW / 2, y + 13, { align: 'center' });
-            doc.setDrawColor(...GRAY_M);
-            doc.setLineWidth(0.5);
-            doc.line(FX + 5, y + 20, FX + FW - 5, y + 20);
-            doc.text('Fecha de aceptación: ___/___/______', FX + FW / 2, y + 25, { align: 'center' });
+            doc.setFontSize(8);
+            doc.text('Firma y aclaración', firmaX + firmaW/2, yPos + 12, { align: 'center' });
+            doc.setDrawColor(...gray);
+            doc.line(firmaX + 5, yPos + 18, firmaX + firmaW - 5, yPos + 18);
+            doc.text('Fecha de aceptación: ___/___/______', firmaX + firmaW/2, yPos + 25, { align: 'center' });
 
-            // Pie de página
-            const footerY = PH - 18;
-            doc.setDrawColor(...GRAY_M);
-            doc.setLineWidth(0.5);
-            doc.line(ML, footerY, PW - MR, footerY);
-            doc.setDrawColor(...GOLD);
-            doc.setLineWidth(2);
-            doc.line(ML, footerY, ML + 35, footerY);
+            // --- Pie de página (ya manejado por didDrawPage) ---
+            doc.setPage(doc.internal.getNumberOfPages()); // Asegurar última página
 
-            doc.setTextColor(...GRAY);
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(7.5);
-            doc.text('AFM Solutions — afmsolutions.com.ar — contacto@afmsolutions.com.ar', ML, PH - 12);
-            doc.text('Página 1 de 1', PW - MR, PH - 12, { align: 'right' });
-
-            doc.setTextColor(...GOLD);
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(7);
-            doc.text('CONFIDENCIAL — Este documento es para uso exclusivo del destinatario.', ML, PH - 7);
-
-            doc.setTextColor(...GRAY);
-            doc.setFont('helvetica', 'normal');
-            doc.setFontSize(6.5);
-            doc.text('Creado con la herramienta de presupuestos gratuita de afmsolutions.com.ar', PW / 2, PH - 2, { align: 'center' });
-
+            // Guardar PDF
             doc.save('presupuesto-' + data.number + '.pdf');
         }
 

@@ -11,6 +11,11 @@ const AFMAuth = {
      * Inicializar autenticación
      */
     async init() {
+        // Verificar que AFM existe (por si acaso)
+        if (typeof AFM === 'undefined') {
+            console.error('AFM no está definido. Asegúrate de cargar supabase.js antes que auth.js');
+            return null;
+        }
         this.session = await AFM.getSession();
         if (this.session) {
             this.currentUser = await AFM.getCurrentUser();

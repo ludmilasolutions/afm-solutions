@@ -564,12 +564,28 @@
             setDisplay('loader', 'none');
         }
 
-        // ── Auth ──────────────────────────────────────────────────
+        // ── Auth (stubs por si los scripts externos fallan) ──────
+        window.AFMAuth = window.AFMAuth || {
+            init: async () => {},
+            isAuthenticated: () => false,
+            getDisplayName: () => '',
+            logout: async () => {}
+        };
+        window.AFMPresupuestos = window.AFMPresupuestos || {
+            generateBudgetNumber: async () => null
+        };
+        window.AFPLoadBudgets = window.AFPLoadBudgets || (() => {});
+        window.AFPSaveBudget = window.AFPSaveBudget || (() => {});
+
         let isAuthenticated = false;
 
         async function checkAuth() {
-            await AFMAuth.init();
-            isAuthenticated = AFMAuth.isAuthenticated();
+            if (typeof AFMAuth !== 'undefined' && AFMAuth.init) {
+                await AFMAuth.init();
+                isAuthenticated = AFMAuth.isAuthenticated();
+            } else {
+                isAuthenticated = false;
+            }
 
             if (isAuthenticated) {
                 setDisplay('userSection', 'flex');
@@ -578,9 +594,9 @@
                 setDisplay('saveCloudBtn', 'inline-flex');
 
                 const nameEl = document.getElementById('userNameDisplay');
-                if (nameEl) nameEl.textContent = AFMAuth.getDisplayName();
+                if (nameEl) nameEl.textContent = AFMAuth.getDisplayName() || 'Usuario';
 
-                await AFPLoadBudgets();
+                if (typeof AFPLoadBudgets === 'function') await AFPLoadBudgets();
             } else {
                 setDisplay('userSection', 'none');
                 setDisplay('loginLink', 'block');
@@ -590,7 +606,9 @@
         }
 
         async function handleLogout() {
-            await AFMAuth.logout();
+            if (typeof AFMAuth !== 'undefined' && AFMAuth.logout) {
+                await AFMAuth.logout();
+            }
             window.location.reload();
         }
 
@@ -603,38 +621,30 @@
             const now = new Date();
             const dateValue = now.toISOString().split('T')[0];
 
-            if (isAuthenticated) {
-                const dateEl = document.getElementById('budgetDate');
-                if (dateEl) dateEl.value = dateValue;
-
-                // Generar número de presupuesto desde Supabase
+            // Generar número de presupuesto
+            let number = '';
+            if (isAuthenticated && typeof AFMPresupuestos !== 'undefined' && AFMPresupuestos.generateBudgetNumber) {
                 try {
-                    const number = await AFPPresupuestos.generateBudgetNumber();
-                    const numEl = document.getElementById('budgetNumber');
-                    if (numEl) numEl.value = number;
+                    number = await AFMPresupuestos.generateBudgetNumber();
                 } catch (e) {
-                    // Fallback local si falla Supabase
-                    const year = now.getFullYear();
-                    const month = String(now.getMonth() + 1).padStart(2, '0');
-                    const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-                    const numEl = document.getElementById('budgetNumber');
-                    if (numEl) numEl.value = `PRES-${year}${month}-${random}`;
+                    console.warn('Error generando número desde Supabase, usando local');
                 }
-
-                addItem();
-            } else {
+            }
+            if (!number) {
                 const year = now.getFullYear();
                 const month = String(now.getMonth() + 1).padStart(2, '0');
                 const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-
-                const numEl = document.getElementById('budgetNumber');
-                if (numEl) numEl.value = `PRES-${year}${month}-${random}`;
-
-                const dateEl = document.getElementById('budgetDate');
-                if (dateEl) dateEl.value = dateValue;
-
-                addItem();
+                number = `PRES-${year}${month}-${random}`;
             }
+
+            const numEl = document.getElementById('budgetNumber');
+            if (numEl) numEl.value = number;
+
+            const dateEl = document.getElementById('budgetDate');
+            if (dateEl) dateEl.value = dateValue;
+
+            // Agregar primer item vacío
+            addItem();
 
             hideLoader();
         });
@@ -686,7 +696,6 @@
                 const subtotal = qty * price;
                 total += subtotal;
 
-                // Actualizar subtotal de la fila
                 const subtotalEl = row.querySelector('[id^="subtotal-"]');
                 if (subtotalEl) {
                     subtotalEl.textContent = '$' + subtotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -729,8 +738,15 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({ unit: 'mm', format: 'a4' });
 
-            const fmt     = (n) => '$ ' + Number(n).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            const fmtDate = (s) => s ? new Date(s + 'T00:00:00').toLocaleDateString('es-AR') : '';
+            // Función de formato con dos decimales y separador de miles (punto)
+            const fmt = (n) => '$ ' + Number(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            
+            // Función de fecha más robusta
+            const fmtDate = (s) => {
+                if (!s) return '';
+                const [y, m, d] = s.split('-');
+                return new Date(y, m-1, d).toLocaleDateString('es-AR');
+            };
 
             const PW = 210, PH = 297;
             const ML = 14, MR = 14;
@@ -1028,6 +1044,7 @@
 
             doc.save('presupuesto-' + data.number + '.pdf');
         }
+
         function shareWhatsApp() {
             const data = getFormData();
 
@@ -1120,7 +1137,11 @@
                 }))
             };
 
-            await AFPSaveBudget(budgetData);
+            if (typeof AFPSaveBudget === 'function') {
+                await AFPSaveBudget(budgetData);
+            } else {
+                alert('Función de guardado no disponible. Asegúrate de haber iniciado sesión.');
+            }
         }
     </script>
 </body>

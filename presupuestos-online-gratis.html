@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presupuestos Online Gratis | AFM Presupuestos</title>
+    <meta name="description" content="Crea presupuestos online gratis en minutos. Descarga PDF profesional y compártelo por WhatsApp. Sin límites y sin publicidad.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #4f46e5;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glow-primary: rgba(79, 70, 229, 0.4);
+            --glow-accent: rgba(6, 182, 212, 0.4);
+        }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        section { padding: 80px 0; }
+        
+        h1, h2, h3 { font-weight: 800; line-height: 1.2; }
+        
+        h1 { font-size: 3.5rem; margin-bottom: 1.5rem; }
+        h2 { font-size: 2.5rem; margin-bottom: 2rem; text-align: center; }
+        h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        
+        p { font-size: 1.1rem; color: var(--gray); margin-bottom: 1rem; }
+        
+        .highlight { color: var(--accent); font-weight: 600; }
+        
+        .btn {
+            display: inline-block;
+            padding: 16px 36px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 8px 24px var(--glow-primary);
+        }
+        
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px var(--glow-primary); }
+        
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 1000;
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .navbar { display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+        }
+        
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { color: var(--light); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        
+        .hero {
+            padding-top: 160px;
+            padding-bottom: 100px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.15;
+            filter: blur(60px);
+        }
+        
+        .hero-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
+        
+        .hero-subtitle { font-size: 1.3rem; color: var(--gray); margin-bottom: 2rem; }
+        
+        .hero-features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .hero-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            color: var(--gray);
+        }
+        
+        .hero-feature i { color: var(--accent); }
+        
+        .features-section { background: linear-gradient(180deg, var(--darker) 0%, rgba(15, 23, 42, 0.8) 100%); }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature-card {
+            background: var(--glass);
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover { transform: translateY(-5px); border-color: rgba(79, 70, 229, 0.3); }
+        
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .seo-section { background: var(--darker); }
+        
+        .seo-content { max-width: 800px; margin: 0 auto; }
+        
+        .seo-content h2 { text-align: left; }
+        
+        .seo-content p { line-height: 1.8; }
+        
+        .cta-section { text-align: center; padding: 100px 0; }
+        
+        .cta-box {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.15), rgba(6, 182, 212, 0.15));
+            border-radius: 24px;
+            padding: 60px 40px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .cta-box h2 { margin-bottom: 1rem; }
+        .cta-box p { margin-bottom: 2rem; }
+        
+        footer {
+            background: rgba(2, 6, 23, 0.9);
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+        
+        footer p { font-size: 0.9rem; margin: 0; }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .nav-links { display: none; }
+            .hero-features { flex-direction: column; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="/" class="logo">AFM SOLUTIONS</a>
+                <div class="nav-links">
+                    <a href="/#services">Servicios</a>
+                    <a href="/presupuestos-online-gratis.html">Presupuestos</a>
+                    <a href="/crm-para-tecnicos.html">CRM</a>
+                    <a href="/#contact">Contacto</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Presupuestos Online Gratis</h1>
+                <p class="hero-subtitle">Crea presupuestos profesionales en minutos</p>
+                <p class="hero-subtitle" style="font-size: 1.5rem; color: var(--light); margin-bottom: 2rem;">Gratis, simple y sin límites.</p>
+                <a href="/apps/presupuestos.html" class="btn btn-primary btn-large">Crear presupuesto ahora</a>
+                
+                <div class="hero-features">
+                    <div class="hero-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Sin registro requerido</span>
+                    </div>
+                    <div class="hero-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Descarga PDF</span>
+                    </div>
+                    <div class="hero-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Comparte por WhatsApp</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="container">
+            <h2>Cómo hacer un presupuesto profesional</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-user"></i></div>
+                    <h3>Datos del cliente</h3>
+                    <p>Ingresa el nombre y contacto de tu cliente para identificar claramente a quién va dirigido el presupuesto.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-list"></i></div>
+                    <h3>Detalla los ítems</h3>
+                    <p>Agrega cada producto o servicio con su descripción, cantidad y precio unitario.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-calculator"></i></div>
+                    <h3>Total automático</h3>
+                    <p>El sistema calcula automáticamente el subtotal de cada ítem y el total general.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="container">
+            <h2>Generador de presupuestos en PDF</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-file-pdf"></i></div>
+                    <h3>Descarga profesional</h3>
+                    <p>Genera un PDF listo para imprimir o enviar por email. Aspecto profesional y limpio.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fab fa-whatsapp"></i></div>
+                    <h3>Envía por WhatsApp</h3>
+                    <p>Comparte el presupuesto directamente por WhatsApp con un solo clic.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-save"></i></div>
+                    <h3>Sin límites</h3>
+                    <p>Crea tantos presupuestos como necesites. No hay límite de uso ni costos ocultos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="container">
+            <h2>Presupuestos para técnicos y emprendedores en Argentina</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-tools"></i></div>
+                    <h3>Electricistas</h3>
+                    <p>Ideal para electricistas que necesitan presentar presupuestos de instalaciones, reparaciones o materiales.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-wrench"></i></div>
+                    <h3>Instaladores</h3>
+                    <p>Perfecto para gasistas, plomeros e instaladores de aire acondicionado.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-hammer"></i></div>
+                    <h3>Albañiles y constructores</h3>
+                    <p>Presenta presupuestos de obras, refacciones o trabajos de construcción.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="seo-section">
+        <div class="container">
+            <div class="seo-content">
+                <h2>¿Qué es un presupuesto?</h2>
+                <p>Un presupuesto es un documento comercial que detalla los costos de un trabajo, servicio o producto que un profesional ofrece a su cliente. Es la base de toda negociación comercial y permite al cliente conocer de forma transparente cuánto le costó un trabajo antes de contratarlo.</p>
+                
+                <h2 style="margin-top: 2rem;">¿Qué debe incluir un presupuesto?</h2>
+                <p>Un presupuesto profesional debe contener: datos del proveedor (nombre, CUIT, contacto), datos del cliente, fecha de emisión, descripción detallada de cada ítem o servicio, cantidades, precios unitarios y totales, subtotal, posibles descuentos, impuestos si corresponde, y validez del presupuesto.</p>
+                
+                <h2 style="margin-top: 2rem;">Errores comunes al hacer presupuestos</h2>
+                <p>Los principales errores son: no detallar suficientemente los trabajos, omitir materiales importantes, no incluir la mano de obra de forma clara, no establecer plazos de validez, no especificar formas de pago, y no dejar claro qué está incluido y qué no está incluido en el precio.</p>
+                
+                <h2 style="margin-top: 2rem;">Beneficios de hacer presupuestos online</h2>
+                <p>La digitalización de presupuestos ofrece numerosas ventajas: ahorro de tiempo al no tener que crear documentos desde cero, profesionalismo al presentar un formato limpio y organizado, posibilidad de compartir instantly por WhatsApp o email, facilidad para hacer modificaciones, y disponibilidad desde cualquier dispositivo.</p>
+                
+                <h2 style="margin-top: 2rem;">Presupuestos en Argentina</h2>
+                <p>En el contexto argentino, es fundamental que los presupuestos incluyan el CUIT del proveedor para que el cliente pueda deducir gastos. Además, dependiendo del tipo de trabajo, puede requerirse CERTIFICADO DE OBRA o habilitación profesional. Nuestra herramienta está pensada para el mercado argentino, permitiendo incluir los datos necesarios para cumplir con los requisitos comerciales locales.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-box">
+                <h2>¿Listo para crear tu primer presupuesto?</h2>
+                <p>Comienza ahora mismo. Es gratis, no requiere registro y tienes resultados inmediatos.</p>
+                <a href="/apps/presupuestos.html" class="btn btn-primary btn-large">Crear presupuesto ahora</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>AFM Presupuestos es una herramienta gratuita desarrollada por AFM Solutions.</p>
+        </div>
+    </footer>
+</body>
+</html>

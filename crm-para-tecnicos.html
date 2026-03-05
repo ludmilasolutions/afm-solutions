@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM para Técnicos Gratis | AFM CRM</title>
+    <meta name="description" content="CRM online gratuito para técnicos y emprendedores. Gestiona clientes, trabajos e ingresos en un solo lugar.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #4f46e5;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glow-primary: rgba(79, 70, 229, 0.4);
+            --glow-accent: rgba(6, 182, 212, 0.4);
+        }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        section { padding: 80px 0; }
+        
+        h1, h2, h3 { font-weight: 800; line-height: 1.2; }
+        
+        h1 { font-size: 3.5rem; margin-bottom: 1.5rem; }
+        h2 { font-size: 2.5rem; margin-bottom: 2rem; text-align: center; }
+        h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        
+        p { font-size: 1.1rem; color: var(--gray); margin-bottom: 1rem; }
+        
+        .highlight { color: var(--accent); font-weight: 600; }
+        
+        .btn {
+            display: inline-block;
+            padding: 16px 36px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 8px 24px var(--glow-primary);
+        }
+        
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px var(--glow-primary); }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid var(--glass);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-outline:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--glow-accent);
+        }
+        
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 1000;
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .navbar { display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+        }
+        
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { color: var(--light); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        
+        .hero {
+            padding-top: 160px;
+            padding-bottom: 100px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.15;
+            filter: blur(60px);
+        }
+        
+        .hero-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
+        
+        .hero-subtitle { font-size: 1.3rem; color: var(--gray); margin-bottom: 2rem; }
+        
+        .hero-features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .hero-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            color: var(--gray);
+        }
+        
+        .hero-feature i { color: var(--accent); }
+        
+        .features-section { background: linear-gradient(180deg, var(--darker) 0%, rgba(15, 23, 42, 0.8) 100%); }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature-card {
+            background: var(--glass);
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover { transform: translateY(-5px); border-color: rgba(79, 70, 229, 0.3); }
+        
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .audience-section { background: var(--darker); }
+        
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .audience-item {
+            text-align: center;
+            padding: 25px;
+            background: var(--glass);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .audience-item i {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        
+        .audience-item h3 { font-size: 1.2rem; margin-bottom: 10px; }
+        .audience-item p { font-size: 0.9rem; margin: 0; }
+        
+        .seo-section { background: linear-gradient(180deg, var(--darker) 0%, rgba(15, 23, 42, 0.8) 100%); }
+        
+        .seo-content { max-width: 800px; margin: 0 auto; }
+        
+        .seo-content h2 { text-align: left; }
+        .seo-content p { line-height: 1.8; }
+        
+        .cta-section { text-align: center; padding: 100px 0; }
+        
+        .cta-box {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.15), rgba(6, 182, 212, 0.15));
+            border-radius: 24px;
+            padding: 60px 40px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .cta-box h2 { margin-bottom: 1rem; }
+        .cta-box p { margin-bottom: 2rem; }
+        
+        footer {
+            background: rgba(2, 6, 23, 0.9);
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+        
+        footer p { font-size: 0.9rem; margin: 0; }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .nav-links { display: none; }
+            .hero-features { flex-direction: column; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="/" class="logo">AFM SOLUTIONS</a>
+                <div class="nav-links">
+                    <a href="/#services">Servicios</a>
+                    <a href="/presupuestos-online-gratis.html">Presupuestos</a>
+                    <a href="/crm-para-tecnicos.html">CRM</a>
+                    <a href="/#contact">Contacto</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>CRM para Técnicos y Emprendedores</h1>
+                <p class="hero-subtitle">Gestiona tu negocio de forma simple</p>
+                <p class="hero-subtitle" style="font-size: 1.5rem; color: var(--light); margin-bottom: 2rem;">Clientes, trabajos e ingresos en un solo lugar.</p>
+                <a href="/apps/crm.html" class="btn btn-primary btn-large">Probar CRM</a>
+                
+                <div class="hero-features">
+                    <div class="hero-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>100% Gratis</span>
+                    </div>
+                    <div class="hero-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Sin registro requerido</span>
+                    </div>
+                    <div class="hero-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Gestiona clientes y trabajos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="container">
+            <h2>Qué es un CRM</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-database"></i></div>
+                    <h3>Definición</h3>
+                    <p>CRM significa "Customer Relationship Management" (Gestión de Relaciones con Clientes). Es un sistema que te permite organizar toda la información de tus clientes y interactions comerciales.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    <h3>Centralización</h3>
+                    <p>Un CRM reúne en un solo lugar: datos de clientes, historial de trabajos, presupuestos generados y pagos recibidos.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Control del negocio</h3>
+                    <p>Con un CRM puedes ver claramente cuántos trabajos tienes pendientes, cuáles están en proceso y cuáles están finalizados.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="container">
+            <h2>Por qué los técnicos necesitan un CRM</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-address-book"></i></div>
+                    <h3>No olvides clientes</h3>
+                    <p>¿Cuántos clientes has atendido que después no recuerdas su teléfono? Un CRM guarda toda esa información para siempre.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <h3>Controla ingresos</h3>
+                    <p>Sabrás exactamente cuánto facturaste este mes y cuánto llevas facturado en el año. Sin sorpresas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-tasks"></i></div>
+                    <h3>Seguimiento de trabajos</h3>
+                    <p>¿Tienes varios trabajos ao mismo tiempo? Ve el estado de cada uno: pendiente, en proceso o finalizado.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="container">
+            <h2>Cómo organizar clientes y trabajos</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-user-plus"></i></div>
+                    <h3>Registro de clientes</h3>
+                    <p>Agrega clientes con nombre, teléfono, email y dirección. Cada cliente puede tener múltiples trabajos asociados.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-clipboard-list"></i></div>
+                    <h3>Estados de trabajo</h3>
+                    <p>Cada trabajo puede estar en: Pendiente (aún no starts), En Proceso (estás trabajando), o Finalizado (cobrado).</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-calendar-check"></i></div>
+                    <h3>Historial completo</h3>
+                    <p>Ve todo lo que haz fatto con cada cliente: qué trabajos hizo, cuándo, y cuánto cobraste.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="audience-section">
+        <div class="container">
+            <h2>Para quién es AFM CRM</h2>
+            <div class="audience-grid">
+                <div class="audience-item">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Electricistas</h3>
+                    <p>Gestiona instalaciones, reparaciones y mantenimiento</p>
+                </div>
+                <div class="audience-item">
+                    <i class="fas fa-fire"></i>
+                    <h3>Gasistas</h3>
+                    <p>Controla instalaciones gasísticas y verificaciones</p>
+                </div>
+                <div class="audience-item">
+                    <i class="fas fa-water"></i>
+                    <h3>Plomeros</h3>
+                    <p>Organiza trabajos de pluviales, cloacas y más</p>
+                </div>
+                <div class="audience-item">
+                    <i class="fas fa-snowflake"></i>
+                    <h3>Aire Acondicionado</h3>
+                    <p>Seguimiento de instalaciones y servicios técnicos</p>
+                </div>
+                <div class="audience-item">
+                    <i class="fas fa-hammer"></i>
+                    <h3>Albañiles</h3>
+                    <p>Control de obras y refacciones</p>
+                </div>
+                <div class="audience-item">
+                    <i class="fas fa-user-tie"></i>
+                    <h3>Freelancers</h3>
+                    <p>Cualquier profesional independiente</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="seo-section">
+        <div class="container">
+            <div class="seo-content">
+                <h2>Beneficios de usar un CRM online</h2>
+                <p>La transformación digital de los pequeños negocios es fundamental en el contexto actual. Un CRM online te permite acceder a tu información desde cualquier dispositivo, ya sea tu teléfono celular mientras estás en el trabajo o tu computadora en la oficina.</p>
+                
+                <p style="margin-top: 1rem;">El principal beneficio es la organización. Cuando manejas muchos clientes, es fácil perder el rastro de quién te debe dinero, quién tiene un trabajo pendiente, o cuándo fue la última vez que atendiste a alguien. Un CRM resuelve estos problemas automáticamente.</p>
+                
+                <h2 style="margin-top: 2rem;">CRM para microemprendedores en Argentina</h2>
+                <p>En Argentina, los microemprendedores y técnicos independientes representan una parte fundamental de la economía. Sin embargo, muchos trabajan sin ningún sistema de gestión, llevando notas en papel o en el celular sin estructura.</p>
+                
+                <p style="margin-top: 1rem;">AFM CRM está pensado específicamente para este segmento: sin costos, fácil de usar, y con las funcionalidades esenciales que realmente se necesitan. No requiere conocimientos técnicos para empezar a usarlo.</p>
+                
+                <h2 style="margin-top: 2rem;">El futuro de tu negocio</h2>
+                <p>Cuando conoces mejor a tus clientes y organizas tu trabajo, puedes ofrecer un mejor servicio, cobrar de manera más eficiente, y eventualmente hacer crecer tu negocio. Todo começa con tener la información ordenada.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-box">
+                <h2>Comienza a gestionar tu negocio</h2>
+                <p>Es gratis, no requiere registro y tienes acceso inmediato a todas las funciones.</p>
+                <a href="/apps/crm.html" class="btn btn-primary btn-large">Probar CRM gratis</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>AFM CRM es una herramienta gratuita desarrollada por AFM Solutions.</p>
+        </div>
+    </footer>
+</body>
+</html>

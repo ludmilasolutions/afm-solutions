@@ -48,11 +48,7 @@
             z-index: 100;
         }
         
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
         
         .logo {
             font-size: 1.3rem;
@@ -68,26 +64,24 @@
         }
         
         .logo i { color: var(--accent); }
-        
         .header-links { display: flex; gap: 20px; align-items: center; }
         .header-links a { color: var(--gray); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
         .header-links a:hover { color: var(--accent); }
-        
         .user-menu { display: flex; align-items: center; gap: 15px; }
         .user-name { font-size: 0.9rem; color: var(--gray); }
-        .btn-logout { 
-            background: rgba(255,255,255,0.1); 
-            border: 1px solid rgba(255,255,255,0.1); 
-            color: var(--gray); 
-            padding: 8px 15px; 
-            border-radius: 6px; 
+        .btn-logout {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--gray);
+            padding: 8px 15px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 0.85rem;
             transition: all 0.3s;
         }
         .btn-logout:hover { background: rgba(255,255,255,0.2); color: var(--light); }
         
-        .app-container { padding: 30px 0; }
+        .app-container { padding: 40px 0; }
         
         .app-header {
             text-align: center;
@@ -95,234 +89,185 @@
         }
         
         .app-header h1 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             background: linear-gradient(90deg, var(--light), var(--accent));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
         
-        /* Dashboard Stats */
+        /* Dashboard stats */
         .dashboard-stats {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+            gap: 15px;
             margin-bottom: 30px;
-        }
-        
-        @media (max-width: 768px) {
-            .dashboard-stats { grid-template-columns: repeat(2, 1fr); }
         }
         
         .stat-card {
             background: var(--glass);
             border-radius: 12px;
             padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.05);
             text-align: center;
         }
         
-        .stat-card i {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-        
+        .stat-card i { font-size: 1.5rem; margin-bottom: 10px; }
         .stat-card.clients i { color: var(--accent); }
         .stat-card.pending i { color: var(--warning); }
         .stat-card.income-month i { color: var(--success); }
         .stat-card.income-total i { color: var(--primary); }
         
-        .stat-value {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 5px;
-        }
-        
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--gray);
-        }
+        .stat-value { font-size: 1.5rem; font-weight: 800; margin-bottom: 4px; }
+        .stat-label { font-size: 0.8rem; color: var(--gray); }
         
         /* Tabs */
         .tabs {
             display: flex;
-            gap: 10px;
+            gap: 5px;
             margin-bottom: 25px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 15px;
-            overflow-x: auto;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 0;
         }
         
         .tab-btn {
-            padding: 12px 24px;
-            background: var(--glass);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
+            padding: 12px 20px;
+            background: none;
+            border: none;
             color: var(--gray);
             cursor: pointer;
-            transition: all 0.3s;
+            font-size: 0.95rem;
             font-weight: 500;
-            white-space: nowrap;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
         }
         
-        .tab-btn:hover { background: rgba(255, 255, 255, 0.1); }
-        
-        .tab-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-        
-        /* Tab Content */
+        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         
-        /* Forms */
+        /* Form card */
         .form-card {
             background: var(--glass);
             border-radius: 12px;
             padding: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.05);
             margin-bottom: 25px;
         }
         
         .form-card h3 {
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin-bottom: 20px;
-            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
+        
+        .form-card h3 i { color: var(--accent); }
         
         .form-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
+            margin-bottom: 15px;
         }
         
         .form-group { margin-bottom: 15px; }
         
         .form-group label {
             display: block;
-            margin-bottom: 6px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--gray);
+            margin-bottom: 6px;
         }
         
         .form-control {
             width: 100%;
-            padding: 12px 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
             color: var(--light);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
             font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            transition: all 0.3s;
+            transition: border-color 0.3s;
         }
         
-        .form-control:focus {
-            outline: none;
-            border-color: var(--accent);
-            background: rgba(255, 255, 255, 0.08);
-        }
+        .form-control:focus { outline: none; border-color: var(--primary); }
+        textarea.form-control { resize: vertical; }
         
-        .form-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            padding-right: 45px;
         }
+        select.form-control option { background: var(--darker); color: var(--light); }
+        
+        .form-actions { display: flex; gap: 10px; }
         
         .btn {
-            padding: 12px 24px;
-            font-size: 1rem;
-            font-weight: 600;
+            padding: 10px 20px;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
-            border: none;
+            transition: all 0.3s;
         }
         
-        .btn-primary {
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            color: white;
-        }
+        .btn-primary { background: linear-gradient(90deg, var(--primary), var(--secondary)); color: white; }
+        .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
         
-        .btn-primary:hover { transform: translateY(-2px); }
-        
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
-        
-        .btn-danger {
-            background: var(--danger);
-            color: white;
-        }
-        
-        .btn-sm { padding: 8px 16px; font-size: 0.9rem; }
-        
-        /* Tables */
+        /* Table */
         .table-container {
             background: var(--glass);
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            overflow-x: auto;
+            border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
         }
         
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
+        table { width: 100%; border-collapse: collapse; }
         
         th {
-            background: rgba(0, 0, 0, 0.2);
-            font-size: 0.85rem;
-            color: var(--gray);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        td { font-size: 0.95rem; }
-        
-        tr:hover { background: rgba(255, 255, 255, 0.02); }
-        
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
+            text-align: left;
             font-size: 0.8rem;
+            color: var(--gray);
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
             font-weight: 600;
         }
         
-        .status-pending {
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--warning);
+        td {
+            padding: 12px 16px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
         }
         
-        .status-progress {
-            background: rgba(6, 182, 212, 0.2);
-            color: var(--accent);
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: rgba(255,255,255,0.02); }
+        
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
         }
         
-        .status-completed {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success);
-        }
+        .status-pending { background: rgba(245,158,11,0.2); color: var(--warning); }
+        .status-progress { background: rgba(6,182,212,0.2); color: var(--accent); }
+        .status-completed { background: rgba(16,185,129,0.2); color: var(--success); }
         
-        .action-btns {
-            display: flex;
-            gap: 8px;
-        }
+        .action-btns { display: flex; gap: 8px; }
         
         .btn-icon {
             width: 32px;
@@ -334,61 +279,45 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s;
+            font-size: 0.8rem;
         }
         
-        .btn-edit {
-            background: rgba(6, 182, 212, 0.2);
-            color: var(--accent);
+        .btn-edit { background: rgba(6,182,212,0.2); color: var(--accent); }
+        .btn-edit:hover { background: rgba(6,182,212,0.4); }
+        .btn-delete { background: rgba(239,68,68,0.2); color: var(--danger); }
+        .btn-delete:hover { background: rgba(239,68,68,0.4); }
+        
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--gray); }
+        .empty-state i { font-size: 3rem; margin-bottom: 15px; opacity: 0.5; display: block; }
+        
+        .footer-note { text-align: center; padding: 30px 0; color: var(--gray); font-size: 0.85rem; }
+        
+        /* Loader */
+        .loader-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(2,6,23,0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
         }
         
-        .btn-edit:hover { background: rgba(6, 182, 212, 0.4); }
-        
-        .btn-delete {
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--danger);
+        .spinner {
+            width: 50px; height: 50px;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
         
-        .btn-delete:hover { background: rgba(239, 68, 68, 0.4); }
+        @keyframes spin { to { transform: rotate(360deg); } }
         
-        .footer-note {
-            text-align: center;
-            padding: 30px 0;
-            color: var(--gray);
-            font-size: 0.85rem;
+        @media (max-width: 768px) {
+            .dashboard-stats { grid-template-columns: repeat(2, 1fr); }
+            .form-row { grid-template-columns: 1fr; }
         }
-        
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--gray);
-        }
-        
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            opacity: 0.5;
-        }
-        
-        /* Select styling */
-        select.form-control {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 15px center;
-            padding-right: 45px;
-        }
-        
-        select.form-control option {
-            background: var(--darker);
-            color: var(--light);
-        }
-        
-        /* Nota: Esta es una versión frontend MVP. 
-           Para persistencia de datos e integración con presupuestos:
-           - Crear tablas en Supabase: clientes, trabajos
-           - Agregar autenticación opcional
-           - Vincular con AFM Presupuestos para generar presupuestos desde el CRM
-        */
     </style>
 </head>
 <body>
@@ -416,7 +345,7 @@
             <div class="app-header">
                 <h1>Gestión de Clientes y Trabajos</h1>
             </div>
-            
+
             <!-- Dashboard Stats -->
             <div class="dashboard-stats">
                 <div class="stat-card clients">
@@ -440,54 +369,53 @@
                     <div class="stat-label">Ingresos Totales</div>
                 </div>
             </div>
-            
+
             <!-- Tabs -->
             <div class="tabs">
-                <button class="tab-btn active" onclick="switchTab('clients')">
+                <button class="tab-btn active" onclick="switchTab('clients', this)">
                     <i class="fas fa-users"></i> Clientes
                 </button>
-                <button class="tab-btn" onclick="switchTab('jobs')">
+                <button class="tab-btn" onclick="switchTab('jobs', this)">
                     <i class="fas fa-briefcase"></i> Trabajos
                 </button>
             </div>
-            
+
             <!-- Clients Tab -->
             <div id="clients" class="tab-content active">
-                <!-- Add Client Form -->
                 <div class="form-card">
                     <h3><i class="fas fa-user-plus"></i> Agregar Cliente</h3>
-                    <form id="clientForm" onsubmit="addClient(event)">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Nombre *</label>
-                                <input type="text" id="clientName" class="form-control" required placeholder="Nombre completo">
-                            </div>
-                            <div class="form-group">
-                                <label>Teléfono *</label>
-                                <input type="tel" id="clientPhone" class="form-control" required placeholder="11 1234 5678">
-                            </div>
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" id="clientEmail" class="form-control" placeholder="email@ejemplo.com">
-                            </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nombre *</label>
+                            <input type="text" id="clientName" class="form-control" placeholder="Nombre completo">
                         </div>
                         <div class="form-group">
-                            <label>Dirección</label>
-                            <input type="text" id="clientAddress" class="form-control" placeholder="Dirección completa">
+                            <label>Teléfono *</label>
+                            <input type="tel" id="clientPhone" class="form-control" placeholder="11 1234 5678">
                         </div>
                         <div class="form-group">
-                            <label>Notas</label>
-                            <textarea id="clientNotes" class="form-control" rows="2" placeholder="Notas adicionales sobre el cliente"></textarea>
+                            <label>Email</label>
+                            <input type="email" id="clientEmail" class="form-control" placeholder="email@ejemplo.com">
                         </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-plus"></i> Agregar Cliente
-                            </button>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección</label>
+                        <input type="text" id="clientAddress" class="form-control" placeholder="Dirección completa">
+                    </div>
+                    <div class="form-group">
+                        <label>Notas</label>
+                        <textarea id="clientNotes" class="form-control" rows="2" placeholder="Notas adicionales sobre el cliente"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-primary" onclick="handleAddClient()">
+                            <i class="fas fa-plus"></i> Agregar Cliente
+                        </button>
+                        <button class="btn" id="cancelEditClientBtn" style="display:none; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--gray);" onclick="cancelEditClient()">
+                            Cancelar
+                        </button>
+                    </div>
                 </div>
-                
-                <!-- Clients Table -->
+
                 <div class="table-container">
                     <table>
                         <thead>
@@ -500,9 +428,7 @@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody id="clientsTableBody">
-                            <!-- Clientes se cargan dinámicamente -->
-                        </tbody>
+                        <tbody id="clientsTableBody"></tbody>
                     </table>
                     <div class="empty-state" id="clientsEmpty">
                         <i class="fas fa-users"></i>
@@ -510,50 +436,46 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Jobs Tab -->
             <div id="jobs" class="tab-content">
-                <!-- Add Job Form -->
                 <div class="form-card">
                     <h3><i class="fas fa-briefcase"></i> Agregar Trabajo</h3>
-                    <form id="jobForm" onsubmit="addJob(event)">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Cliente *</label>
-                                <select id="jobClient" class="form-control" required>
-                                    <option value="">Seleccionar cliente...</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Fecha</label>
-                                <input type="date" id="jobDate" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Estado</label>
-                                <select id="jobStatus" class="form-control">
-                                    <option value="pendiente">Pendiente</option>
-                                    <option value="proceso">En Proceso</option>
-                                    <option value="finalizado">Finalizado</option>
-                                </select>
-                            </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Cliente *</label>
+                            <select id="jobClient" class="form-control">
+                                <option value="">Seleccionar cliente...</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label>Descripción del Trabajo *</label>
-                            <textarea id="jobDescription" class="form-control" rows="2" required placeholder="Describe el trabajo a realizar"></textarea>
+                            <label>Fecha</label>
+                            <input type="date" id="jobDate" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>Monto ($)</label>
-                            <input type="number" id="jobAmount" class="form-control" min="0" step="0.01" placeholder="0.00">
+                            <label>Estado</label>
+                            <select id="jobStatus" class="form-control">
+                                <option value="pendiente">Pendiente</option>
+                                <option value="proceso">En Proceso</option>
+                                <option value="finalizado">Finalizado</option>
+                            </select>
                         </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-plus"></i> Agregar Trabajo
-                            </button>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción del Trabajo *</label>
+                        <textarea id="jobDescription" class="form-control" rows="2" placeholder="Describe el trabajo a realizar"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Monto ($)</label>
+                        <input type="number" id="jobAmount" class="form-control" min="0" step="0.01" placeholder="0.00">
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-primary" onclick="handleAddJob()">
+                            <i class="fas fa-plus"></i> Agregar Trabajo
+                        </button>
+                    </div>
                 </div>
-                
-                <!-- Jobs Table -->
+
                 <div class="table-container">
                     <table>
                         <thead>
@@ -566,9 +488,7 @@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody id="jobsTableBody">
-                            <!-- Trabajos se cargan dinámicamente -->
-                        </tbody>
+                        <tbody id="jobsTableBody"></tbody>
                     </table>
                     <div class="empty-state" id="jobsEmpty">
                         <i class="fas fa-briefcase"></i>
@@ -576,311 +496,63 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="footer-note">
                 <p>AFM CRM - Herramienta gratuita desarrollada por AFM Solutions</p>
             </div>
         </div>
     </div>
 
-    <script>
-        // Datos en memoria (simulación de base de datos)
-        let clients = [];
-        let jobs = [];
-        let clientIdCounter = 1;
-        let jobIdCounter = 1;
-        
-        // Cambiar tabs
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            
-            document.getElementById(tabId).classList.add('active');
-            event.target.classList.add('active');
-        }
-        
-        // CLIENTES
-        function addClient(e) {
-            e.preventDefault();
-            
-            const client = {
-                id: clientIdCounter++,
-                name: document.getElementById('clientName').value,
-                phone: document.getElementById('clientPhone').value,
-                email: document.getElementById('clientEmail').value,
-                address: document.getElementById('clientAddress').value,
-                notes: document.getElementById('clientNotes').value,
-                createdAt: new Date().toISOString()
-            };
-            
-            clients.push(client);
-            document.getElementById('clientForm').reset();
-            renderClients();
-            updateClientSelect();
-            updateDashboard();
-            
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('jobDate').value = today;
-        }
-        
-        function renderClients() {
-            const tbody = document.getElementById('clientsTableBody');
-            const empty = document.getElementById('clientsEmpty');
-            
-            if (clients.length === 0) {
-                tbody.innerHTML = '';
-                empty.style.display = 'block';
-                return;
-            }
-            
-            empty.style.display = 'none';
-            tbody.innerHTML = clients.map(client => `
-                <tr>
-                    <td><strong>${client.name}</strong></td>
-                    <td>${client.phone}</td>
-                    <td>${client.email || '-'}</td>
-                    <td>${client.address || '-'}</td>
-                    <td>${client.notes || '-'}</td>
-                    <td>
-                        <div class="action-btns">
-                            <button class="btn-icon btn-edit" onclick="editClient(${client.id})" title="Editar">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn-icon btn-delete" onclick="deleteClient(${client.id})" title="Eliminar">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
-        }
-        
-        function deleteClient(id) {
-            if (confirm('¿Eliminar este cliente? Los trabajos asociados también se eliminarán.')) {
-                clients = clients.filter(c => c.id !== id);
-                jobs = jobs.filter(j => j.clientId !== id);
-                renderClients();
-                renderJobs();
-                updateClientSelect();
-                updateDashboard();
-            }
-        }
-        
-        function editClient(id) {
-            const client = clients.find(c => c.id === id);
-            if (!client) return;
-            
-            document.getElementById('clientName').value = client.name;
-            document.getElementById('clientPhone').value = client.phone;
-            document.getElementById('clientEmail').value = client.email || '';
-            document.getElementById('clientAddress').value = client.address || '';
-            document.getElementById('clientNotes').value = client.notes || '';
-            
-            // Eliminar y re-agregar
-            clients = clients.filter(c => c.id !== id);
-            renderClients();
-            updateClientSelect();
-            updateDashboard();
-            
-            document.getElementById('clientName').focus();
-        }
-        
-        function updateClientSelect() {
-            const select = document.getElementById('jobClient');
-            select.innerHTML = '<option value="">Seleccionar cliente...</option>' +
-                clients.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
-        }
-        
-        // TRABAJOS
-        function addJob(e) {
-            e.preventDefault();
-            
-            const clientId = parseInt(document.getElementById('jobClient').value);
-            const client = clients.find(c => c.id === clientId);
-            
-            const job = {
-                id: jobIdCounter++,
-                clientId: clientId,
-                clientName: client ? client.name : '',
-                date: document.getElementById('jobDate').value,
-                description: document.getElementById('jobDescription').value,
-                status: document.getElementById('jobStatus').value,
-                amount: parseFloat(document.getElementById('jobAmount').value) || 0,
-                createdAt: new Date().toISOString()
-            };
-            
-            jobs.push(job);
-            document.getElementById('jobForm').reset();
-            
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('jobDate').value = today;
-            
-            updateClientSelect();
-            renderJobs();
-            updateDashboard();
-        }
-        
-        function renderJobs() {
-            const tbody = document.getElementById('jobsTableBody');
-            const empty = document.getElementById('jobsEmpty');
-            
-            if (jobs.length === 0) {
-                tbody.innerHTML = '';
-                empty.style.display = 'block';
-                return;
-            }
-            
-            empty.style.display = 'none';
-            const formatDate = (dateStr) => {
-                if (!dateStr) return '-';
-                const d = new Date(dateStr);
-                return d.toLocaleDateString('es-AR');
-            };
-            
-            const formatCurrency = (num) => {
-                return '$' + num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            };
-            
-            const statusLabels = {
-                'pendiente': 'Pendiente',
-                'proceso': 'En Proceso',
-                'finalizado': 'Finalizado'
-            };
-            
-            tbody.innerHTML = jobs.map(job => `
-                <tr>
-                    <td>${formatDate(job.date)}</td>
-                    <td><strong>${job.clientName}</strong></td>
-                    <td>${job.description}</td>
-                    <td><span class="status-badge status-${job.status}">${statusLabels[job.status]}</span></td>
-                    <td>${formatCurrency(job.amount)}</td>
-                    <td>
-                        <div class="action-btns">
-                            <button class="btn-icon btn-edit" onclick="editJob(${job.id})" title="Editar">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn-icon btn-delete" onclick="deleteJob(${job.id})" title="Eliminar">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
-        }
-        
-        function deleteJob(id) {
-            if (confirm('¿Eliminar este trabajo?')) {
-                jobs = jobs.filter(j => j.id !== id);
-                renderJobs();
-                updateDashboard();
-            }
-        }
-        
-        function editJob(id) {
-            const job = jobs.find(j => j.id === id);
-            if (!job) return;
-            
-            document.getElementById('jobClient').value = job.clientId;
-            document.getElementById('jobDate').value = job.date;
-            document.getElementById('jobStatus').value = job.status;
-            document.getElementById('jobDescription').value = job.description;
-            document.getElementById('jobAmount').value = job.amount;
-            
-            jobs = jobs.filter(j => j.id !== id);
-            renderJobs();
-            updateDashboard();
-            
-            document.getElementById('jobDescription').focus();
-        }
-        
-        // DASHBOARD
-        function updateDashboard() {
-            // Total clientes
-            document.getElementById('totalClients').textContent = clients.length;
-            
-            // Trabajos pendientes (pendiente + en proceso)
-            const pending = jobs.filter(j => j.status === 'pendiente' || j.status === 'proceso').length;
-            document.getElementById('pendingJobs').textContent = pending;
-            
-            // Ingresos del mes
-            const now = new Date();
-            const currentMonth = now.getMonth();
-            const currentYear = now.getFullYear();
-            
-            const monthIncome = jobs
-                .filter(j => j.status === 'finalizado')
-                .filter(j => {
-                    const jobDate = new Date(j.date);
-                    return jobDate.getMonth() === currentMonth && jobDate.getFullYear() === currentYear;
-                })
-                .reduce((sum, j) => sum + j.amount, 0);
-            
-            document.getElementById('monthIncome').textContent = '$' + monthIncome.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            
-            // Ingresos totales
-            const totalIncome = jobs
-                .filter(j => j.status === 'finalizado')
-                .reduce((sum, j) => sum + j.amount, 0);
-            
-            document.getElementById('totalIncome').textContent = '$' + totalIncome.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-        }
-    </script>
-    
     <!-- Loader -->
-    <div class="loader-overlay" id="loader" style="display: none;">
+    <div class="loader-overlay" id="loader">
         <div class="spinner"></div>
     </div>
-    
-    <style>
-        .loader-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(2, 6, 23, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-    </style>
-    
+
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="/js/supabase.js"></script>
     <script src="/js/auth.js"></script>
     <script src="/js/crm.js"></script>
-    
+
     <script>
-        // Verificar autenticación
+        // ── Helpers ───────────────────────────────────────────────
+        function showLoader() {
+            const el = document.getElementById('loader');
+            if (el) el.style.display = 'flex';
+        }
+
+        function hideLoader() {
+            const el = document.getElementById('loader');
+            if (el) el.style.display = 'none';
+        }
+
+        function showError(msg) { alert('❌ ' + msg); }
+        function showSuccess(msg) { alert('✅ ' + msg); }
+
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            if (btn) btn.classList.add('active');
+        }
+
+        // ── Auth ──────────────────────────────────────────────────
         let isAuthenticated = false;
-        
+
         async function checkAuth() {
             await AFMAuth.init();
             isAuthenticated = AFMAuth.isAuthenticated();
-            
+
             if (isAuthenticated) {
                 document.getElementById('userSection').style.display = 'flex';
                 document.getElementById('loginLink').style.display = 'none';
-                document.getElementById('userNameDisplay').textContent = AFMAuth.getDisplayName();
-                
-                // Cargar datos desde Supabase
+                const nameEl = document.getElementById('userNameDisplay');
+                if (nameEl) nameEl.textContent = AFMAuth.getDisplayName();
                 await AFPCRMInit();
             } else {
                 document.getElementById('userSection').style.display = 'none';
                 document.getElementById('loginLink').style.display = 'block';
-                
-                // Modo sin auth - datos locales
+                // Modo sin auth: listas vacías
                 AFPCRM.clients = [];
                 AFPCRM.jobs = [];
                 AFPCRM.renderClients();
@@ -888,15 +560,172 @@
                 AFPCRM.updateDashboard();
             }
         }
-        
+
         async function handleLogout() {
             await AFMAuth.logout();
             window.location.reload();
         }
-        
-        // Inicialización
+
+        // ── Clientes ─────────────────────────────────────────────
+        let editingClientId = null;
+
+        async function handleAddClient() {
+            const name = document.getElementById('clientName').value.trim();
+            const phone = document.getElementById('clientPhone').value.trim();
+
+            if (!name || !phone) {
+                showError('Nombre y teléfono son obligatorios');
+                return;
+            }
+
+            const clientData = {
+                name,
+                phone,
+                email: document.getElementById('clientEmail').value.trim(),
+                address: document.getElementById('clientAddress').value.trim(),
+                notes: document.getElementById('clientNotes').value.trim()
+            };
+
+            showLoader();
+            try {
+                if (editingClientId) {
+                    await AFPCRM.updateClient(editingClientId, clientData);
+                    cancelEditClient();
+                    showSuccess('Cliente actualizado');
+                } else {
+                    await AFPCRM.createClient(clientData);
+                    showSuccess('Cliente agregado');
+                }
+                clearClientForm();
+                AFPCRM.renderClients();
+                AFPCRM.updateClientSelect();
+                AFPCRM.updateDashboard();
+            } catch (error) {
+                console.error(error);
+                showError('Error al guardar cliente: ' + error.message);
+            } finally {
+                hideLoader();
+            }
+        }
+
+        function editClient(id) {
+            const client = AFPCRM.clients.find(c => c.id === id);
+            if (!client) return;
+            editingClientId = id;
+            document.getElementById('clientName').value = client.name;
+            document.getElementById('clientPhone').value = client.phone || '';
+            document.getElementById('clientEmail').value = client.email || '';
+            document.getElementById('clientAddress').value = client.address || '';
+            document.getElementById('clientNotes').value = client.notes || '';
+            document.getElementById('cancelEditClientBtn').style.display = 'inline-flex';
+            document.getElementById('clientName').focus();
+        }
+
+        function cancelEditClient() {
+            editingClientId = null;
+            clearClientForm();
+            document.getElementById('cancelEditClientBtn').style.display = 'none';
+        }
+
+        function clearClientForm() {
+            ['clientName','clientPhone','clientEmail','clientAddress','clientNotes']
+                .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+        }
+
+        async function deleteClient(id) {
+            if (!confirm('¿Eliminar este cliente? Los trabajos asociados también podrían verse afectados.')) return;
+            showLoader();
+            try {
+                await AFPCRM.deleteClient(id);
+                AFPCRM.renderClients();
+                AFPCRM.updateClientSelect();
+                AFPCRM.updateDashboard();
+                showSuccess('Cliente eliminado');
+            } catch (error) {
+                console.error(error);
+                showError('Error al eliminar cliente: ' + error.message);
+            } finally {
+                hideLoader();
+            }
+        }
+
+        // Alias requeridos por crm.js (renderClients usa estos nombres en los onclick)
+        const AFPCRMEditClient = editClient;
+        const AFPCRMDeleteClient = deleteClient;
+
+        async function AFPCRMUpdateStatus(id, status) {
+            try { await AFPCRM.updateJobStatus(id, status); AFPCRM.updateDashboard(); }
+            catch (error) { console.error(error); }
+        }
+
+        function AFPCRMEditJob(id) { /* edición inline por estado */ }
+        async function AFPCRMDeleteJob(id) { await deleteJob(id); }
+
+
+        // ── Trabajos ─────────────────────────────────────────────
+        async function handleAddJob() {
+            const clientId = document.getElementById('jobClient').value;
+            const description = document.getElementById('jobDescription').value.trim();
+
+            if (!clientId) { showError('Seleccioná un cliente'); return; }
+            if (!description) { showError('La descripción es obligatoria'); return; }
+
+            const jobData = {
+                clientId,
+                date: document.getElementById('jobDate').value || new Date().toISOString().split('T')[0],
+                status: document.getElementById('jobStatus').value,
+                description,
+                amount: parseFloat(document.getElementById('jobAmount').value) || 0
+            };
+
+            showLoader();
+            try {
+                await AFPCRM.createJob(jobData);
+                // Limpiar formulario
+                document.getElementById('jobDescription').value = '';
+                document.getElementById('jobAmount').value = '';
+                document.getElementById('jobClient').value = '';
+                AFPCRM.renderJobs();
+                AFPCRM.updateDashboard();
+                showSuccess('Trabajo agregado');
+            } catch (error) {
+                console.error(error);
+                showError('Error al agregar trabajo: ' + error.message);
+            } finally {
+                hideLoader();
+            }
+        }
+
+        async function deleteJob(id) {
+            if (!confirm('¿Eliminar este trabajo?')) return;
+            showLoader();
+            try {
+                await AFPCRM.deleteJob(id);
+                AFPCRM.renderJobs();
+                AFPCRM.updateDashboard();
+                showSuccess('Trabajo eliminado');
+            } catch (error) {
+                console.error(error);
+                showError('Error al eliminar trabajo: ' + error.message);
+            } finally {
+                hideLoader();
+            }
+        }
+
+        async function updateJobStatus(id, status) {
+            try {
+                await AFPCRM.updateJob(id, { status });
+                AFPCRM.updateDashboard();
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        // ── Inicialización ────────────────────────────────────────
         document.addEventListener('DOMContentLoaded', async function() {
             showLoader();
+            // Fecha de hoy por defecto en el form de trabajos
+            document.getElementById('jobDate').value = new Date().toISOString().split('T')[0];
             await checkAuth();
             hideLoader();
         });

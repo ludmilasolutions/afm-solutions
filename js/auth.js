@@ -82,10 +82,10 @@ const AFMAuth = {
         });
         
         if (error) {
-            throw new Error(error.message        return data;
-);
+            throw new Error(error.message);
         }
         
+        // Si no hay error, la redirección ocurre automáticamente
     },
     
     /**

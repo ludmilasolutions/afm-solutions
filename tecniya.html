@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TECNIYA - Encuentra profesionales y técnicos cerca de ti">
+    <meta name="theme-color" content="#4f46e5">
+    <title>TECNIYA | AFM Solutions</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header" id="header">
+            <div class="container">
+                <nav class="navbar">
+                    <a href="#" class="logo" onclick="showPage('home')">
+                        <span class="logo-icon">🔧</span> TECNIYA
+                    </a>
+                    <div class="nav-links" id="navLinks">
+                        <a href="#" onclick="showPage('home')" class="nav-link active">Inicio</a>
+                        <a href="#" onclick="showPage('professionals')" class="nav-link">Profesionales</a>
+                        <a href="#" onclick="showPage('how-it-works')" class="nav-link">Cómo Funciona</a>
+                        <div id="authLinks">
+                            <a href="#" onclick="showLoginModal()" class="btn btn-outline btn-sm">Iniciar Sesión</a>
+                            <a href="#" onclick="showRegisterModal()" class="btn btn-primary btn-sm">Registrarse</a>
+                        </div>
+                        <div id="userMenu" class="user-menu" style="display: none;">
+                            <button class="user-menu-btn" onclick="toggleUserDropdown()">
+                                <img src="assets/default-avatar.png" alt="Usuario" id="userAvatar" class="avatar-sm">
+                                <span id="userName">Usuario</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu" id="userDropdown">
+                                <a href="#" onclick="showPage('dashboard')"><i class="fas fa-home"></i> Mi Panel</a>
+                                <a href="#" onclick="showPage('my-jobs')"><i class="fas fa-briefcase"></i> Mis Trabajos</a>
+                                <a href="#" onclick="showPage('favorites')"><i class="fas fa-heart"></i> Favoritos</a>
+                                <a href="#" onclick="showPage('addresses')"><i class="fas fa-map-marker-alt"></i> Direcciones</a>
+                                <a href="#" onclick="showPage('settings')"><i class="fas fa-cog"></i> Configuración</a>
+                                <hr>
+                                <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            <!-- Home Page -->
+            <div id="page-home" class="page active">
+                <!-- Hero Section -->
+                <section class="hero">
+                    <div class="container">
+                        <div class="hero-content">
+                            <h1>Encuentra el <span class="highlight">Profesional</span> Perfecto</h1>
+                            <p class="hero-subtitle">Conectamos usuarios con profesionales verificados cerca de tu ubicación</p>
+                            
+                            <!-- Search Bar -->
+                            <div class="search-container">
+                                <div class="search-box">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" id="searchInput" placeholder="¿Qué servicio necesitas?">
+                                </div>
+                                <div class="search-filters">
+                                    <select id="provinceFilter" onchange="loadCities(); updateAds();">
+                                        <option value="">Provincia</option>
+                                    </select>
+                                    <select id="cityFilter" onchange="updateAds();">
+                                        <option value="">Ciudad</option>
+                                    </select>
+                                    <select id="specialtyFilter">
+                                        <option value="">Especialidad</option>
+                                    </select>
+                                    <button class="btn btn-primary" onclick="searchProfessionals()">
+                                        <i class="fas fa-search"></i> Buscar
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Quick Filters -->
+                            <div class="quick-filters">
+                                <label class="filter-chip">
+                                    <input type="checkbox" id="onlyCertified" onchange="searchProfessionals()">
+                                    <span><i class="fas fa-certificate"></i> Certificados</span>
+                                </label>
+                                <label class="filter-chip">
+                                    <input type="checkbox" id="onlyFeatured" onchange="searchProfessionals()">
+                                    <span><i class="fas fa-star"></i> Destacados</span>
+                                </label>
+                                <label class="filter-chip">
+                                    <input type="checkbox" id="onlyAvailable" onchange="searchProfessionals()">
+                                    <span><i class="fas fa-clock"></i> Disponibles Ahora</span>
+                                </label>
+                                <label class="filter-chip">
+                                    <input type="checkbox" id="withUrgency" onchange="searchProfessionals()">
+                                    <span><i class="fas fa-bolt"></i> Urgencias</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Publicity Banner -->
+                <section class="publicity-section" id="publicityBanner">
+                    <div class="container">
+                        <div class="publicity-banner" id="adBanner">
+                            <img src="assets/ad-default.jpg" alt="Publicidad" id="adImage">
+                            <div class="ad-overlay">
+                                <span id="adTitle">¡Tu publicidad aquí!</span>
+                                <a href="#" id="adLink" class="btn btn-primary btn-sm">Ver más</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Featured Professionals -->
+                <section class="professionals-section" id="featuredSection">
+                    <div class="container">
+                        <div class="section-header">
+                            <h2><i class="fas fa-star"></i> Profesionales Destacados</h2>
+                            <p>Los mejores profesionales seleccionados para ti</p>
+                        </div>
+                        <div class="professionals-grid" id="featuredProfessionals">
+                            <!-- Featured professionals will be loaded here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Certified Professionals -->
+                <section class="professionals-section bg-light" id="certifiedSection">
+                    <div class="container">
+                        <div class="section-header">
+                            <h2><i class="fas fa-certificate"></i> Profesionales Certificados</h2>
+                            <p>Verificados y comprometidos con la calidad</p>
+                        </div>
+                        <div class="professionals-grid" id="certifiedProfessionals">
+                            <!-- Certified professionals will be loaded here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Top Rated Professionals -->
+                <section class="professionals-section" id="topRatedSection">
+                    <div class="container">
+                        <div class="section-header">
+                            <h2><i class="fas fa-trophy"></i> Mejor Puntuados</h2>
+                            <p>Los profesionales mejor valorados por nuestros usuarios</p>
+                        </div>
+                        <div class="professionals-grid" id="topRatedProfessionals">
+                            <!-- Top rated professionals will be loaded here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- All Professionals -->
+                <section class="professionals-section bg-light" id="allProfessionalsSection">
+                    <div class="container">
+                        <div class="section-header">
+                            <h2><i class="fas fa-users"></i> Todos los Profesionales</h2>
+                            <p>Explora nuestro directorio completo</p>
+                        </div>
+                        <div class="professionals-grid" id="allProfessionals">
+                            <!-- All professionals will be loaded here -->
+                        </div>
+                        <div class="load-more-container">
+                            <button class="btn btn-outline" onclick="loadMoreProfessionals()">
+                                <i class="fas fa-plus"></i> Ver más profesionales
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- How It Works -->
+                <section class="how-it-works" id="howItWorks">
+                    <div class="container">
+                        <div class="section-header">
+                            <h2>¿Cómo Funciona?</h2>
+                            <p>En solo 3 pasos encuentra al profesional que necesitas</p>
+                        </div>
+                        <div class="steps-grid">
+                            <div class="step-card">
+                                <div class="step-icon">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <h3>1. Busca</h3>
+                                <p>Selecciona tu provincia, ciudad y el servicio que necesitas</p>
+                            </div>
+                            <div class="step-card">
+                                <div class="step-icon">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                                <h3>2. Compara</h3>
+                                <p>Revisa perfiles, puntuaciones, reseñas y certificaciones</p>
+                            </div>
+                            <div class="step-card">
+                                <div class="step-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <h3>3. Contrata</h3>
+                                <p>Contacta, solicita el servicio y disfruta del trabajo bien hecho</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Professionals List Page -->
+            <div id="page-professionals" class="page">
+                <div class="container">
+                    <div class="page-header">
+                        <h1>Buscar Profesionales</h1>
+                        <p>Encuentra el profesional ideal para tu trabajo</p>
+                    </div>
+                    
+                    <!-- Filters Sidebar -->
+                    <div class="professionals-layout">
+                        <aside class="filters-sidebar">
+                            <div class="filter-section">
+                                <h3><i class="fas fa-filter"></i> Filtros</h3>
+                                
+                                <div class="filter-group">
+                                    <label>Provincia</label>
+                                    <select id="provinceFilterList" onchange="loadCitiesList(); searchProfessionalsList()">
+                                        <option value="">Todas las provincias</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="filter-group">
+                                    <label>Ciudad</label>
+                                    <select id="cityFilterList" onchange="searchProfessionalsList()">
+                                        <option value="">Todas las ciudades</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="filter-group">
+                                    <label>Especialidad</label>
+                                    <select id="specialtyFilterList" onchange="searchProfessionalsList()">
+                                        <option value="">Todas las especialidades</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="filter-group">
+                                    <label>Distancia máxima</label>
+                                    <input type="range" id="distanceFilter" min="1" max="100" value="50" onchange="updateDistanceLabel(); searchProfessionalsList()">
+                                    <span id="distanceLabel">50 km</span>
+                                </div>
+                                
+                                <div class="filter-group">
+                                    <label class="filter-checkbox">
+                                        <input type="checkbox" id="onlyCertifiedList" onchange="searchProfessionalsList()">
+                                        Solo certificados
+                                    </label>
+                                </div>
+                                
+                                <div class="filter-group">
+                                    <label class="filter-checkbox">
+                                        <input type="checkbox" id="onlyFeaturedList" onchange="searchProfessionalsList()">
+                                        Solo destacados
+                                    </label>
+                                </div>
+                                
+                                <div class="filter-group">
+                                    <label class="filter-checkbox">
+                                        <input type="checkbox" id="onlyAvailableList" onchange="searchProfessionalsList()">
+                                        Disponibles ahora
+                                    </label>
+                                </div>
+                                
+                                <button class="btn btn-outline btn-block" onclick="clearFilters()">
+                                    <i class="fas fa-times"></i> Limpiar filtros
+                                </button>
+                            </div>
+                        </aside>
+                        
+                        <div class="professionals-content">
+                            <div class="results-header">
+                                <span id="resultsCount">0 profesionales encontrados</span>
+                                <select id="sortBy" onchange="searchProfessionalsList()">
+                                    <option value="featured">Ordenar por: Destacados</option>
+                                    <option value="rating">Mejor puntuación</option>
+                                    <option value="reviews">Más reseñas</option>
+                                    <option value="distance">Más cercanos</option>
+                                </select>
+                            </div>
+                            
+                            <div class="professionals-grid" id="professionalsList">
+                                <!-- Professionals list will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How It Works Page -->
+            <div id="page-how-it-works" class="page">
+                <div class="container">
+                    <div class="page-header">
+                        <h1>¿Cómo Funciona TECNIYA?</h1>
+                        <p>Te conectamos con profesionales de confianza</p>
+                    </div>
+                    
+                    <div class="how-it-works-content">
+                        <div class="info-section">
+                            <h2>Para Usuarios</h2>
+                            <div class="info-cards">
+                                <div class="info-card">
+                                    <i class="fas fa-search-location"></i>
+                                    <h3>1. Busca profesionales</h3>
+                                    <p>Ingresa tu ubicación y el tipo de servicio que necesitas. Filtra por especialidad, certificación y disponibilidad.</p>
+                                </div>
+                                <div class="info-card">
+                                    <i class="fas fa-star"></i>
+                                    <h3>2. Compara y elige</h3>
+                                    <p>Revisa las puntuaciones, reseñas, certificaciones y portafolios de trabajos de cada profesional.</p>
+                                </div>
+                                <div class="info-card">
+                                    <i class="fas fa-paper-plane"></i>
+                                    <h3>3. Solicita el servicio</h3>
+                                    <p>Envía una solicitud de trabajo directamente al profesional. Él te contactará para confirmar.</p>
+                                </div>
+                                <div class="info-card">
+                                    <i class="fas fa-smile"></i>
+                                    <h3>4. Evalúa el servicio</h3>
+                                    <p>Una vez completado el trabajo, califica tu experiencia para ayudar a otros usuarios.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h2>Para Profesionales</h2>
+                            <div class="info-cards">
+                                <div class="info-card">
+                                    <i class="fas fa-user-plus"></i>
+                                    <h3>1. Crea tu perfil</h3>
+                                    <p>Regístrate y completa tu perfil con tu especialidad, experiencia y certificaciones.</p>
+                                </div>
+                                <div class="info-card">
+                                    <i class="fas fa-briefcase"></i>
+                                    <h3>2. Recibe solicitudes</h3>
+                                    <p>Los usuarios te enviarán solicitudes de trabajo según tu especialidad y ubicación.</p>
+                                </div>
+                                <div class="info-card">
+                                    <i class="fas fa-file-invoice-dollar"></i>
+                                    <h3>3. Gestiona presupuestos</h3>
+                                    <p>Como profesional destacado, crea presupuestos profesionales en PDF y envíalos a tus clientes.</p>
+                                </div>
+                                <div class="info-card">
+                                    <i class="fas fa-rocket"></i>
+                                    <h3>4. Destaca tu negocio</h3>
+                                    <p>Suscríbete como profesional destacado para mayor visibilidad y beneficios exclusivos.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cta-section">
+                            <h2>¡Empieza hoy!</h2>
+                            <p>Únete a miles de usuarios y profesionales en TECNIYA</p>
+                            <div class="cta-buttons">
+                                <a href="#" onclick="showRegisterModal()" class="btn btn-primary btn-large">
+                                    <i class="fas fa-user-plus"></i> Crear Cuenta
+                                </a>
+                                <a href="#" onclick="showPage('professionals')" class="btn btn-outline btn-large">
+                                    <i class="fas fa-search"></i> Buscar Profesionales
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Page (User Panel) -->
+            <div id="page-dashboard" class="page">
+                <div class="container">
+                    <div class="page-header">
+                        <h1>Mi Panel</h1>
+                        <p>Gestiona tu cuenta y actividades</p>
+                    </div>
+                    
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <div class="dashboard-icon">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <div class="dashboard-info">
+                                <h3 id="userJobsCount">0</h3>
+                                <p>Trabajos Solicitados</p>
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="dashboard-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="dashboard-info">
+                                <h3 id="userFavoritesCount">0</h3>
+                                <p>Favoritos</p>
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="dashboard-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="dashboard-info">
+                                <h3 id="userAddressesCount">0</h3>
+                                <p>Direcciones Guardadas</p>
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="dashboard-icon">
+                                <i class="fas fa-file-invoice"></i>
+                            </div>
+                            <div class="dashboard-info">
+                                <h3 id="userBudgetsCount">0</h3>
+                                <p>Presupuestos Recibidos</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-actions">
+                        <a href="#" onclick="showPage('my-jobs')" class="action-card">
+                            <i class="fas fa-list"></i>
+                            <span>Mis Trabajos</span>
+                        </a>
+                        <a href="#" onclick="showRequestJobModal()" class="action-card">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Solicitar Trabajo</span>
+                        </a>
+                        <a href="#" onclick="showPage('favorites')" class="action-card">
+                            <i class="fas fa-heart"></i>
+                            <span>Favoritos</span>
+                        </a>
+                        <a href="#" onclick="showPage('addresses')" class="action-card">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Mis Direcciones</span>
+                        </a>
+                        <a href="#" onclick="showPage('budgets')" class="action-card">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <span>Presupuestos</span>
+                        </a>
+                        <a href="#" onclick="showPage('settings')" class="action-card">
+                            <i class="fas fa-cog"></i>
+                            <span>Configuración</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Quick Request -->
+                    <div class="quick-request-section">
+                        <h2><i class="fas fa-bolt"></i> Solicitud Rápida</h2>
+                        <p>¿Necesitas un profesional urgentemente?</p>
+                        <button class="btn btn-primary btn-large" onclick="showRequestJobModal()">
+                            <i class="fas fa-plus"></i> Nueva Solicitud
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Jobs Page -->
+            <div id="page-my-jobs" class="page">
+                <div class="container">
+                    <div class="page-header">
+                        <h1>Mis Trabajos</h1>
+                        <p>Historial de solicitudes y trabajos</p>
+                    </div>
+                    
+                    <div class="tabs-container">
+                        <button class="tab-btn active" onclick="filterJobs('all')">Todos</button>
+                        <button class="tab-btn" onclick="filterJobs('solicitado')">Solicitados</button>
+                        <button class="tab-btn" onclick="filterJobs('aceptado')">Aceptados</button>
+                        <button class="tab-btn" onclick="filterJobs('en_proceso')">En Proceso</button>
+                        <button class="tab-btn" onclick="filterJobs('finalizado')">Finalizados</button>
+                        <button class="tab-btn" onclick="filterJobs('cancelado')">Cancelados</button>
+                    </div>
+                    
+                    <div class="jobs-list" id="userJobsList">
+                        <!-- User jobs will be loaded here -->
+                        <div class="empty-state">
+                            <i class="fas fa-briefcase"></i>
+                            <p>No tienes trabajos solicitados</p>
+                            <button class="btn btn-primary" onclick="showRequestJobModal()">
+                                Solicitar tu primer trabajo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Favorites Page -->
+            <div id="page-favorites" class="page">
+                <div class="container">
+                    <div class="page-header">
+                        <h1>Mis Favoritos</h1>
+                        <p>Profesionales guardados para más tarde</p>
+                    </div>
+                    
+                    <div class="professionals-grid" id="favoritesList">
+                        <!-- Favorites will be loaded here -->
+                        <div class="empty-state">
+                            <i class="fas fa-heart"></i>
+                            <p>No tienes favoritos guardados</p>
+                            <button class="btn btn-primary" onclick="showPage('professionals')">
+                                Explorar profesionales
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Addresses Page -->
+            <div id="page-addresses" class="page">
+                <div class="container">
+                    <div class="page-header">
+                        <h1>Mis Direcciones</h1>
+                        <p>Gestiona tus direcciones guardadas</p>
+                        <button class="btn btn-primary" onclick="showAddAddressModal()">
+                            <i class="fas fa-plus"></i> Agregar Dirección
+                        </button>
+                    </div>
+                    
+                    <div class="addresses-grid" id="addressesList">
+                        <!-- Addresses will be loaded here -->
+                        <div class="empty-state">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>No tienes direcciones guardadas</p>
+                            <button class="btn btn-primary" onclick="showAddAddressModal()">
+                                Agregar tu primera dirección
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Budgets Page -->
+            <div id="page-budgets" class="page">
+                <div class="container">
+                    <div class="page-header">
+                        <h1>Presupuestos</h1>
+                        <p>Presupuestos recibidos de profesionales</p>
+                    </div>
+                    
+                    <div class="budgets-list" id="budgetsList">
+                        <!-- Budgets will be loaded here -->
+                        <div class="empty-state">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <p>No has recibido presupuestos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Page -->
+            <div id="page-settings" class="page">
+                <div class="container">
+                    <div class="page-header">
+                        <h1>Configuración</h1>
+                        <p>Gestiona tu cuenta y preferencias</p>
+                    </div>
+                    
+                    <div class="settings-sections">
+                        <div class="settings-section">
+                            <h3><i class="fas fa-user"></i> Perfil</h3>
+                            <form id="profileForm" onsubmit="updateProfile(event)">
+                                <div class="form-group">
+                                    <label>Nombre completo</label>
+                                    <input type="text" id="profileName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Teléfono</label>
+                                    <input type="tel" id="profilePhone">
+                                </div>
+                                <div class="form-group">
+                                    <label>Avatar</label>
+                                    <input type="file" id="profileAvatar" accept="image/*">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                            </form>
+                        </div>
+                        
+                        <div class="settings-section">
+                            <h3><i class="fas fa-bell"></i> Notificaciones</h3>
+                            <label class="toggle-setting">
+                                <span>Notificaciones de trabajos</span>
+                                <input type="checkbox" id="notifyJobs" checked>
+                            </label>
+                            <label class="toggle-setting">
+                                <span>Notificaciones de presupuestos</span>
+                                <input type="checkbox" id="notifyBudgets" checked>
+                            </label>
+                            <label class="toggle-setting">
+                                <span>Notificaciones de reseñas</span>
+                                <input type="checkbox" id="notifyReviews" checked>
+                            </label>
+                        </div>
+                        
+                        <div class="settings-section">
+                            <h3><i class="fas fa-lock"></i> Seguridad</h3>
+                            <button class="btn btn-outline" onclick="showChangePasswordModal()">
+                                Cambiar Contraseña
+                            </button>
+                        </div>
+                        
+                        <div class="settings-section danger-zone">
+                            <h3><i class="fas fa-exclamation-triangle"></i> Zona de Peligro</h3>
+                            <button class="btn btn-danger" onclick="deleteAccount()">
+                                Eliminar Cuenta
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Detail Page -->
+            <div id="page-professional-detail" class="page">
+                <div class="container">
+                    <button class="btn btn-outline back-btn" onclick="goBack()">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </button>
+                    
+                    <div class="professional-detail" id="professionalDetail">
+                        <!-- Professional detail will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Detail Page -->
+            <div id="page-job-detail" class="page">
+                <div class="container">
+                    <button class="btn btn-outline back-btn" onclick="showPage('my-jobs')">
+                        <i class="fas fa-arrow-left"></i> Volver a Mis Trabajos
+                    </button>
+                    
+                    <div class="job-detail" id="jobDetail">
+                        <!-- Job detail will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <span class="logo-icon">🔧</span> TECNIYA
+                        <p>Plataforma de profesionales y técnicos</p>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#" onclick="showPage('home')">Inicio</a>
+                        <a href="#" onclick="showPage('professionals')">Profesionales</a>
+                        <a href="#" onclick="showPage('how-it-works')">Cómo Funciona</a>
+                        <a href="#">Términos y Condiciones</a>
+                        <a href="#">Política de Privacidad</a>
+                    </div>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>Aplicación creada por <strong>AFM Solutions</strong></p>
+                    <p>&copy; 2024 TECNIYA. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('loginModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h2>Iniciar Sesión</h2>
+                <p>Accede a tu cuenta de TECNIYA</p>
+            </div>
+            <div class="modal-body">
+                <button class="btn btn-social btn-google" onclick="loginWithGoogle()">
+                    <i class="fab fa-google"></i> Continuar con Google
+                </button>
+                <div class="divider">
+                    <span>o</span>
+                </div>
+                <form id="loginForm" onsubmit="login(event)">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                    </button>
+                </form>
+                <p class="modal-footer-text">
+                    ¿No tienes cuenta? <a href="#" onclick="switchModal('loginModal', 'registerModal')">Regístrate</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('registerModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h2>Crear Cuenta</h2>
+                <p>Únete a TECNIYA</p>
+            </div>
+            <div class="modal-body">
+                <button class="btn btn-social btn-google" onclick="loginWithGoogle()">
+                    <i class="fab fa-google"></i> Continuar con Google
+                </button>
+                <div class="divider">
+                    <span>o</span>
+                </div>
+                <form id="registerForm" onsubmit="register(event)">
+                    <div class="form-group">
+                        <label>Nombre completo</label>
+                        <input type="text" id="registerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="registerPassword" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de cuenta</label>
+                        <select id="registerRole" required>
+                            <option value="user">Usuario</option>
+                            <option value="professional">Profesional</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-user-plus"></i> Crear Cuenta
+                    </button>
+                </form>
+                <p class="modal-footer-text">
+                    ¿Ya tienes cuenta? <a href="#" onclick="switchModal('registerModal', 'loginModal')">Inicia Sesión</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Job Modal -->
+    <div class="modal" id="requestJobModal">
+        <div class="modal-content modal-large">
+            <button class="modal-close" onclick="closeModal('requestJobModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h2>Solicitar Trabajo</h2>
+                <p>Describe el trabajo que necesitas realizar</p>
+            </div>
+            <div class="modal-body">
+                <form id="requestJobForm" onsubmit="requestJob(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Especialidad</label>
+                            <select id="jobSpecialty" required>
+                                <option value="">Selecciona especialidad</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Provincia</label>
+                            <select id="jobProvince" required onchange="loadCitiesJob()">
+                                <option value="">Selecciona provincia</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Ciudad</label>
+                            <select id="jobCity" required>
+                                <option value="">Selecciona ciudad</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Zona</label>
+                            <input type="text" id="jobZone" placeholder="Barrio o zona">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Título del trabajo</label>
+                        <input type="text" id="jobTitle" placeholder="Ej: Reparación de grifo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <textarea id="jobDescription" rows="4" placeholder="Describe detalladamente el trabajo a realizar..." required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Dirección</label>
+                            <input type="text" id="jobAddress" placeholder="Dirección completa">
+                        </div>
+                        <div class="form-group">
+                            <label>¿Es urgente?</label>
+                            <label class="toggle-label">
+                                <input type="checkbox" id="jobUrgency">
+                                <span>Sí, es urgente</span>
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-paper-plane"></i> Enviar Solicitud
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Professional Profile Modal -->
+    <div class="modal" id="professionalProfileModal">
+        <div class="modal-content modal-large">
+            <button class="modal-close" onclick="closeModal('professionalProfileModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h2>Mi Perfil Profesional</h2>
+                <p>Gestiona tu información como profesional</p>
+            </div>
+            <div class="modal-body">
+                <form id="professionalProfileForm" onsubmit="saveProfessionalProfile(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nombre del negocio</label>
+                            <input type="text" id="profBusinessName" placeholder="Nombre de tu negocio">
+                        </div>
+                        <div class="form-group">
+                            <label>Especialidad</label>
+                            <select id="profSpecialty" required>
+                                <option value="">Selecciona especialidad</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <textarea id="profDescription" rows="4" placeholder="Describe tu experiencia y servicios..."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input type="tel" id="profPhone">
+                        </div>
+                        <div class="form-group">
+                            <label>WhatsApp</label>
+                            <input type="tel" id="profWhatsapp">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Provincia</label>
+                            <select id="profProvince" onchange="loadCitiesProfessional()">
+                                <option value="">Selecciona provincia</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Ciudad</label>
+                            <select id="profCity">
+                                <option value="">Selecciona ciudad</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Zonas donde trabajas</label>
+                        <input type="text" id="profZones" placeholder="Zona norte, Centro, etc. (separadas por coma)">
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección</label>
+                        <input type="text" id="profAddress">
+                    </div>
+                    <h3>Disponibilidad</h3>
+                    <div class="form-group">
+                        <label>Días laborales</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="profDays" value="lunes"> Lunes</label>
+                            <label><input type="checkbox" name="profDays" value="martes"> Martes</label>
+                            <label><input type="checkbox" name="profDays" value="miercoles"> Miércoles</label>
+                            <label><input type="checkbox" name="profDays" value="jueves"> Jueves</label>
+                            <label><input type="checkbox" name="profDays" value="viernes"> Viernes</label>
+                            <label><input type="checkbox" name="profDays" value="sabado"> Sábado</label>
+                            <label><input type="checkbox" name="profDays" value="domingo"> Domingo</label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Horario de trabajo</label>
+                            <input type="text" id="profHours" placeholder="08:00 - 18:00">
+                        </div>
+                        <div class="form-group">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="profUrgency">
+                                <span>Servicio de urgencias</span>
+                            </label>
+                        </div>
+                    </div>
+                    <h3> Fotos del Negocio</h3>
+                    <div class="form-group">
+                        <label>Foto de perfil</label>
+                        <input type="file" id="profPhoto" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label>Foto de portada</label>
+                        <input type="file" id="profCover" accept="image/*">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-save"></i> Guardar Perfil
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Address Modal -->
+    <div class="modal" id="addAddressModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('addAddressModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h2>Agregar Dirección</h2>
+            </div>
+            <div class="modal-body">
+                <form id="addAddressForm" onsubmit="addAddress(event)">
+                    <div class="form-group">
+                        <label>Nombre (ej: Casa, Trabajo)</label>
+                        <input type="text" id="addressName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección</label>
+                        <input type="text" id="addressStreet" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Provincia</label>
+                            <select id="addressProvince" onchange="loadCitiesAddress()">
+                                <option value="">Selecciona</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Ciudad</label>
+                            <select id="addressCity">
+                                <option value="">Selecciona</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Zona</label>
+                        <input type="text" id="addressZone">
+                    </div>
+                    <div class="form-group">
+                        <label class="toggle-label">
+                            <input type="checkbox" id="addressDefault">
+                            <span>Establecer como predeterminada</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-plus"></i> Agregar Dirección
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rate Job Modal -->
+    <div class="modal" id="rateJobModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('rateJobModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h2>Calificar Trabajo</h2>
+                <p>Tu opinión nos importa</p>
+            </div>
+            <div class="modal-body">
+                <form id="rateJobForm" onsubmit="rateJob(event)">
+                    <input type="hidden" id="rateJobId">
+                    <div class="rating-group">
+                        <label>Puntualidad</label>
+                        <div class="star-rating" id="punctualityRating">
+                            <i class="far fa-star" data-value="1"></i>
+                            <i class="far fa-star" data-value="2"></i>
+                            <i class="far fa-star" data-value="3"></i>
+                            <i class="far fa-star" data-value="4"></i>
+                            <i class="far fa-star" data-value="5"></i>
+                        </div>
+                    </div>
+                    <div class="rating-group">
+                        <label>Calidad</label>
+                        <div class="star-rating" id="qualityRating">
+                            <i class="far fa-star" data-value="1"></i>
+                            <i class="far fa-star" data-value="2"></i>
+                            <i class="far fa-star" data-value="3"></i>
+                            <i class="far fa-star" data-value="4"></i>
+                            <i class="far fa-star" data-value="5"></i>
+                        </div>
+                    </div>
+                    <div class="rating-group">
+                        <label>Precio</label>
+                        <div class="star-rating" id="priceRating">
+                            <i class="far fa-star" data-value="1"></i>
+                            <i class="far fa-star" data-value="2"></i>
+                            <i class="far fa-star" data-value="3"></i>
+                            <i class="far fa-star" data-value="4"></i>
+                            <i class="far fa-star" data-value="5"></i>
+                        </div>
+                    </div>
+                    <div class="rating-group">
+                        <label>Comunicación</label>
+                        <div class="star-rating" id="communicationRating">
+                            <i class="far fa-star" data-value="1"></i>
+                            <i class="far fa-star" data-value="2"></i>
+                            <i class="far fa-star" data-value="3"></i>
+                            <i class="far fa-star" data-value="4"></i>
+                            <i class="far fa-star" data-value="5"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Comentario</label>
+                        <textarea id="reviewComment" rows="3" placeholder="Comparte tu experiencia..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-star"></i> Enviar Calificación
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Subscription Modal -->
+    <div class="modal" id="subscriptionModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('subscriptionModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h2>Ser Profesional Destacado</h2>
+                <p>Destaca tu negocio y llega a más clientes</p>
+            </div>
+            <div class="modal-body">
+                <div class="subscription-plan">
+                    <div class="plan-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Plan Destacado</h3>
+                    <div class="plan-price">
+                        <span class="price">$5.000</span>
+                        <span class="period">/mes</span>
+                    </div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Mayor visibilidad en búsquedas</li>
+                        <li><i class="fas fa-check"></i> Badge de profesional destacado</li>
+                        <li><i class="fas fa-check"></i> Crear presupuestos en PDF</li>
+                        <li><i class="fas fa-check"></i> Enviar presupuestos por WhatsApp</li>
+                        <li><i class="fas fa-check"></i> Posición privilegiada en listados</li>
+                    </ul>
+                    <button class="btn btn-primary btn-block" onclick="subscribeToPlan()">
+                        <i class="fas fa-rocket"></i> Suscribirse Ahora
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
